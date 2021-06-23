@@ -1,7 +1,6 @@
 To Do Liste:
 -SQL-Datenbank installieren - lokal
 -Webserver installieren
--Frontend Framework auswählen
 -Altersüberprüfung
 -User Stories erstellen
 -Persona erstellen
