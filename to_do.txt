@@ -1,6 +1,6 @@
 To Do Liste:
 -SQL-Datenbank installieren - lokal
--Webserver installieren
+-Webserver installieren (per Docker zusammen mit SQL? Welches Framework verwenden?)
 -Frontend Framework auswählen
 -Altersüberprüfung
 -User Stories erstellen
