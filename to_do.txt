@@ -1,6 +1,11 @@
 To Do Liste:
 -SQL-Datenbank installieren - lokal
+<<<<<<< HEAD
 -Webserver installieren
+=======
+-Webserver installieren (per Docker zusammen mit SQL? Welches Framework verwenden?)
+-Frontend Framework auswählen
+>>>>>>> 0350027aeb40153e51aa6130100a7fc0cb174903
 -Altersüberprüfung
 -User Stories erstellen
 -Persona erstellen
