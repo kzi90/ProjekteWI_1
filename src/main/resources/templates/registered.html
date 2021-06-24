@@ -1,0 +1,15 @@
+<!DOCTYPE HTML>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Registrierung erfolgreich</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html" />
+    <link th:href="@{/style.css}" rel="stylesheet" />
+</head>
+<body>
+    <span th:text="'Herzlich Willkommen '" />
+    <span th:text="${person.firstname}" />
+    <span th:text="${person.lastname + ','}" />
+    <span th:text="'deine Registrierung war erfolgreich.'" />
+</body>
+</html>
