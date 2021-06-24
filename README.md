@@ -3,7 +3,7 @@ Das hier funktioniert bei mir mit jdk 16
 Bisher implementiert:
 
 Spring Framework, Anleitung Quickstart: https://spring.io/quickstart
-Start Application: .\mvnw spring-boot:run
+Start Application: .\mvnw spring-boot:run (./mvnw spring-boot:run unter UNIX)
 Zugriff über Webbrowser: localhost:8080/login?name=Name / localhost:8080/ / localhost:8080/register
 Abbruch: Strg+C im Terminal
 
