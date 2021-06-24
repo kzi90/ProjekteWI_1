@@ -18,4 +18,7 @@ https://www.thymeleaf.org/documentation.html
 https://www.dev-insider.de/datenbankabfragen-mit-dem-jdbc-template-a-1022878/
 https://spring.io/guides/gs/relational-data-access/
 
+@JENS CSS Präprozessor:
+https://sass-lang.com/
+
 siehe auch HELP.md
