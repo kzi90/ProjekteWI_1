@@ -4,3 +4,6 @@ target/
 !**/src/test/**/target/
 
 .vscode/
+.settings/
+.project
+.classpath
