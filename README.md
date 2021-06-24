@@ -1,4 +1,5 @@
-Das hier funktioniert bei mir mit jdk 16
+Das hier funktioniert bei mir mit jdk 16 (Windows 10) und OpenJDK 11 (Linux)
+(Java Version muss ggf. in pom.xml angepasst werden)
 
 Bisher implementiert:
 
