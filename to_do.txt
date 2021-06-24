@@ -3,7 +3,7 @@ To Do Liste:
 -Webserver installieren
 =======
 -Webserver installieren (per Docker zusammen mit SQL? Welches Framework verwenden?)
--Frontend Framework auswählen
+-Frontend Framework auswählen (ist Thymeleaf für die backend-frontend Kommunikation) evtl. kann man hier auch mit BOOTSTRAP arbeiten
 -Altersüberprüfung
 -User Stories erstellen
 -Persona erstellen
