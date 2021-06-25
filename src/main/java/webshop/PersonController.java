@@ -46,9 +46,8 @@ public class PersonController {
     @PostMapping("/register")
     public String registered(@ModelAttribute Person person, Model model){
         model.addAttribute(person);
-        // hier sollte der user in der Datenbank gespeichert werden.
         String sql = String.format("INSERT INTO person VALUES (4, '%s', '%s');", person.getFirstname(), person.getLastname());
-        this.jdbcTemplate.execute(sql); // funktioniert noch nicht (@Autowired erforderlich?)
+        this.jdbcTemplate.execute(sql);
         return "registered";
     }
 
