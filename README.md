@@ -3,6 +3,9 @@ Das hier funktioniert bei mir mit jdk 16 (Windows 10) und OpenJDK 11 (Linux)
 Für VS Code ist es sinnvoll, die Lombok-Extension zu installieren, damit VS Code
 weiß, dass aufgrund der Annotations (z.B. @Data) die entsprechenden Methoden vorhanden sind.
 
+Zugang H2-Datenbank: jdbc:h2:file:./database
+User + Kennwort leer
+
 Bisher implementiert:
 
 Spring Framework, Anleitung Quickstart: https://spring.io/quickstart
