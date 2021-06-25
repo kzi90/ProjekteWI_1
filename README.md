@@ -6,6 +6,12 @@ weiß, dass aufgrund der Annotations (z.B. @Data) die entsprechenden Methoden vo
 Zugang H2-Datenbank: jdbc:h2:file:./database
 User + Kennwort leer
 
+Schreiben in Datenbank funktioniert jetzt, ist aber anfällig für SQL-Injections.
+Beispiel:
+    Eingabe Vorname: Fieser
+    Eingabe Nachname: Hacker'); DELETE FROM PERSON WHERE ID = 2; INSERT INTO PERSON VALUES (5, 'Noch ein', 'Hacker
+Ergebnis: 2 Personen hinzugefügt und eine gelöscht. Ein Hacker könnte so natürlich auch die ganze Datenbank löschen.
+
 Bisher implementiert:
 
 Spring Framework, Anleitung Quickstart: https://spring.io/quickstart

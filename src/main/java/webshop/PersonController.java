@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class PersonController {
+
+    @Autowired
+    JdbcTemplate jdbcTemplate;
+
     /**
      * 
      * @param model
@@ -34,7 +38,7 @@ public class PersonController {
     }
 
     /**
-     * 
+     * writes the registered person into the database and shows success message
      * @param person built automatically with submitted values
      * @param model
      * @return registered.html template
@@ -43,8 +47,8 @@ public class PersonController {
     public String registered(@ModelAttribute Person person, Model model){
         model.addAttribute(person);
         // hier sollte der user in der Datenbank gespeichert werden.
-        String sql = String.format("INSERT INTO person VALUES (4, %s, %s);", person.getFirstname(), person.getLastname());
-        // new JdbcTemplate().update(sql); // funktioniert noch nicht (@Autowired erforderlich?)
+        String sql = String.format("INSERT INTO person VALUES (4, '%s', '%s');", person.getFirstname(), person.getLastname());
+        this.jdbcTemplate.execute(sql); // funktioniert noch nicht (@Autowired erforderlich?)
         return "registered";
     }
 
