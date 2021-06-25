@@ -11,7 +11,7 @@ public class PersonController {
 
     @GetMapping("/")
     public String home(Model model) {
-        Person person = Person.builder().id(3l).firstname("Alfred").lastname("Neumann").build();
+        Person person = Person.builder().firstname("Alfred").lastname("Neumann").build();
         model.addAttribute(person);
         return "home";
     }
