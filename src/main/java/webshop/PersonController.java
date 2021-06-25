@@ -11,16 +11,14 @@ public class PersonController {
 
     @GetMapping("/")
     public String home(Model model) {
-        Person person = new Person();
-        person.setFirstname("Alfred");
-        person.setLastname("Neumann");
+        Person person = Person.builder().id(3l).firstname("Alfred").lastname("Neumann").build();
         model.addAttribute(person);
         return "home";
     }
 
     @GetMapping("/register")
     public String register(Model model){
-        Person person = new Person();
+        Person person = Person.builder().build();
         model.addAttribute(person);
         return "register";
     }

@@ -1,18 +1,12 @@
 package webshop;
 
+import lombok.Builder;
+import lombok.Data;
+
+@Data
+@Builder
 public class Person {
+    private Long id;
     private String firstname;
-   private String lastname;
-   public String getFirstname() {
-      return firstname;
-   }
-   public void setFirstname(String firstname) {
-      this.firstname = firstname;
-   }
-   public String getLastname() {
-      return lastname;
-   }
-   public void setLastname(String lastname) {
-      this.lastname = lastname;
-   }
+    private String lastname;
 }
