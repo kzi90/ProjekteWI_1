@@ -6,7 +6,8 @@ weiß, dass aufgrund der Annotations (z.B. @Data) die entsprechenden Methoden vo
 Bisher implementiert:
 
 Spring Framework, Anleitung Quickstart: https://spring.io/quickstart
-Start Application: .\mvnw spring-boot:run (./mvnw spring-boot:run unter UNIX)
+Start Application: .\mvnw spring-boot:run
+                   mvn spring-boot:run (für macOS)
 Zugriff über Webbrowser: localhost:8080/login?name=Name / localhost:8080/ / localhost:8080/register
 Abbruch: Strg+C im Terminal
 
