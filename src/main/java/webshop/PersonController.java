@@ -1,5 +1,7 @@
 package webshop;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,6 +43,8 @@ public class PersonController {
     public String registered(@ModelAttribute Person person, Model model){
         model.addAttribute(person);
         // hier sollte der user in der Datenbank gespeichert werden.
+        String sql = String.format("INSERT INTO person VALUES (4, %s, %s);", person.getFirstname(), person.getLastname());
+        // new JdbcTemplate().update(sql); // funktioniert noch nicht (@Autowired erforderlich?)
         return "registered";
     }
 
