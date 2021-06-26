@@ -1,6 +1,8 @@
 package webshop;
 
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +24,7 @@ public class PersonController {
     @GetMapping("/")
     public String home(Model model) {
         Person person = Person.builder().firstname("Alfred").lastname("Neumann").build();
+        // hier andere Möglichkeiten testen, Person aus Datenbank zu lesen
         model.addAttribute(person);
         return "home";
     }
