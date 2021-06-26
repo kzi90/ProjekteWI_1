@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class PersonController {
 
     @Autowired
-    JdbcTemplate jdbcTemplate;
+    private JdbcTemplate jdbcTemplate;
 
     /**
      * 
