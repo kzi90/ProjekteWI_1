@@ -22,8 +22,11 @@ public class PersonController {
     @GetMapping("/")
     public String home(Model model) {
         Person person = Person.builder().firstname("Alfred").lastname("Neumann").build();
-        // hier andere Möglichkeiten testen, Person aus Datenbank zu lesen
         model.addAttribute(person);
+        Person person1 = jdbcTemplate.queryForObject("SELECT * FROM Person WHERE Id = ?", new PersonRowMapper(), 1l);
+        if (person1 != null){
+            model.addAttribute(person1);
+        }
         return "home";
     }
     /**
