@@ -17,7 +17,7 @@ Bisher implementiert:
 Spring Framework, Anleitung Quickstart: https://spring.io/quickstart
 Start Application: .\mvnw spring-boot:run
                    mvn spring-boot:run (für macOS)
-Zugriff über Webbrowser: localhost:8080/login?name=Name / localhost:8080/ / localhost:8080/register
+Zugriff über Webbrowser: localhost/login?name=Name / localhost/ / localhost/register
 Abbruch: Strg+C im Terminal
 
 spring initializr: https://start.spring.io/
