@@ -7,8 +7,10 @@ import lombok.Data;
 @Data
 @Builder
 @AllArgsConstructor  // needed for getting form-inputs via POST and thymeleaf
-public class Person {
+public class Address {
     private Integer id;
-    private String firstname;
-    private String lastname;
+    private String street;
+    private String housenr;
+    private Integer postcode;
+    private String city;
 }

@@ -8,7 +8,7 @@ public class PersonRowMapper implements RowMapper<Person> {
     
     public Person mapRow(ResultSet rs, int rowNum) throws SQLException {
         return Person.builder()
-            .id(rs.getLong("ID"))
+            .id(rs.getInt("ID"))
             .firstname(rs.getString("firstname"))
             .lastname(rs.getString("lastname"))
             .build();
