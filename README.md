@@ -23,6 +23,10 @@ Start Application: .\mvnw spring-boot:run
 Zugriff über Webbrowser: localhost/login?name=Name | localhost/ | localhost/register
 Abbruch: Strg+C im Terminal
 
+Änderung Serverport auf 80 (in application.properties) hat unter Linux Probleme verursacht.
+Kommando muss dort und vielleicht unter macOS jetzt mit root-Rechten gestartet werden:
+    sudo mvn spring-boot:run
+
 spring initializr: https://start.spring.io/
 
 Views mit Thymeleaf erstellen: https://www.dev-insider.de/views-mit-thymeleaf-erstellen-a-976811/
