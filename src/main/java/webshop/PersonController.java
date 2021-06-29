@@ -1,10 +1,14 @@
 package webshop;
 
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.PreparedStatementCreatorFactory;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Controller;
@@ -56,10 +60,12 @@ public class PersonController {
     public String registered(@ModelAttribute Person person, Model model){
         model.addAttribute(person);
         String testsql = "SELECT * FROM Person WHERE firstname = '%s' AND lastname = '%s';";
-        if (jdbcTemplate.query(String.format(testsql, person.getFirstname(), person.getLastname()), new PersonRowMapper()).isEmpty()){
+        testsql = String.format(testsql, person.getFirstname(), person.getLastname());
+        if (jdbcTemplate.query(testsql, new PersonRowMapper()).isEmpty()){
             String savesql = "INSERT INTO person (firstname, lastname) VALUES ('%s', '%s');";
+            savesql = String.format(savesql, person.getFirstname(), person.getLastname());
             // id wird automatisch durch die Datenbank vergeben
-            this.jdbcTemplate.execute(String.format(savesql, person.getFirstname(), person.getLastname()));
+            this.jdbcTemplate.execute(savesql);
         }
         return "registered";
     }
