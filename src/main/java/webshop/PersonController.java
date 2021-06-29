@@ -59,12 +59,8 @@ public class PersonController {
     @PostMapping("/register")
     public String registered(@ModelAttribute Person person, Model model){
         model.addAttribute(person);
-        // String testsql = "SELECT * FROM Person WHERE firstname = '%s' AND lastname = '%s';";
-        // testsql = String.format(testsql, person.getFirstname(), person.getLastname());
         String testSQL = "SELECT * FROM Person WHERE firstname = ? AND lastname = ?;";
         if (jdbcTemplate.query(testSQL, new PersonRowMapper(), person.getFirstname(), person.getLastname()).isEmpty()){
-            // String savesql = "INSERT INTO person (firstname, lastname) VALUES ('%s', '%s');";
-            // savesql = String.format(savesql, person.getFirstname(), person.getLastname());
             // id wird automatisch durch die Datenbank vergeben
             String saveSQL = "INSERT INTO person (firstname, lastname) VALUES (?, ?);";
             this.jdbcTemplate.update(saveSQL, person.getFirstname(), person.getLastname());
