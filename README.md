@@ -8,13 +8,6 @@ URL: localhost/h2-console
 JDBC URL: jdbc:h2:file:./database
 User + Kennwort leer
 
-Schreiben in Datenbank funktioniert jetzt, ist aber anfällig für SQL-Injections.
-Beispiel-Eingabe localhost/register:
-    Vorname: Fieser
-    Nachname: Hacker'); DELETE FROM PERSON WHERE (ID = '2
-    Ergebnis: eine Personen hinzugefügt und eine gelöscht (die mit der ID 2). Ein Hacker könnte so natürlich auch
-              die ganze Datenbank löschen.
-
 Bisher implementiert:
 
 Spring Framework, Anleitung Quickstart: https://spring.io/quickstart
