@@ -32,7 +32,7 @@ public class PersonController {
     public String home(Model model) {
         Person person = Person.builder().firstname("Alfred").lastname("Neumann").build();
         model.addAttribute(person);
-        Person person1 = jdbcTemplate.queryForObject("SELECT * FROM Person WHERE Id = ?", new PersonRowMapper(), 1);
+        Person person1 = jdbcTemplate.queryForObject("SELECT * FROM Person WHERE Id = ?;", new PersonRowMapper(), 1);
         if (person1 != null){
             model.addAttribute(person1);
         }
@@ -59,13 +59,15 @@ public class PersonController {
     @PostMapping("/register")
     public String registered(@ModelAttribute Person person, Model model){
         model.addAttribute(person);
-        String testsql = "SELECT * FROM Person WHERE firstname = '%s' AND lastname = '%s';";
-        testsql = String.format(testsql, person.getFirstname(), person.getLastname());
-        if (jdbcTemplate.query(testsql, new PersonRowMapper()).isEmpty()){
-            String savesql = "INSERT INTO person (firstname, lastname) VALUES ('%s', '%s');";
-            savesql = String.format(savesql, person.getFirstname(), person.getLastname());
+        // String testsql = "SELECT * FROM Person WHERE firstname = '%s' AND lastname = '%s';";
+        // testsql = String.format(testsql, person.getFirstname(), person.getLastname());
+        String testSQL = "SELECT * FROM Person WHERE firstname = ? AND lastname = ?;";
+        if (jdbcTemplate.query(testSQL, new PersonRowMapper(), person.getFirstname(), person.getLastname()).isEmpty()){
+            // String savesql = "INSERT INTO person (firstname, lastname) VALUES ('%s', '%s');";
+            // savesql = String.format(savesql, person.getFirstname(), person.getLastname());
             // id wird automatisch durch die Datenbank vergeben
-            this.jdbcTemplate.execute(savesql);
+            String saveSQL = "INSERT INTO person (firstname, lastname) VALUES (?, ?);";
+            this.jdbcTemplate.update(saveSQL, person.getFirstname(), person.getLastname());
         }
         return "registered";
     }
