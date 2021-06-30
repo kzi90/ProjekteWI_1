@@ -45,16 +45,6 @@ CREATE TABLE customers (
     UNIQUE (email)
 );
 
-CREATE TABLE orders (
-    id INTEGER NOT NULL AUTO_INCREMENT,
-    order_date DATE NOT NULL,
-    order_time TIME NOT NULL,
-    order_status VARCHAR(128) NOT NULL,
-    cust_id INTEGER NOT NULL,
-    PRIMARY KEY (id),
-    FOREIGN KEY (cust_id) REFERENCES customers(id)
-);
-
 CREATE TABLE products (
     id INTEGER NOT NULL AUTO_INCREMENT,
     product_name VARCHAR(128) NOT NULL,
@@ -62,6 +52,17 @@ CREATE TABLE products (
     amount_ml INTEGER NOT NULL,
     price_eur DECIMAL(10,2) NOT NULL,
     PRIMARY KEY (id)
+);
+
+CREATE TABLE orders (
+    id INTEGER NOT NULL AUTO_INCREMENT,
+    order_date DATE NOT NULL,
+    order_time TIME NOT NULL,
+    total_price DECIMAL (10,2) NOT NULL,
+    order_status VARCHAR(128) NOT NULL,
+    cust_id INTEGER NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (cust_id) REFERENCES customers(id)
 );
 
 CREATE TABLE orderpositions (
