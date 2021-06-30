@@ -51,7 +51,9 @@ public class PersonController {
     public String registered(@ModelAttribute Person person, Model model){
         model.addAttribute(person);
         String testSQL = "SELECT * FROM Person WHERE firstname = ? AND lastname = ?;";
-        if (jdbcTemplate.query(testSQL, new PersonRowMapper(), person.getFirstname(), person.getLastname()).isEmpty()){
+        boolean alreadyRegistered = (!jdbcTemplate.query(testSQL, new PersonRowMapper(), person.getFirstname(), person.getLastname()).isEmpty());
+        model.addAttribute("alreadyRegistered", alreadyRegistered);
+        if (!alreadyRegistered){
             // id wird automatisch durch die Datenbank vergeben
             String saveSQL = "INSERT INTO person (firstname, lastname) VALUES (?, ?);";
             this.jdbcTemplate.update(saveSQL, person.getFirstname(), person.getLastname());

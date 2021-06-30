@@ -9,10 +9,15 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
 </head>
-<body>
-    <span th:text="'Herzlich Willkommen '" />
-    <span th:text="${person.firstname}" />
-    <span th:text="${person.lastname + ','}" />
-    <span th:text="'deine Registrierung war erfolgreich.'" />
+<body th:switch="${alreadyRegistered}">
+    <span th:case="false">Herzlich Willkommen
+        <span th:text="${person.firstname + ' ' + person.lastname + ','}" />
+        deine Registrierung war erfolgreich.
+    </span>
+    <span th:case="true">Schön, dich wieder zu sehen
+        <span th:text="${person.firstname + ' ' + person.lastname + ','}" />
+        du warst bereits registriert.
+    </span>
+    <span th:case="*">ERROR! Das hätte nicht passieren dürfen!</span>
 </body>
 </html>
