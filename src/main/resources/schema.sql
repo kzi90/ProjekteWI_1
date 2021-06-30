@@ -17,12 +17,28 @@ CREATE TABLE addresses (
     PRIMARY KEY (id)
 );
 
+CREATE TABLE employees (
+    id INTEGER NOT NULL AUTO_INCREMENT,
+    firstname VARCHAR(128) NOT NULL,
+    lastname VARCHAR(128) NOT NULL,
+    address_id INTEGER NOT NULL,
+    email VARCHAR(128) NOT NULL,
+    phonenumber VARCHAR(128),
+    department VARCHAR(128) NOT NULL,
+    is_admin BOOLEAN NOT NULL DEFAULT FALSE,
+    pass_hash VARCHAR(128) NOT NULL,
+    FOREIGN KEY (address_id) REFERENCES ADDRESSES(id),
+    PRIMARY KEY (id),
+    UNIQUE (email)
+);
+
 CREATE TABLE customers (
     id INTEGER NOT NULL AUTO_INCREMENT,
     firstname VARCHAR(128) NOT NULL,
     lastname VARCHAR(128) NOT NULL,
     address_id INTEGER NOT NULL,
     email VARCHAR(128) NOT NULL,
+    phonenumber VARCHAR(128),
     pass_hash VARCHAR(128) NOT NULL,
     FOREIGN KEY (address_id) REFERENCES ADDRESSES(id),
     PRIMARY KEY (id),
@@ -33,6 +49,7 @@ CREATE TABLE orders (
     id INTEGER NOT NULL AUTO_INCREMENT,
     order_date DATE NOT NULL,
     order_time TIME NOT NULL,
+    order_status VARCHAR(128) NOT NULL,
     cust_id INTEGER NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (cust_id) REFERENCES customers(id)
@@ -50,9 +67,9 @@ CREATE TABLE products (
 CREATE TABLE orderpositions (
     pos_nr INTEGER NOT NULL,
     quantity INTEGER NOT NULL,
-    cust_id INTEGER NOT NULL,
+    order_id INTEGER NOT NULL,
     product_id INTEGER NOT NULL,
-    FOREIGN KEY (cust_id) REFERENCES customers(id),
+    FOREIGN KEY (order_id) REFERENCES orders(id),
     FOREIGN KEY (product_id) REFERENCES products(id),
-    PRIMARY KEY (pos_nr, cust_id, product_id)
+    PRIMARY KEY (pos_nr, order_id, product_id)
 );
