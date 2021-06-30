@@ -9,14 +9,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
 </head>
-<body th:switch="${alreadyRegistered}">
+<body th:switch="${emailAlreadyRegistered}">
     <span th:case="false">Herzlich Willkommen
-        <span th:text="${person.firstname + ' ' + person.lastname + ','}" />
+        <span th:text="${customer.firstname + ' ' + customer.lastname + ','}" />
         deine Registrierung war erfolgreich.
     </span>
-    <span th:case="true">Schön, dich wieder zu sehen
-        <span th:text="${person.firstname + ' ' + person.lastname + ','}" />
-        du warst bereits registriert.
+    <span th:case="true">Es gibt bereits ein Nutzerkonto mit der E-Mail-Adresse
+        <span th:text="${customer.email + '.'}" />
     </span>
     <span th:case="*">ERROR! Das hätte nicht passieren dürfen!</span>
 </body>

@@ -11,9 +11,17 @@
 </head>
 <body>
     <h1>Name</h1>
-    <form action="#" th:action="@{/register}" th:object="${person}" method="post">
-        <p>Vorname: <input type="text" th:field="*{firstname}" /></p>
-        <p>Nachname: <input type="text" th:field="*{lastname}" /></p>
+    <form action="#" th:action="@{/register}" method="post">
+        <p>Vorname: <input type="text" th:field="${customer.firstname}" /></p>
+        <p>Nachname: <input type="text" th:field="${customer.lastname}" /></p>
+        <p>E-Mail: <input type="text" th:field="${customer.email}" /></p>
+        <p>Telefonnummer: <input type="text" th:field="${customer.phonenumber}" /></p>
+        <p>Passwort: <input type="text" th:field="${customer.passHash}" /></p>
+        <p th:text="'Adresse (in Deutschland):'" />
+        <p>Straße: <input type="text" th:field="${address.street}" /></p>
+        <p>Haus-Nr.: <input type="text" th:field="${address.housenr}" /></p>
+        <p>PLZ: <input type="text" th:field="${address.postcode}" /></p>
+        <p>Stadt: <input type="text" th:field="${address.city}" /></p>
         <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
     </form>
 </body>

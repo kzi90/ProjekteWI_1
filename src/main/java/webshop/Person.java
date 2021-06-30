@@ -1,14 +1,19 @@
 package webshop;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
-@Data
-@Builder
-@AllArgsConstructor  // needed for getting form-inputs via POST and thymeleaf
-public class Person {
-    private Integer id;
-    private String firstname;
-    private String lastname;
+@Getter @Setter
+@NoArgsConstructor
+@SuperBuilder
+public abstract class Person {
+    protected Integer id;
+    protected String firstname;
+    protected String lastname;
+    protected Integer addressID;
+    protected String email;
+    protected String phonenumber;
+    protected String passHash;
 }

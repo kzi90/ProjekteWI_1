@@ -1,11 +1,13 @@
 To Do Liste:
--SQL-Datenbank installieren - lokal
--Webserver installieren
-=======
--Webserver installieren (per Docker zusammen mit SQL? Welches Framework verwenden?)
 -Frontend Framework auswählen (ist Thymeleaf für die backend-frontend Kommunikation) evtl. kann man hier auch mit BOOTSTRAP arbeiten
 -Altersüberprüfung
 -User Stories erstellen
 -Persona erstellen
 -Wireframe erstellen
 -Mockup erstellen
+
+Backend:
+-Übrige Klassen implementieren
+-Cookies setzen und lesen
+-Passwortverschlüsselung (SHA256), bislang erfolgt eine Klartextspeicherung
+--> Login realisieren

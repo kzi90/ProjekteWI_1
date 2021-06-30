@@ -1,2 +1,2 @@
-INSERT INTO person VALUES (1, 'Max', 'Mustermann');
-INSERT INTO person VALUES (2, 'Ute', 'Musterfrau');
+-- für Testdaten beim Betrieb einer nicht persistenten DB
+-- einfach per SQL mit INSERT einfügen

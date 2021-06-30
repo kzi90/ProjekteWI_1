@@ -23,7 +23,7 @@ CREATE TABLE employees (
     lastname VARCHAR(128) NOT NULL,
     address_id INTEGER NOT NULL,
     email VARCHAR(128) NOT NULL,
-    phonenumber VARCHAR(128),
+    phonenumber VARCHAR(128), -- VARCHAR wegen führender Null
     department VARCHAR(128) NOT NULL,
     is_admin BOOLEAN NOT NULL DEFAULT FALSE,
     pass_hash VARCHAR(128) NOT NULL,
