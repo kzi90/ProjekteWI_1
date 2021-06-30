@@ -12,7 +12,7 @@ CREATE TABLE addresses (
     street VARCHAR(128) NOT NULL,
     housenr VARCHAR(128) NOT NULL,
     postcode INTEGER NOT NULL,
-    city VARCHAR(128) NOT NULL
+    city VARCHAR(128) NOT NULL,
     PRIMARY KEY (id)
 );
 
@@ -47,5 +47,11 @@ CREATE TABLE products (
 );
 
 CREATE TABLE orderpositions (
-        
+    pos_nr INTEGER NOT NULL,
+    quantity INTEGER NOT NULL,
+    cust_id INTEGER NOT NULL,
+    product_id INTEGER NOT NULL,
+    FOREIGN KEY (cust_id) REFERENCES customers(id),
+    FOREIGN KEY (product_id) REFERENCES products(id),
+    PRIMARY KEY (pos_nr, cust_id, product_id)
 );
