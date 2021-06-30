@@ -11,8 +11,9 @@ CREATE TABLE addresses (
     id INTEGER NOT NULL AUTO_INCREMENT,
     street VARCHAR(128) NOT NULL,
     housenr VARCHAR(128) NOT NULL,
-    postcode INTEGER NOT NULL,
+    postcode VARCHAR(128) NOT NULL, -- VARCHAR wegen evtl. führender Nullen
     city VARCHAR(128) NOT NULL,
+    country VARCHAR(128) NOT NULL DEFAULT 'Deutschland',
     PRIMARY KEY (id)
 );
 
