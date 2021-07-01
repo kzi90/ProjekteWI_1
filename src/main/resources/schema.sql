@@ -21,6 +21,7 @@ CREATE TABLE employees (
     id INTEGER NOT NULL AUTO_INCREMENT,
     firstname VARCHAR(128) NOT NULL,
     lastname VARCHAR(128) NOT NULL,
+    birthdate DATE NOT NULL,
     address_id INTEGER NOT NULL,
     email VARCHAR(128) NOT NULL,
     phonenumber VARCHAR(128), -- VARCHAR wegen führender Null
@@ -36,6 +37,7 @@ CREATE TABLE customers (
     id INTEGER NOT NULL AUTO_INCREMENT,
     firstname VARCHAR(128) NOT NULL,
     lastname VARCHAR(128) NOT NULL,
+    birthdate DATE NOT NULL,
     address_id INTEGER NOT NULL,
     email VARCHAR(128) NOT NULL,
     phonenumber VARCHAR(128),
