@@ -1,5 +1,8 @@
 package webshop;
 
+import java.sql.Date;
+import java.time.LocalDate;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,6 +15,7 @@ public abstract class Person {
     protected Integer id;
     protected String firstname;
     protected String lastname;
+    protected String birthdate;
     protected Integer addressID;
     protected String email;
     protected String phonenumber;

@@ -2,6 +2,8 @@ package webshop;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+
 import org.springframework.jdbc.core.RowMapper;
 
 public class CustomerRowMapper implements RowMapper<Person> {
@@ -11,6 +13,7 @@ public class CustomerRowMapper implements RowMapper<Person> {
                        .id(rs.getInt("ID"))
                        .firstname(rs.getString("firstname"))
                        .lastname(rs.getString("lastname"))
+                       .birthdate(new SimpleDateFormat("dd.mm.yyyy").format(rs.getDate("birthdate")))
                        .addressID(rs.getInt("address_id"))
                        .email(rs.getString("email"))
                        .phonenumber(rs.getString("phonenumber"))
