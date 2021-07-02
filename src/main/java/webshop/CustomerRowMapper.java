@@ -3,10 +3,9 @@ package webshop;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-
 import org.springframework.jdbc.core.RowMapper;
 
-public class CustomerRowMapper implements RowMapper<Person> {
+public class CustomerRowMapper implements RowMapper<Customer> {
     
     public Customer mapRow(ResultSet rs, int rowNum) throws SQLException {
         return Customer.builder()
