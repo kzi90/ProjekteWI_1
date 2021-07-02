@@ -12,6 +12,7 @@ public class ProductRowMapper implements RowMapper<Product> {
                        .id(rs.getInt("ID"))
                        .name(rs.getString("product_name"))
                        .description(rs.getString("product_description"))
+                       .imgURL(rs.getString("image_url"))
                        .amount(rs.getInt("amount_ml"))
                        .price(rs.getDouble("price_eur"))
                        .build();

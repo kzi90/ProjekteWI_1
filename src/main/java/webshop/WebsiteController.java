@@ -13,13 +13,20 @@ public class WebsiteController {
     @Autowired
     JdbcTemplate db;
     
+    @GetMapping("/")
+    public String home(Model model){
+        List<Product> products = db.query("SELECT * FROM products", new ProductRowMapper());
+        model.addAttribute("products", products);
+        return "home";
+    }
+
     /**
      * 
      * @param model
      * @return home.html template
      */
-    @GetMapping("/")
-    public String home(Model model){
+    @GetMapping("/db")
+    public String db(Model model){
         List<Address> addresses = db.query("SELECT * FROM addresses", new AddressRowMapper());
         model.addAttribute("addresses", addresses);
         List<Employee> employees = db.query("SELECT * FROM employees", new EmployeeRowMapper());
@@ -32,6 +39,6 @@ public class WebsiteController {
         model.addAttribute("orders", orders);
         List<OrderPosition> orderPositions = db.query("SELECT * FROM orderpositions", new OrderPositionRowMapper());
         model.addAttribute("orderPositions", orderPositions);
-        return "home";
+        return "db";
     }
 }

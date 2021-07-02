@@ -1,0 +1,140 @@
+<!DOCTYPE HTML>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Database</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html" />
+    <link th:href="@{/style.css}" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <table border=1>
+        <caption><strong>ADDRESSES</strong></caption>
+        <tr>
+            <th scope="col" th:text="'ID'" />
+            <th scope="col" th:text="'Straße'" />
+            <th scope="col" th:text="'Hausnr.'" />
+            <th scope="col" th:text="'PLZ'" />
+            <th scope="col" th:text="'Stadt'" />
+            <th scope="col" th:text="'Land'" />
+        </tr>
+        <tr th:each="address: ${addresses}">
+            <td th:text="${address.id}" />
+            <td th:text="${address.street}" />
+            <td th:text="${address.housenr}" />
+            <td th:text="${address.postcode}" />
+            <td th:text="${address.city}" />
+            <td th:text="${address.country}" />
+        </tr>
+    </table><br>
+    <table border=1>
+        <caption><strong>EMPLOYEES</strong></caption>
+        <tr>
+            <th scope="col" th:text="'ID'" />
+            <th scope="col" th:text="'Vorname'" />
+            <th scope="col" th:text="'Nachname'" />
+            <th scope="col" th:text="'Geburtsdatum'" />
+            <th scope="col" th:text="'Adress-ID'" />
+            <th scope="col" th:text="'E-Mail'" />
+            <th scope="col" th:text="'Tel.'" />
+            <th scope="col" th:text="'Abteilung'" />
+            <th scope="col" th:text="'Admin'" />
+            <th scope="col" th:text="'Passwort-Hash'" />
+        </tr>
+        <tr th:each="employee: ${employees}">
+            <td th:text="${employee.id}" />
+            <td th:text="${employee.firstname}" />
+            <td th:text="${employee.lastname}" />
+            <td th:text="${employee.birthdate}" />
+            <td th:text="${employee.addressID}" />
+            <td th:text="${employee.email}" />
+            <td th:text="${employee.phonenumber}" />
+            <td th:text="${employee.department}" />
+            <td th:switch="${employee.isAdmin}">
+                <span th:case="${true}" th:text="'Ja'" />
+                <span th:case="${false}" th:text="'Nein'" />
+                <span th:case="*" th:text="'ERROR!'" />
+            </td>
+            <td th:text="${employee.passHash}" />
+        </tr>
+    </table><br>
+    <table border=1>
+        <caption><strong>CUSTOMERS</strong></caption>
+        <tr>
+            <th scope="col" th:text="'ID'" />
+            <th scope="col" th:text="'Vorname'" />
+            <th scope="col" th:text="'Nachname'" />
+            <th scope="col" th:text="'Geburtsdatum'" />
+            <th scope="col" th:text="'Adress-ID'" />
+            <th scope="col" th:text="'E-Mail'" />
+            <th scope="col" th:text="'Tel.'" />
+            <th scope="col" th:text="'Passwort-Hash'" />
+        </tr>
+        <tr th:each="customer: ${customers}">
+            <td th:text="${customer.id}" />
+            <td th:text="${customer.firstname}" />
+            <td th:text="${customer.lastname}" />
+            <td th:text="${customer.birthdate}" />
+            <td th:text="${customer.addressID}" />
+            <td th:text="${customer.email}" />
+            <td th:text="${customer.phonenumber}" />
+            <td th:text="${customer.passHash}" />
+        </tr>
+    </table><br>
+    <table border=1>
+        <caption><strong>PRODUCTS</strong></caption>
+        <tr>
+            <th scope="col" th:text="'ID'" />
+            <th scope="col" th:text="'Name'" />
+            <th scope="col" th:text="'Beschreibung'" />
+            <th scope="col" th:text="'Image-URL'" />
+            <th scope="col" th:text="'Menge in l'" />
+            <th scope="col" th:text="'Preis in €'" />
+        </tr>
+        <tr th:each="product: ${products}">
+            <td th:text="${product.id}" />
+            <td th:text="${product.name}" />
+            <td th:text="${product.description}" />
+            <td th:text="${product.imgURL}" />
+            <td th:text="${product.amount / 1000.0}" />
+            <td th:text="${product.price}" />
+        </tr>
+    </table><br>
+    <table border=1>
+        <caption><strong>ORDERS</strong></caption>
+        <tr>
+            <th scope="col" th:text="'ID'" />
+            <th scope="col" th:text="'Bestelldatum'" />
+            <th scope="col" th:text="'Uhrzeit'" />
+            <th scope="col" th:text="'Gesamtpreis in €'" />
+            <th scope="col" th:text="'Bestellstatus'" />
+            <th scope="col" th:text="'Kundennr.'" />
+        </tr>
+        <tr th:each="order: ${orders}">
+            <td th:text="${order.id}" />
+            <td th:text="${order.orderDate}" />
+            <td th:text="${order.orderTime}" />
+            <td th:text="${order.totalPrice}" />
+            <td th:text="${order.status}" />
+            <td th:text="${order.custID}" />
+        </tr>
+    </table><br>
+    <table border=1>
+        <caption><strong>ORDERPOSITIONS</strong></caption>
+        <tr>
+            <th scope="col" th:text="'Pos-Nr.'" />
+            <th scope="col" th:text="'Menge'" />
+            <th scope="col" th:text="'Produkt-ID'" />
+            <th scope="col" th:text="'Order-ID'" />
+        </tr>
+        <tr th:each="orderPosition: ${orderPositions}">
+            <td th:text="${orderPosition.posNr}" />
+            <td th:text="${orderPosition.quantity}" />
+            <td th:text="${orderPosition.productID}" />
+            <td th:text="${orderPosition.orderID}" />
+        </tr>
+    </table><br>
+</body>
+</html>

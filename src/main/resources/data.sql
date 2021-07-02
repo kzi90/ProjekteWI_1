@@ -14,8 +14,8 @@ INSERT INTO employees VALUES (1, 'Kasimir', 'Eckhardt', '1990-08-10', 2, 'kasimi
 -- Passwort: beershop
 
 -- Beispieldaten für Produkte
-INSERT INTO products VALUES (1, 'Pils', 'Standard-Pils, kein Schnickschnack', 333, 0.89);
-INSERT INTO products VALUES (2, 'Bananenweizen', 'fruchtig herb', 500, 1.29);
+INSERT INTO products VALUES (1, 'Pils', 'Standard-Pils, kein Schnickschnack', 'https://www.bierselect.de/biermagazin/wp-content/uploads/2016/06/Interessantes-ueber-das-Pils-1300x722.jpg', 333, 0.89);
+INSERT INTO products VALUES (2, 'Bananenweizen', 'fruchtig herb', 'https://www.marions-kochbuch.de/dru-pic/1842.jpg', 500, 1.29);
 
 -- Beispieldaten für Bestellungen
 INSERT INTO orders VALUES (1, '2021-07-01', '15:33:42', 9.12, 'ordered', 1);

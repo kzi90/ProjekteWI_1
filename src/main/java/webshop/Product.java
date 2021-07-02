@@ -14,6 +14,7 @@ public class Product {
     private Integer id;
     private String name;
     private String description;
+    private String imgURL;
     private Integer amount;
     private Double price;
 }
