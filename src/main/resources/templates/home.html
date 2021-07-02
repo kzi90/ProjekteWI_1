@@ -11,29 +11,6 @@
 </head>
 <body>
     <table border=1>
-        <caption><strong>CUSTOMERS</strong></caption>
-        <tr>
-            <th scope="col" th:text="'ID'" />
-            <th scope="col" th:text="'Vorname'" />
-            <th scope="col" th:text="'Nachname'" />
-            <th scope="col" th:text="'Geburtsdatum'" />
-            <th scope="col" th:text="'Adress-ID'" />
-            <th scope="col" th:text="'E-Mail'" />
-            <th scope="col" th:text="'Tel.'" />
-            <th scope="col" th:text="'Passwort-Hash'" />
-        </tr>
-        <tr th:each="customer: ${customers}">
-            <td th:text="${customer.id}" />
-            <td th:text="${customer.firstname}" />
-            <td th:text="${customer.lastname}" />
-            <td th:text="${customer.birthdate}" />
-            <td th:text="${customer.addressID}" />
-            <td th:text="${customer.email}" />
-            <td th:text="${customer.phonenumber}" />
-            <td th:text="${customer.passHash}" />
-        </tr>
-    </table><br>
-    <table border=1>
         <caption><strong>ADDRESSES</strong></caption>
         <tr>
             <th scope="col" th:text="'ID'" />
@@ -50,23 +27,6 @@
             <td th:text="${address.postcode}" />
             <td th:text="${address.city}" />
             <td th:text="${address.country}" />
-        </tr>
-    </table><br>
-    <table border=1>
-        <caption><strong>PRODUCTS</strong></caption>
-        <tr>
-            <th scope="col" th:text="'ID'" />
-            <th scope="col" th:text="'Name'" />
-            <th scope="col" th:text="'Beschreibung'" />
-            <th scope="col" th:text="'Menge in l'" />
-            <th scope="col" th:text="'Preis in €'" />
-        </tr>
-        <tr th:each="product: ${products}">
-            <td th:text="${product.id}" />
-            <td th:text="${product.name}" />
-            <td th:text="${product.description}" />
-            <td th:text="${product.amount / 1000.0}" />
-            <td th:text="${product.price}" />
         </tr>
     </table><br>
     <table border=1>
@@ -98,6 +58,65 @@
                 <span th:case="*" th:text="'ERROR!'" />
             </td>
             <td th:text="${employee.passHash}" />
+        </tr>
+    </table><br>
+    <table border=1>
+        <caption><strong>CUSTOMERS</strong></caption>
+        <tr>
+            <th scope="col" th:text="'ID'" />
+            <th scope="col" th:text="'Vorname'" />
+            <th scope="col" th:text="'Nachname'" />
+            <th scope="col" th:text="'Geburtsdatum'" />
+            <th scope="col" th:text="'Adress-ID'" />
+            <th scope="col" th:text="'E-Mail'" />
+            <th scope="col" th:text="'Tel.'" />
+            <th scope="col" th:text="'Passwort-Hash'" />
+        </tr>
+        <tr th:each="customer: ${customers}">
+            <td th:text="${customer.id}" />
+            <td th:text="${customer.firstname}" />
+            <td th:text="${customer.lastname}" />
+            <td th:text="${customer.birthdate}" />
+            <td th:text="${customer.addressID}" />
+            <td th:text="${customer.email}" />
+            <td th:text="${customer.phonenumber}" />
+            <td th:text="${customer.passHash}" />
+        </tr>
+    </table><br>
+    <table border=1>
+        <caption><strong>PRODUCTS</strong></caption>
+        <tr>
+            <th scope="col" th:text="'ID'" />
+            <th scope="col" th:text="'Name'" />
+            <th scope="col" th:text="'Beschreibung'" />
+            <th scope="col" th:text="'Menge in l'" />
+            <th scope="col" th:text="'Preis in €'" />
+        </tr>
+        <tr th:each="product: ${products}">
+            <td th:text="${product.id}" />
+            <td th:text="${product.name}" />
+            <td th:text="${product.description}" />
+            <td th:text="${product.amount / 1000.0}" />
+            <td th:text="${product.price}" />
+        </tr>
+    </table><br>
+    <table border=1>
+        <caption><strong>ORDERS</strong></caption>
+        <tr>
+            <th scope="col" th:text="'ID'" />
+            <th scope="col" th:text="'Bestelldatum'" />
+            <th scope="col" th:text="'Uhrzeit'" />
+            <th scope="col" th:text="'Gesamtpreis in €'" />
+            <th scope="col" th:text="'Bestellstatus'" />
+            <th scope="col" th:text="'Kundennr.'" />
+        </tr>
+        <tr th:each="order: ${orders}">
+            <td th:text="${order.id}" />
+            <td th:text="${order.orderDate}" />
+            <td th:text="${order.orderTime}" />
+            <td th:text="${order.totalPrice}" />
+            <td th:text="${order.status}" />
+            <td th:text="${order.custID}" />
         </tr>
     </table><br>
 </body>
