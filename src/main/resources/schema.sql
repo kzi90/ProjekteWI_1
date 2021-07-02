@@ -5,13 +5,6 @@
 DROP TABLE orderpositions, orders, products, customers, employees, addresses;
 
 -- Tabellen:
-CREATE TABLE person (
-    id INTEGER NOT NULL AUTO_INCREMENT,
-    firstname VARCHAR(128) NOT NULL,
-    lastname VARCHAR(128) NOT NULL,
-    PRIMARY KEY (id)
-);
-
 CREATE TABLE addresses (
     id INTEGER NOT NULL AUTO_INCREMENT,
     street VARCHAR(128) NOT NULL,
@@ -79,5 +72,5 @@ CREATE TABLE orderpositions (
     order_id INTEGER NOT NULL,
     FOREIGN KEY (product_id) REFERENCES products(id),
     FOREIGN KEY (order_id) REFERENCES orders(id),
-    PRIMARY KEY (pos_nr, order_id, product_id)
+    PRIMARY KEY (pos_nr, order_id)
 );
