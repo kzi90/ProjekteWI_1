@@ -13,6 +13,11 @@ public class WebsiteController {
     @Autowired
     JdbcTemplate db;
     
+    /**
+     * 
+     * @param model
+     * @return home.html (homepage)
+     */
     @GetMapping("/")
     public String home(Model model){
         List<Product> products = db.query("SELECT * FROM products", new ProductRowMapper());
@@ -23,7 +28,7 @@ public class WebsiteController {
     /**
      * 
      * @param model
-     * @return home.html template
+     * @return db.html template
      */
     @GetMapping("/db")
     public String db(Model model){
