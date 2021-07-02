@@ -124,8 +124,8 @@
         <tr>
             <th scope="col" th:text="'Pos-Nr.'" />
             <th scope="col" th:text="'Menge'" />
-            <th scope="col" th:text="'Order-ID.'" />
             <th scope="col" th:text="'Produkt-ID'" />
+            <th scope="col" th:text="'Order-ID'" />
         </tr>
         <tr th:each="orderPosition: ${orderPositions}">
             <td th:text="${orderPosition.posNr}" />
