@@ -7,7 +7,6 @@ To Do Liste:
 -Mockup erstellen
 
 Backend:
--Übrige Klassen implementieren
 -Cookies setzen und lesen
 -Passwortverschlüsselung (SHA256), bislang erfolgt eine Klartextspeicherung
 --> Login realisieren
