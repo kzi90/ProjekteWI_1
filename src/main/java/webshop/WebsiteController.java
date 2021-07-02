@@ -26,6 +26,8 @@ public class WebsiteController {
         model.addAttribute("addresses", addresses);
         List<Product> products = db.query("SELECT * FROM products", new ProductRowMapper());
         model.addAttribute("products", products);
+        List<Employee> employees = db.query("SELECT * FROM employees", new EmployeeRowMapper());
+        model.addAttribute("employees", employees);
         return "home";
     }
 }

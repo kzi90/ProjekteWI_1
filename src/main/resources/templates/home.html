@@ -69,5 +69,36 @@
             <td th:text="${product.price}" />
         </tr>
     </table><br>
+    <table border=1>
+        <caption><strong>EMPLOYEES</strong></caption>
+        <tr>
+            <th scope="col" th:text="'ID'" />
+            <th scope="col" th:text="'Vorname'" />
+            <th scope="col" th:text="'Nachname'" />
+            <th scope="col" th:text="'Geburtsdatum'" />
+            <th scope="col" th:text="'Adress-ID'" />
+            <th scope="col" th:text="'E-Mail'" />
+            <th scope="col" th:text="'Tel.'" />
+            <th scope="col" th:text="'Abteilung'" />
+            <th scope="col" th:text="'Admin'" />
+            <th scope="col" th:text="'Passwort-Hash'" />
+        </tr>
+        <tr th:each="employee: ${employees}">
+            <td th:text="${employee.id}" />
+            <td th:text="${employee.firstname}" />
+            <td th:text="${employee.lastname}" />
+            <td th:text="${employee.birthdate}" />
+            <td th:text="${employee.addressID}" />
+            <td th:text="${employee.email}" />
+            <td th:text="${employee.phonenumber}" />
+            <td th:text="${employee.department}" />
+            <td th:switch="${employee.isAdmin}">
+                <span th:case="${true}" th:text="'Ja'" />
+                <span th:case="${false}" th:text="'Nein'" />
+                <span th:case="*" th:text="'ERROR!'" />
+            </td>
+            <td th:text="${employee.passHash}" />
+        </tr>
+    </table><br>
 </body>
 </html>
