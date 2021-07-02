@@ -30,7 +30,8 @@ public class WebsiteController {
         model.addAttribute("products", products);
         List<Order> orders = db.query("SELECT * FROM orders", new OrderRowMapper());
         model.addAttribute("orders", orders);
-        
+        List<OrderPosition> orderPositions = db.query("SELECT * FROM orderpositions", new OrderPositionRowMapper());
+        model.addAttribute("orderPositions", orderPositions);
         return "home";
     }
 }

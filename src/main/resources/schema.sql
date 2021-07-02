@@ -1,5 +1,10 @@
 -- Das wird nicht ausgeführt, da eine persistente DB verwendet wird (database.mv.db)
 -- Trotzdem kann hier dokumentiert werden, welche Tabellen wie erstellt wurden.
+
+-- Löschen der Tabellen, um sie anschließend neu anzulegen:
+DROP TABLE orderpositions, orders, products, customers, employees, addresses;
+
+-- Tabellen:
 CREATE TABLE person (
     id INTEGER NOT NULL AUTO_INCREMENT,
     firstname VARCHAR(128) NOT NULL,
@@ -70,9 +75,9 @@ CREATE TABLE orders (
 CREATE TABLE orderpositions (
     pos_nr INTEGER NOT NULL,
     quantity INTEGER NOT NULL,
-    order_id INTEGER NOT NULL,
     product_id INTEGER NOT NULL,
-    FOREIGN KEY (order_id) REFERENCES orders(id),
+    order_id INTEGER NOT NULL,
     FOREIGN KEY (product_id) REFERENCES products(id),
+    FOREIGN KEY (order_id) REFERENCES orders(id),
     PRIMARY KEY (pos_nr, order_id, product_id)
 );

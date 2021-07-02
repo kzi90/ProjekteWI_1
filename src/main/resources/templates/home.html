@@ -119,5 +119,20 @@
             <td th:text="${order.custID}" />
         </tr>
     </table><br>
+    <table border=1>
+        <caption><strong>ORDERPOSITIONS</strong></caption>
+        <tr>
+            <th scope="col" th:text="'Pos-Nr.'" />
+            <th scope="col" th:text="'Menge'" />
+            <th scope="col" th:text="'Order-ID.'" />
+            <th scope="col" th:text="'Produkt-ID'" />
+        </tr>
+        <tr th:each="orderPosition: ${orderPositions}">
+            <td th:text="${orderPosition.posNr}" />
+            <td th:text="${orderPosition.quantity}" />
+            <td th:text="${orderPosition.productID}" />
+            <td th:text="${orderPosition.orderID}" />
+        </tr>
+    </table><br>
 </body>
 </html>
