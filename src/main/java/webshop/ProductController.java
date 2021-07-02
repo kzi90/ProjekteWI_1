@@ -10,6 +10,6 @@ public class ProductController {
     @Autowired
     private JdbcTemplate db;
 
-    // hier Methoden zum Speichern von Produkten in der DB
-    // und zum Auslesen implementieren
+    // hier Methoden zum Speichern von Produkten in der DB implementieren
+
 }
