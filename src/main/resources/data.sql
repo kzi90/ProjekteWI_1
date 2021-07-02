@@ -1,6 +1,14 @@
 -- Wird bei persistenter DB nicht ausgeführt
 -- Dokumentation Beispieldaten
 
+-- Löschen aller Daten, um sie anschließend neu anzulegen:
+DELETE FROM orderpositions;
+DELETE FROM orders;
+DELETE FROM products;
+DELETE FROM customers;
+DELETE FROM employees;
+DELETE FROM addresses;
+
 -- Beispieldaten für Adressen
 INSERT INTO addresses VALUES (1, 'Ausgedachte Str.', 3, '12345', 'Entenhausen', 'Deutschland');
 INSERT INTO addresses VALUES (2, 'Musterstr.', 42, '42424', 'Nuketown', 'Deutschland');
