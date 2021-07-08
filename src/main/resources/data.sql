@@ -23,8 +23,8 @@ INSERT INTO employees VALUES (1, 'Kasimir', 'Eckhardt', '1990-08-10', 2, 'kasimi
 
 -- Beispieldaten für Produkte
 INSERT INTO products VALUES (1, 'Pils - der Genüssliche', 'Qualitativ hochwertiges Standard-Bier zum fairen Preis. Hier weiß man, was man bekommt!', 'https://www.bierselect.de/biermagazin/wp-content/uploads/2016/06/Interessantes-ueber-das-Pils-1300x722.jpg', 333, 0.89);
-INSERT INTO products VALUES (2, 'Radler / Alster - der Heimliche', 'Du möchtest etwas Alkohol konsumieren, ohne als Säufer zu gelten? Dann bist du hier genau richtig!', 'https://lh3.googleusercontent.com/proxy/CCNy_Kus4Bk2ao230o660i0dUssNBnRKuwQkpF3jX-Ct7oICe9JXrYdNvJSikzrMxpPtBj9RwHoDfE0BllnPvHI4Wxg28w6FaGOvdKDhYXEJwkZ_', 333, 0.95);
-INSERT INTO products VALUES (3, 'Weizen - die Königin', 'Schmeckt und knallt richtig rein. Serviervorschlag: Einen Schuss Bananensaft hinzugeben für ein köstliches Bananenweizen. Prost!', 'https://www.marions-kochbuch.de/dru-pic/1842.jpg', 500, 1.29);
+INSERT INTO products VALUES (2, 'Radler / Alster - der Heimliche', 'Du möchtest etwas Alkohol konsumieren, ohne als Säufer zu gelten? Dann bist du hier genau richtig!', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGLIbkm7eIAaqkb7LBIKOHFca0CRDE43EbBg&usqp=CAU', 333, 0.95);
+INSERT INTO products VALUES (3, 'Weizen - die Königin', 'Schmeckt und knallt richtig rein. Serviervorschlag: Einen Schuss Bananensaft hinzugeben für ein köstliches Bananenweizen. Prost!', 'https://cdn.gutekueche.de/upload/artikel/1711/1600x1200_weizenbier.jpg', 500, 1.29);
 
 -- Beispieldaten für Bestellungen
 INSERT INTO orders VALUES (1, '2021-07-01', '15:33:42', 9.12, 'ordered', 1);
