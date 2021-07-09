@@ -82,7 +82,8 @@ public class CustomerController {
                                     address.getId(),
                                     customer.getEmail(),
                                     customer.getPhonenumber(),
-                                    Convert.stringToHex(customer.getPassHash()));
+                                    // customer.passHash contains plain text password right now
+                                    Convert.stringToHash(customer.getPassHash()));
         }
         return emailNotRegisteredBefore;
     }

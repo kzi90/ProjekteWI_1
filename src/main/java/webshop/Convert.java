@@ -31,7 +31,7 @@ public class Convert {
      * @return SHA-256 String of the given plain Text String
      * @throws NoSuchAlgorithmException
      */
-    public static String stringToHex(String plain) throws NoSuchAlgorithmException{
+    public static String stringToHash(String plain) throws NoSuchAlgorithmException{
         return Convert.bytesToHex(MessageDigest.getInstance("SHA-256")
 		    .digest(plain.getBytes(StandardCharsets.UTF_8)));
     }
