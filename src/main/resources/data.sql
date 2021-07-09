@@ -14,11 +14,11 @@ INSERT INTO addresses VALUES (1, 'Ausgedachte Str.', 3, '12345', 'Entenhausen', 
 INSERT INTO addresses VALUES (2, 'Musterstr.', 42, '42424', 'Nuketown', 'Deutschland');
 
 -- Beispieldaten für Kunden
-INSERT INTO customers VALUES (1, 'Bernd', 'das Brot', '1985-04-01', 1, 'Bernd@Brot.de', '012345678910', '5c6c557828690e93182ab73ce6eade78acfcb8f6');
+INSERT INTO customers VALUES (1, 'Bernd', 'das Brot', '1985-04-01', 1, 'Bernd@Brot.de', '012345678910', 'ef53751671e5219919b139afb43865b325192727a2f1ca216b018d4509abb57f');
 -- Passwort: Brot
 
 -- Beispieldaten für Angestellte
-INSERT INTO employees VALUES (1, 'Kasimir', 'Eckhardt', '1990-08-10', 2, 'kasimir.eckhardt@edu.fhdw.de', '017634934106',  'Webdevelopment', TRUE, 'b595c71e9f4e4dfcfc18e80190685ed563791f74');
+INSERT INTO employees VALUES (1, 'Kasimir', 'Eckhardt', '1990-08-10', 2, 'kasimir.eckhardt@edu.fhdw.de', '017634934106',  'Webdevelopment', TRUE, '15c7772149be0dce3d0c6352acb5cdf0578365de1ab8aa3ea2efc97467c3ea59');
 -- Passwort: beershop
 
 -- Beispieldaten für Produkte

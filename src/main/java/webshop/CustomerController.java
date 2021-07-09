@@ -1,5 +1,6 @@
 package webshop;
 
+import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,10 +43,13 @@ public class CustomerController {
      * @return template registered.html
      * @throws DataAccessException
      * @throws ParseException
+     * @throws NoSuchAlgorithmException
      */
     @PostMapping("/register")
     public String registered(@ModelAttribute Customer customer,
-                             @ModelAttribute Address address, Model model) throws DataAccessException, ParseException{
+                             @ModelAttribute Address address, Model model) throws DataAccessException,
+                                                                                  ParseException,
+                                                                                  NoSuchAlgorithmException{
         boolean emailAlreadyRegistered = (!saveCustWithAddress(customer, address));
         model.addAttribute("emailAlreadyRegistered", emailAlreadyRegistered);
         return "registered";
@@ -58,8 +62,11 @@ public class CustomerController {
      * @return true if the email of the customer was not used before, else false
      * @throws DataAccessException
      * @throws ParseException
+     * @throws NoSuchAlgorithmException
      */
-    public boolean saveCustWithAddress(Customer customer, Address address) throws DataAccessException, ParseException{
+    public boolean saveCustWithAddress(Customer customer, Address address) throws DataAccessException,
+                                                                                  ParseException,
+                                                                                  NoSuchAlgorithmException{
         String testSQL = "SELECT * FROM customers WHERE email = ?;";
         boolean emailNotRegisteredBefore = db.query(testSQL, new CustomerRowMapper(), customer.getEmail()).isEmpty();
         if (emailNotRegisteredBefore){
@@ -75,7 +82,7 @@ public class CustomerController {
                                     address.getId(),
                                     customer.getEmail(),
                                     customer.getPhonenumber(),
-                                    customer.getPassHash());
+                                    Convert.stringToHex(customer.getPassHash()));
         }
         return emailNotRegisteredBefore;
     }

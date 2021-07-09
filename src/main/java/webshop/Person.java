@@ -1,5 +1,8 @@
 package webshop;
 
+import java.nio.charset.StandardCharsets;
+import java.security.NoSuchAlgorithmException;
+import java.security.MessageDigest;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,4 +20,15 @@ public abstract class Person {
     protected String email;
     protected String phonenumber;
     protected String passHash;
+
+    /**
+	 * 
+	 * @param password
+	 * @return boolean value that indicates whether the login was successful
+	 * @throws NoSuchAlgorithmException
+	 */
+	public boolean login(String password) throws NoSuchAlgorithmException{
+		return Convert.stringToHex(password).equalsIgnoreCase(this.passHash);
+	}
+
 }
