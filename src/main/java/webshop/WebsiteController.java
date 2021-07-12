@@ -1,11 +1,15 @@
 package webshop;
 
 import java.util.List;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class WebsiteController {
@@ -46,4 +50,32 @@ public class WebsiteController {
         model.addAttribute("orderPositions", orderPositions);
         return "db";
     }
+
+    @GetMapping("/cookieshow")
+    public String cookieshow(HttpServletRequest request, Model model){
+        Cookie[] cookies = request.getCookies();
+        model.addAttribute("cookies", cookies);
+        return "cookieshow";
+    }
+
+    @GetMapping("/cookieset") @ResponseBody
+    public String cookieset(HttpServletResponse response){
+        Cookie cookie = new Cookie("username", "Kasimir");
+        response.addCookie(cookie);
+        cookie = new Cookie("CookieTestName", "CookieTestValue");
+        response.addCookie(cookie);
+        return "Set some cookies";
+    }
+
+    @GetMapping("/cookiedel") @ResponseBody
+    public String cookiedel(HttpServletResponse response){
+        Cookie cookie = new Cookie("username", null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+        cookie = new Cookie("CookieTestName", null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+        return "Deleted some cookies";
+    }
+
 }
