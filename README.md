@@ -30,3 +30,6 @@ https://www.thymeleaf.org/documentation.html
 https://sass-lang.com/
 
 siehe auch HELP.md
+
+Mail ich habe mir die Mailadresse bierbestellen@gmail.com sichern 🥳
+Mehr dazu findet ihr in dem verschlüsselten Verzeichnis, mit dem Schlüssel bierbestellen

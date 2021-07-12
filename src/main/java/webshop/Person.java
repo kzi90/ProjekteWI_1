@@ -28,7 +28,7 @@ public abstract class Person {
 	 * @throws NoSuchAlgorithmException
 	 */
 	public boolean login(String password) throws NoSuchAlgorithmException{
-		return Convert.stringToHex(password).equalsIgnoreCase(this.passHash);
+		return Convert.stringToHash(password).equalsIgnoreCase(this.passHash);
 	}
 
 }
