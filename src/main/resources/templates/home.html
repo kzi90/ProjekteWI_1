@@ -11,6 +11,21 @@
     <link rel="icon" th:href="@{/images/favicon.ico}">
 </head>
 <body>
+    <header>
+        <div>
+            <a href="/"><img src="" alt="Logo Beer-Shop"></a>
+        </div>
+        <div th:switch="${loggedInUser.isEmpty()}">
+            <span th:case="${true}" th:text="'Nicht eingeloggt'" /> <!-- Hier muss noch ein Login-Button hin (+Registrieren) -->
+            <span th:case="${false}" th:text="${loggedInUser}" /> <!-- Hier muss noch ein Logout-Button hin -->
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/">HOME</a></li>
+                <!-- Beliebig viele weitere Menüeinträge -->
+            </ul>
+        </nav>
+    </header>
     <h1>Beer-Shop präsentiert</h1>
     <table border=1>
         <caption><strong>Sortiment:</strong></caption>

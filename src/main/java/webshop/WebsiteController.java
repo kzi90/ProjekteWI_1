@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -23,7 +24,8 @@ public class WebsiteController {
      * @return home.html (homepage)
      */
     @GetMapping("/")
-    public String home(Model model){
+    public String home(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser, Model model){
+        model.addAttribute("loggedInUser", loggedInUser);
         List<Product> products = db.query("SELECT * FROM products", new ProductRowMapper());
         model.addAttribute("products", products);
         return "home";
@@ -64,18 +66,20 @@ public class WebsiteController {
         response.addCookie(cookie);
         cookie = new Cookie("CookieTestName", "CookieTestValue");
         response.addCookie(cookie);
+        cookie = new Cookie("loggedInUser", "e@mail.ad");
+        response.addCookie(cookie);
         return "Set some cookies";
     }
 
     @GetMapping("/cookiedel") @ResponseBody
-    public String cookiedel(HttpServletResponse response){
-        Cookie cookie = new Cookie("username", null);
-        cookie.setMaxAge(0);
-        response.addCookie(cookie);
-        cookie = new Cookie("CookieTestName", null);
-        cookie.setMaxAge(0);
-        response.addCookie(cookie);
-        return "Deleted some cookies";
+    public String cookiedel(HttpServletRequest request, HttpServletResponse response){
+        Cookie[] cookies = request.getCookies();
+        for (Cookie cookie : cookies) {
+            cookie.setValue(null);
+            cookie.setMaxAge(0);
+            response.addCookie(cookie);
+        }
+        return "Deleted all cookies";
     }
 
 }
