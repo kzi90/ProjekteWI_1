@@ -15,6 +15,8 @@ public class ShoppingCart {
     // Liste von Integer Paaren productID und Menge
     private List<ShoppingCartPosition> cartList;
 
+    private
+
     public void addToCart(Integer productID) {
         for (ShoppingCartPosition shoppingCartPosition : cartList) {
             if (shoppingCartPosition.getProductID().equals(productID)) {
