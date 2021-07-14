@@ -36,6 +36,7 @@
             <th scope="col" th:text="'Bild'" />
             <th scope="col" th:text="'Menge in l'" />
             <th scope="col" th:text="'Preis in €'" />
+            <th scope="col" th:text="" />
         </tr>
         <tr th:each="product: ${products}">
             <td th:text="${product.id}" />
@@ -44,6 +45,8 @@
             <td><img alt="Produktbild" th:src="@{${product.imgURL}}" height="120"></td>
             <td th:text="${product.amount / 1000.0}" />
             <td th:text="${product.price}" />
+            <td><button th:attr="onclick=|addToCart('${product.id}')|" >🛒</button></td>
+            
         </tr>
     </table><br>
     <h1>Bestellungen unter 0176/34934106</h1>

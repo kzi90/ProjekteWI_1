@@ -17,17 +17,19 @@ public class WebsiteController {
 
     @Autowired
     JdbcTemplate db;
-    
+
     /**
      * 
      * @param model
      * @return home.html (homepage)
      */
     @GetMapping("/")
-    public String home(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser, Model model){
+    public String home(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser, Model model) {
         model.addAttribute("loggedInUser", loggedInUser);
         List<Product> products = db.query("SELECT * FROM products", new ProductRowMapper());
         model.addAttribute("products", products);
+        ShoppingCart shoppingCart = new ShoppingCart();
+        model.addAttribute("shoppingCart", shoppingCart);
         return "home";
     }
 
@@ -37,7 +39,7 @@ public class WebsiteController {
      * @return db.html template
      */
     @GetMapping("/db")
-    public String db(Model model){
+    public String db(Model model) {
         List<Address> addresses = db.query("SELECT * FROM addresses", new AddressRowMapper());
         model.addAttribute("addresses", addresses);
         List<Employee> employees = db.query("SELECT * FROM employees", new EmployeeRowMapper());
@@ -54,14 +56,15 @@ public class WebsiteController {
     }
 
     @GetMapping("/cookieshow")
-    public String cookieshow(HttpServletRequest request, Model model){
+    public String cookieshow(HttpServletRequest request, Model model) {
         Cookie[] cookies = request.getCookies();
         model.addAttribute("cookies", cookies);
         return "cookieshow";
     }
 
-    @GetMapping("/cookieset") @ResponseBody
-    public String cookieset(HttpServletResponse response){
+    @GetMapping("/cookieset")
+    @ResponseBody
+    public String cookieset(HttpServletResponse response) {
         Cookie cookie = new Cookie("username", "Kasimir");
         response.addCookie(cookie);
         cookie = new Cookie("CookieTestName", "CookieTestValue");
@@ -71,8 +74,9 @@ public class WebsiteController {
         return "Set some cookies";
     }
 
-    @GetMapping("/cookiedel") @ResponseBody
-    public String cookiedel(HttpServletRequest request, HttpServletResponse response){
+    @GetMapping("/cookiedel")
+    @ResponseBody
+    public String cookiedel(HttpServletRequest request, HttpServletResponse response) {
         Cookie[] cookies = request.getCookies();
         for (Cookie cookie : cookies) {
             cookie.setValue(null);
@@ -80,6 +84,12 @@ public class WebsiteController {
             response.addCookie(cookie);
         }
         return "Deleted all cookies";
+    }
+
+    @GetMapping("/shoppingCart")
+    public String shoppingCart(Model model) {
+        model.addAttribute("shoppingCart", shoppingCart)
+        return "shoppingCart";
     }
 
 }
