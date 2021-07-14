@@ -24,11 +24,22 @@ public class WebsiteController {
      * @return home.html (homepage)
      */
     @GetMapping("/")
-    public String home(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser, Model model) {
+    public String home(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
+                          @CookieValue(value = "SessionID", defaultValue = "") String sessID,
+                                                                               HttpServletResponse response,
+                                                                               Model model) {
         model.addAttribute("loggedInUser", loggedInUser);
         List<Product> products = db.query("SELECT * FROM products", new ProductRowMapper());
         model.addAttribute("products", products);
-        ShoppingCart shoppingCart = new ShoppingCart();
+        ShoppingCart shoppingCart;
+        if (sessID.isEmpty()){
+            shoppingCart = new ShoppingCart();
+            Cookie cookie = new Cookie("SessionID", shoppingCart.getSessID().toString());
+            cookie.setMaxAge(-1); // Session cookie
+            response.addCookie(cookie);
+        } else {
+            shoppingCart = ShoppingCart.findBySessID(Integer.valueOf(sessID));
+        }
         model.addAttribute("shoppingCart", shoppingCart);
         return "home";
     }
@@ -84,12 +95,6 @@ public class WebsiteController {
             response.addCookie(cookie);
         }
         return "Deleted all cookies";
-    }
-
-    @GetMapping("/shoppingCart")
-    public String shoppingCart(Model model) {
-        model.addAttribute("shoppingCart", shoppingCart)
-        return "shoppingCart";
     }
 
 }
