@@ -34,7 +34,6 @@ public class WebsiteController {
         if (sessID.isEmpty()){
             ShoppingCart shoppingCart = new ShoppingCart();
             Cookie cookie = new Cookie("SessionID", shoppingCart.getSessID().toString());
-            cookie.setMaxAge(-1); // Session cookie
             response.addCookie(cookie);
         }
         return "home";

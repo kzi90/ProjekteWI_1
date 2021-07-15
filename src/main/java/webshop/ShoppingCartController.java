@@ -27,7 +27,6 @@ public class ShoppingCartController {
         if (sessID.isEmpty()){
             shoppingCart = new ShoppingCart();
             Cookie cookie = new Cookie("SessionID", shoppingCart.getSessID().toString());
-            cookie.setMaxAge(-1); // Session cookie
             response.addCookie(cookie);
         } else {
             shoppingCart = ShoppingCart.findBySessID(Integer.valueOf(sessID));
