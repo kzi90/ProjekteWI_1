@@ -37,10 +37,7 @@ public class WebsiteController {
             Cookie cookie = new Cookie("SessionID", shoppingCart.getSessID().toString());
             cookie.setMaxAge(-1); // Session cookie
             response.addCookie(cookie);
-        } else {
-            shoppingCart = ShoppingCart.findBySessID(Integer.valueOf(sessID));
         }
-        model.addAttribute("shoppingCart", shoppingCart);
         return "home";
     }
 
