@@ -20,23 +20,51 @@ public class WebsiteController {
 
     /**
      * Homepage
+     * @param loggedInUser
      * @param model
-     * @return home.html template (homepage)
+     * @return home.html template
      */
     @GetMapping("/")
-    public String home(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
-                          @CookieValue(value = "SessionID", defaultValue = "") String sessID,
-                                                                               HttpServletResponse response,
-                                                                               Model model) {
+    public String home(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser, Model model){
+        model.addAttribute("loggedInUser", loggedInUser);
+        return "home";
+    }
+
+    /**
+     * Sortiment / Bestellseite
+     * @param loggedInUser
+     * @param sessID
+     * @param response
+     * @param model
+     * @return sortiment.html template
+     */
+    @GetMapping("/sortiment")
+    public String sortiment(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
+                               @CookieValue(value = "SessionID", defaultValue = "") String sessID,
+                                                                       HttpServletResponse response,
+                                                                                     Model model) {
         model.addAttribute("loggedInUser", loggedInUser);
         List<Product> products = db.query("SELECT * FROM products", new ProductRowMapper());
         model.addAttribute("products", products);
         if (sessID.isEmpty()){
             ShoppingCart shoppingCart = new ShoppingCart();
             Cookie cookie = new Cookie("SessionID", shoppingCart.getSessID().toString());
+            cookie.setPath("/");
             response.addCookie(cookie);
         }
-        return "home";
+        return "sortiment";
+    }
+
+    /**
+     * Impressum
+     * @param loggedInUser
+     * @param model
+     * @return impressum.html template
+     */
+    @GetMapping("/impressum")
+    public String impressum(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser, Model model){
+        model.addAttribute("loggedInUser", loggedInUser);
+        return "impressum";
     }
 
     /**

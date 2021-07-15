@@ -28,6 +28,33 @@
             </ul>
         </nav>
     </header>
-    <!-- Hier fehlt noch der Content für die Startseite -->
+    <h1>Wir brauen limitiertes Premium-Bier mit Geschichte!</h1>
+    <table border=1>
+        <caption><strong>Sortiment:</strong></caption>
+        <tr>
+            <th scope="col" th:text="'ID'" />
+            <th scope="col" th:text="'Name'" />
+            <th scope="col" th:text="'Beschreibung'" />
+            <th scope="col" th:text="'Bild'" />
+            <th scope="col" th:text="'Menge in l'" />
+            <th scope="col" th:text="'Preis in €'" />
+            <th scope="col" th:text="''" />
+        </tr>
+        <tr th:each="product: ${products}">
+            <td th:text="${product.id}" />
+            <td th:text="${product.name}" />
+            <td th:text="${product.description}" />
+            <td><img alt="Produktbild" th:src="@{${product.imgURL}}" height="120"></td>
+            <td th:text="${product.amount / 1000.0}" />
+            <td th:text="${product.price}" />
+            <td>
+                <form th:action="@{/addProductToCart}">
+                    <button type="submit" th:name="productID" th:value="${product.id}">🛒</button>
+                </form>
+            </td>
+        </tr>
+    </table><br>
+    <h1>Bestellungen unter 0176/34934106</h1>
+    <h1><a href="mailto:bierbestellen@gmail.com?subject=Bestellung">Bestellung per Mail an bierbestellen@gmail.com</a></h1>
 </body>
 </html>

@@ -16,7 +16,7 @@ public class ShoppingCartController {
                                    @RequestParam(value = "productID", required = true) Integer productID){
         ShoppingCart shoppingCart = ShoppingCart.findBySessID(Integer.valueOf(sessID));
         shoppingCart.addToCart(productID);
-        return "redirect:/";
+        return "redirect:/sortiment";
     }
 
     @GetMapping("/shoppingCart")
