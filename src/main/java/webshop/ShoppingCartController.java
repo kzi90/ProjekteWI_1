@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class ShoppingCartController {
     
-    @GetMapping(value = "/addProductToCart")
+    @GetMapping("/addProductToCart")
     public String addProductToCart(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
                                    @RequestParam(value = "productID", required = true) Integer productID){
         ShoppingCart shoppingCart = ShoppingCart.findBySessID(Integer.valueOf(sessID));
