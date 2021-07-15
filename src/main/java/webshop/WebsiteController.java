@@ -19,9 +19,9 @@ public class WebsiteController {
     JdbcTemplate db;
 
     /**
-     * 
+     * Homepage
      * @param model
-     * @return home.html (homepage)
+     * @return home.html template (homepage)
      */
     @GetMapping("/")
     public String home(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
@@ -31,9 +31,8 @@ public class WebsiteController {
         model.addAttribute("loggedInUser", loggedInUser);
         List<Product> products = db.query("SELECT * FROM products", new ProductRowMapper());
         model.addAttribute("products", products);
-        ShoppingCart shoppingCart;
         if (sessID.isEmpty()){
-            shoppingCart = new ShoppingCart();
+            ShoppingCart shoppingCart = new ShoppingCart();
             Cookie cookie = new Cookie("SessionID", shoppingCart.getSessID().toString());
             cookie.setMaxAge(-1); // Session cookie
             response.addCookie(cookie);

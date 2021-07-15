@@ -56,7 +56,7 @@ public class CustomerController {
     }
 
     /**
-     * 
+     * save customer- and addressdata if not already existing in database
      * @param customer
      * @param address
      * @return true if the email of the customer was not used before, else false
