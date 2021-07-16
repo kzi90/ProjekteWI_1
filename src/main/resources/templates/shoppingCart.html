@@ -11,7 +11,7 @@
     <link rel="icon" th:href="@{/images/favicon.ico}">
 </head>
 <body>
-    <table border=1>
+    <table>
         <caption><strong>Warenkorb:</strong></caption>
         <tr>
             <th scope="col" th:text="'Session-ID'" />
@@ -20,7 +20,7 @@
         <tr>
             <td th:text="${shoppingCart.sessID}" />
             <td>
-                <table border=1>
+                <table>
                     <tr>
                         <th scope="col" th:text="'Produkt-ID'" />
                         <th scope="col" th:text="'Menge'" />
