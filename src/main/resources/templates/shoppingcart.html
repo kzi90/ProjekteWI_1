@@ -1,31 +1,9 @@
 <!DOCTYPE HTML>
 <html lang="de" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Warenkorb</title>
-    <meta charset="UTF-8">
-    <meta http-equiv="Content-Type" content="text/html" />
-    <link th:href="@{/style.css}" rel="stylesheet" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
-    <link rel="icon" th:href="@{/images/favicon.ico}">
-</head>
+<div th:replace="fragment-head :: head"></div>
 <body>
-    <header>
-        <a href="/" class="logo"><img src="images/Logo-Bielefelder-Unikat.svg" alt="Bielefelder Unikat"></a>
-        <div th:switch="${loggedInUser.isEmpty()}">
-            <span th:case="${true}" th:text="'Nicht eingeloggt'" /> <!-- Hier muss noch ein Login-Button hin (+Registrieren) -->
-            <span th:case="${false}" th:text="${loggedInUser}" /> <!-- Hier muss noch ein Logout-Button hin -->
-        </div>
-        <nav>
-            <ul>
-                <li><a href="/">Startseite</a></li>
-                <li><a href="/sortiment">Sortiment</a> <a href="/shoppingcart">🛒</a></li>
-                <li><a href="/impressum">Impressum</a></li>
-                <!-- Beliebig viele weitere Menüeinträge -->
-            </ul>
-        </nav>
-    </header>
+    <div th:replace="fragment-header :: header"></div>
+
     <table class="shoppingcart">
         <caption><strong>Warenkorb:</strong></caption>
         <tr>
@@ -41,5 +19,7 @@
             <td th:text= "${cartLine[3]}" />
         </tr>
     </table>
+
+    <div th:replace="fragment-footer :: footer"></div>
 </body>
 </html>
