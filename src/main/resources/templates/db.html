@@ -11,7 +11,7 @@
     <link rel="icon" th:href="@{/images/favicon.ico}">
 </head>
 <body>
-    <table border=1>
+    <table>
         <caption><strong>ADDRESSES</strong></caption>
         <tr>
             <th scope="col" th:text="'ID'" />
@@ -30,7 +30,7 @@
             <td th:text="${address.country}" />
         </tr>
     </table><br>
-    <table border=1>
+    <table>
         <caption><strong>EMPLOYEES</strong></caption>
         <tr>
             <th scope="col" th:text="'ID'" />
@@ -61,7 +61,7 @@
             <td th:text="${employee.passHash}" />
         </tr>
     </table><br>
-    <table border=1>
+    <table>
         <caption><strong>CUSTOMERS</strong></caption>
         <tr>
             <th scope="col" th:text="'ID'" />
@@ -84,7 +84,7 @@
             <td th:text="${customer.passHash}" />
         </tr>
     </table><br>
-    <table border=1>
+    <table>
         <caption><strong>PRODUCTS</strong></caption>
         <tr>
             <th scope="col" th:text="'ID'" />
@@ -103,7 +103,7 @@
             <td th:text="${product.price}" />
         </tr>
     </table><br>
-    <table border=1>
+    <table>
         <caption><strong>ORDERS</strong></caption>
         <tr>
             <th scope="col" th:text="'ID'" />
@@ -122,7 +122,7 @@
             <td th:text="${order.custID}" />
         </tr>
     </table><br>
-    <table border=1>
+    <table>
         <caption><strong>ORDERPOSITIONS</strong></caption>
         <tr>
             <th scope="col" th:text="'Pos-Nr.'" />

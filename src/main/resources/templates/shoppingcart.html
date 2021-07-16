@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html lang="de" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Bielefelder Unikat</title>
+    <title>Warenkorb</title>
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html" />
     <link th:href="@{/style.css}" rel="stylesheet" />
@@ -26,6 +26,20 @@
             </ul>
         </nav>
     </header>
-    <!-- Hier fehlt noch der Content für die Startseite -->
+    <table class="shoppingcart">
+        <caption><strong>Warenkorb:</strong></caption>
+        <tr>
+            <th scope="col" th:text="'Artikelnummer'" />
+            <th scope="col" th:text="'Bezeichnung'" />
+            <th scope="col" th:text="''" />
+            <th scope="col" th:text="'Menge'" />
+        </tr>
+        <tr th:each="cartLine: ${shoppingCartLines}">
+            <td th:text= "${cartLine[0]}" />
+            <td th:text= "${cartLine[1]}" />
+            <td><img alt="Produktbild" th:src="@{${cartLine[2]}}" height="120"></td>
+            <td th:text= "${cartLine[3]}" />
+        </tr>
+    </table>
 </body>
 </html>

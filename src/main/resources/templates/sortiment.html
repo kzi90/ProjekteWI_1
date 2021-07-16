@@ -12,9 +12,7 @@
 </head>
 <body>
     <header>
-        <div>
-            <a href="/"><img src="images/Logo-Bielefelder-Unikat.svg" alt="Bielefelder Unikat" class="logo"></a>
-        </div>
+        <a href="/" class="logo"><img src="images/Logo-Bielefelder-Unikat.svg" alt="Bielefelder Unikat"></a>
         <div th:switch="${loggedInUser.isEmpty()}">
             <span th:case="${true}" th:text="'Nicht eingeloggt'" /> <!-- Hier muss noch ein Login-Button hin (+Registrieren) -->
             <span th:case="${false}" th:text="${loggedInUser}" /> <!-- Hier muss noch ein Logout-Button hin -->
@@ -22,7 +20,7 @@
         <nav>
             <ul>
                 <li><a href="/">Startseite</a></li>
-                <li><a href="/sortiment">Sortiment</a></li>
+                <li><a href="/sortiment">Sortiment</a> <a href="/shoppingcart">🛒</a></li>
                 <li><a href="/impressum">Impressum</a></li>
                 <!-- Beliebig viele weitere Menüeinträge -->
             </ul>
