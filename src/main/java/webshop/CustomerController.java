@@ -23,7 +23,8 @@ public class CustomerController {
     private AddressController addressController;
 
     /**
-     * 
+     * register-page
+     * @param loggedInUser
      * @param model
      * @return register.html template
      */
@@ -38,11 +39,12 @@ public class CustomerController {
     }
 
     /**
-     * 
+     * Answer page after submitting registration values
      * @param customer built automatically with submitted values
      * @param address built automatically with submitted values
+     * @param loggedInUser read from cookie
      * @param model saves objects as attributes
-     * @return template registered.html
+     * @return registered.html template
      * @throws DataAccessException
      * @throws ParseException
      * @throws NoSuchAlgorithmException
