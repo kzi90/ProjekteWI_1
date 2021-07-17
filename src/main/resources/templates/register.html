@@ -1,7 +1,9 @@
 <!DOCTYPE HTML>
 <html lang="de" xmlns:th="http://www.thymeleaf.org">
-<div th:replace="fragment-head :: head"></div>
+<div th:replace="fragments :: head"></div>
 <body>
+    <div th:replace="fragments :: header"></div>
+
     <h1>Registrierung</h1>
     <form action="#" th:action="@{/register}" method="post">
         <p>Vorname: <input type="text" th:field="${customer.firstname}" />
@@ -17,5 +19,7 @@
         <p>Stadt: <input type="text" th:field="${address.city}" />
         <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" />
     </form>
+
+    <div th:replace="fragments :: footer"></div>
 </body>
 </html>

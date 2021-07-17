@@ -8,6 +8,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,7 +28,8 @@ public class CustomerController {
      * @return register.html template
      */
     @GetMapping("/register")
-    public String register(Model model){
+    public String register(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser, Model model){
+        model.addAttribute("loggedInUser", loggedInUser);
         Customer customer = new Customer();
         model.addAttribute(customer);
         Address address = new Address();
@@ -47,9 +49,12 @@ public class CustomerController {
      */
     @PostMapping("/register")
     public String registered(@ModelAttribute Customer customer,
-                             @ModelAttribute Address address, Model model) throws DataAccessException,
-                                                                                  ParseException,
-                                                                                  NoSuchAlgorithmException{
+                             @ModelAttribute Address address,
+                             @CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
+                                                                                      Model model) throws DataAccessException,
+                                                                                                          ParseException,
+                                                                                                          NoSuchAlgorithmException{
+        model.addAttribute("loggedInUser", loggedInUser);
         boolean emailAlreadyRegistered = (!saveCustWithAddress(customer, address));
         model.addAttribute("emailAlreadyRegistered", emailAlreadyRegistered);
         return "registered";

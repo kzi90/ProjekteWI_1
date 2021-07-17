@@ -1,8 +1,8 @@
 <!DOCTYPE HTML>
 <html lang="de" xmlns:th="http://www.thymeleaf.org">
-<div th:replace="fragment-head :: head"></div>
+<div th:replace="fragments :: head"></div>
 <body>
-    <div th:replace="fragment-header :: header"></div>
+    <div th:replace="fragments :: header"></div>
 
     <table class="shoppingcart">
         <caption><strong>Warenkorb:</strong></caption>
@@ -20,6 +20,6 @@
         </tr>
     </table>
 
-    <div th:replace="fragment-footer :: footer"></div>
+    <div th:replace="fragments :: footer"></div>
 </body>
 </html>

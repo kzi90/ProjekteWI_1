@@ -1,0 +1,37 @@
+<head th:fragment="head">
+    <title>Bielefelder Unikat</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html" />
+    <link th:href="@{/style.css}" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="icon" th:href="@{/images/favicon.ico}">
+</head>
+
+<header th:fragment="header">
+    <a href="/" class="logo"><img src="images/Logo-Bielefelder-Unikat.svg" alt="Bielefelder Unikat"></a>
+        <div th:switch="${loggedInUser.isEmpty()}">
+            <span th:case="${true}">
+                <div><a href="/login">anmelden</a></div>
+                <div><a href="/register">registrieren</a></div>
+            </span>
+            <span th:case="${false}">
+                <div th:text="${loggedInUser}" />
+                <div><a href="/logout">abmelden</a></div>
+            </span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/">Startseite</a></li>
+                <li><a href="/sortiment">Sortiment</a> <a href="/shoppingcart">🛒</a></li>
+                <li><a href="/impressum">Impressum</a></li>
+                <!-- Beliebig viele weitere Menüeinträge -->
+            </ul>
+        </nav>
+</header>
+
+<footer th:fragment="footer">
+    <h2>Footer</h2>
+</footer>
