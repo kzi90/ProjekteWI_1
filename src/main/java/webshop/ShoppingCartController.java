@@ -43,11 +43,22 @@ public class ShoppingCartController {
         }
         List<String[]> shoppingCartLines = new ArrayList<>();
         Product product;
+        Double lineTotal;
+        Double total = 0.0;
         for (ShoppingCartPosition pos : shoppingCart.getCartList()) {
             product = db.queryForObject("SELECT * FROM products WHERE id = ?", new ProductRowMapper(), pos.getProductID());
-            shoppingCartLines.add(new String[] {pos.getProductID().toString(), product.getName(), product.getImgURL(), pos.getQuantity().toString()});
+            lineTotal = Math.round(pos.getQuantity() * product.getPrice() * 100) / 100.0;
+            total += lineTotal;
+            shoppingCartLines.add(new String[] {pos.getProductID().toString(),
+                                                product.getName(),
+                                                product.getImgURL(),
+                                                pos.getQuantity().toString(),
+                                                String.format("%.2f", product.getPrice()),
+                                                String.format("%.2f", lineTotal)});
         }
         model.addAttribute("shoppingCartLines", shoppingCartLines);
+        total = Math.round(total * 100) / 100.0;
+        model.addAttribute("total", String.format("%.2f", total));
         return "shoppingcart";
     }
 

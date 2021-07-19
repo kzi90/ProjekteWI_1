@@ -11,12 +11,24 @@
             <th scope="col" th:text="'Bezeichnung'" />
             <th scope="col" th:text="''" />
             <th scope="col" th:text="'Menge'" />
+            <th scope="col" th:text="'Einzelpreis in €'" />
+            <th scope="col" th:text="'Gesamtpreis in €'" />
         </tr>
         <tr th:each="cartLine: ${shoppingCartLines}">
-            <td th:text= "${cartLine[0]}" />
-            <td th:text= "${cartLine[1]}" />
+            <td th:text="${cartLine[0]}" />
+            <td th:text="${cartLine[1]}" />
             <td><img alt="Produktbild" th:src="@{${cartLine[2]}}" height="120"></td>
-            <td th:text= "${cartLine[3]}" />
+            <td th:text="${cartLine[3]}" />
+            <td th:text="${cartLine[4]}" />
+            <td th:text="${cartLine[5]}" />
+        </tr>
+        <tr>
+            <td/>
+            <td/>
+            <td/>
+            <td/>
+            <td th:text="'Summe in €: '" />
+            <td th:text="${total}" />
         </tr>
     </table>
 
