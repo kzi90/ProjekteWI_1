@@ -8,7 +8,7 @@
     ===================================================-->
 
     <main>
-        
+
         <h1 class="display-1">Wir brauen limitiertes Premium-Bier mit Geschichte!</h1>
 
         <section th:each="product: ${products}">
@@ -24,7 +24,7 @@
             <div>
 
                 <!-- Ingriedients -->
-                <table>
+                <table class="table-ingredients">
                     <tr>
                         <td>
                             <span class="text-key">Type</span>
@@ -65,6 +65,9 @@
                         <td colspan="2">
                             <span class="text-key">Verfügbarkeit</span>
                             <span class="text-value">24 Flaschen</span>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
                         </td>
                     </tr>
                 </table>
@@ -75,7 +78,10 @@
                 
                 <!-- Button -->
                 <form th:action="@{/addProductToCart}"></form>
-                    <button class="btn btn-primary" type="submit" th:name="productID" th:value="${product.id}">In die Bierkiste legen</button>
+                    <div class="d-grid gap-2"> 
+                        <!-- <input class="btn btn-primary" type="submit" th:name="productID" value="In die Bierkiste legen" /> Den hier verwenden oder den unteren? -->
+                        <button class="btn btn-primary" type="submit" th:name="productID" th:value="${product.id}">In die Bierkiste legen</button>
+                    </div>
                 </form>
             </div>
         </section>

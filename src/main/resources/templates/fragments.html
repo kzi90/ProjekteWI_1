@@ -4,9 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="./style.css" rel="stylesheet" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="./fonts/fontawesome/css/all.css" rel="stylesheet">
     <link rel="icon" th:href="@{/images/favicon.ico}">
 </head>
 
@@ -25,8 +23,8 @@
         <nav>
             <ul>
                 <li><a href="/">Startseite</a></li>
-                <li><a href="/sortiment">Sortiment</a> <a href="/shoppingcart">🛒</a></li>
-                <li><a href="/impressum">Impressum</a></li>
+                <li><a href="/sortiment">Sortiment</a></li>
+                <li><a href="/shoppingcart">🛒</a></li>
                 <!-- Beliebig viele weitere Menüeinträge -->
             </ul>
         </nav>
@@ -34,6 +32,11 @@
 
 <footer th:fragment="footer">
     <h2>Footer</h2>
+    <nav>
+        <ul>
+            <li><a href="/impressum">Impressum</a></li>
+        </ul>
+    </nav>
 </footer>
 
 <div th:fragment="scripts">

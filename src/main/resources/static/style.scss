@@ -15,17 +15,17 @@ Table of contents
 // 1. Variables overrides
 // 1.1 Color system
 // scss-docs-start gray-color-variables
-$white:    #fff;
-$gray-100: #f8efdd; // changed
-$gray-200: #e9ecef;
-$gray-300: #dee2e6;
-$gray-400: #ced4da;
-$gray-500: #adb5bd;
-$gray-600: #6c757d;
-$gray-700: #495057;
-$gray-800: #343a40;
-$gray-900: #212025; // changed
-$black:    #000;
+$white:    #f8efdd; // changed
+$gray-100: #e0d8c8; // changed
+$gray-200: #c8c1b4; // changed
+$gray-300: #b1aaa1; // changed
+$gray-400: #9a958d; // changed
+$gray-500: #847f7b; // changed
+$gray-600: #6f6b68; // changed
+$gray-700: #5a5756; // changed
+$gray-800: #464445; // changed
+$gray-900: #333135; // changed
+$black:    #212025; // changed
 
 // scss-docs-start color-variables
 $blue:    #0d6efd;
@@ -38,7 +38,7 @@ $yellow:  #ffc107;
 $green:   #198754;
 $teal:    #20c997;
 $cyan:    #0dcaf0;
-$gold:    #F9AB26; // new
+$gold:    #F9AB26; // this is new or should we use yellow? This is used also for warning!
 
 // scss-docs-start theme-color-variables
 $primary:       $gold;
@@ -47,14 +47,14 @@ $success:       $green;
 $info:          $cyan;
 $warning:       $yellow;
 $danger:        $red;
-$light:         $gray-100;
-$dark:          $gray-900;
+$light:         $white;
+$dark:          $black;
 
 // Body
 //
 // Settings for the `<body>` element.
-$body-bg:                   $gray-900;
-$body-color:                $gray-100;
+$body-bg:                   $black;
+$body-color:                $white;
 $body-text-align:           null;
 
 // Spacing
@@ -71,8 +71,9 @@ $spacer: 1rem;
     src: url(./fonts/RobotoSlab.ttf);
 }
 
-$font-family-sans-serif:      "Roboto Slab", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !default;
-$font-family-monospace:       "Roboto Slab", SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !default;
+$font-family-sans-serif:      "Roboto Slab", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+$font-family-monospace:       "Roboto Slab", SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+$font-size-base:              1rem; // Assumes the browser default, typically `16px`
 
 // Display headings
 $headings-margin-bottom:      $spacer * .5;
@@ -82,7 +83,12 @@ $headings-font-weight:        500;
 $headings-line-height:        1.2;
 $headings-color:              null;
 
-
+// 1.X Progress bars
+// scss-docs-start progress-variables
+$progress-height:                   1rem;
+$progress-bg:                       $gray-700; // changed
+$progress-bar-color:                $black; // changed
+$progress-bar-bg:                   $white; // changed
 
 // Bootstrap and its default variables
 @import "../../../../node_modules/bootstrap/scss/bootstrap";
@@ -91,8 +97,33 @@ $headings-color:              null;
 // 2.1 Import fonts
 
 // 2.2 Typography
-
+.text-key {
+    display: block;
+    font-size: .75rem;
+    text-transform: uppercase;
+    opacity: .5;
+}
 // 2.3 General changes
 .logo img {
     width: 8.75rem;
+}
+
+// 2.X Ingredients table
+.table-ingredients {
+    margin-bottom: $spacer;
+    table-layout: fixed;
+    width: 100%;
+
+    td {
+        border: 1px solid $gray-800; // need a darker version of this
+        padding: .9375rem; // search for spacing variable and change the value
+    }
+
+    tr td:first-child {
+        border-left: none;
+    }
+
+    tr td:last-child {
+        border-right: none;
+    }
 }
