@@ -3,7 +3,17 @@
 <div th:replace="fragments :: head"></div>
 <body>
     <div th:replace="fragments :: header"></div>
-    <!-- Hier fehlt noch der Content für die Startseite -->
+    <!--==================================================
+    START CONTENT
+    ===================================================-->
+    <main>
+        <button type="button" class="btn btn-primary">Primary</button>
+        <button type="button" class="btn btn-secondary">Secondary</button>
+    </main>
+    <!--==================================================
+    END CONTENT
+    ===================================================-->
     <div th:replace="fragments :: footer"></div>
+    <div th:replace="fragments :: scripts"></div>
 </body>
 </html>

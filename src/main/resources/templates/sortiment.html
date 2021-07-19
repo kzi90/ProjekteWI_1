@@ -3,8 +3,89 @@
 <div th:replace="fragments :: head (title='Sortiment')"></div>
 <body>
     <div th:replace="fragments :: header"></div>
+    <!--==================================================
+    START CONTENT
+    ===================================================-->
 
-    <h1>Wir brauen limitiertes Premium-Bier mit Geschichte!</h1>
+    <main>
+        
+        <h1 class="display-1">Wir brauen limitiertes Premium-Bier mit Geschichte!</h1>
+
+        <section th:each="product: ${products}">
+            <div>
+                <!-- Product image -->
+                <img alt="Produktbild" th:src="@{${product.imgURL}}" height="120">
+            </div>
+            <div>
+                <!-- Name and description -->
+                <h2 class="display-2" th:text="${product.name}" />
+                <p class="description" th:text="${product.description}" />
+            </div>
+            <div>
+
+                <!-- Ingriedients -->
+                <table>
+                    <tr>
+                        <td>
+                            <span class="text-key">Type</span>
+                            <span class="text-value">Pils</span>
+                        </td>
+                        <td>
+                            <span class="text-key">Volumen</span>
+                            <span class="text-value">0,33 L</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="text-key">Alkohol</span>
+                            <span class="text-value">4,3 % vol.</span>
+                        </td>
+                        <td>
+                            <span class="text-key">Stammwürze</span>
+                            <span class="text-value">18,9 % mas.</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="text-key">Brauart</span>
+                            <span class="text-value">Untergärig</span>
+                        </td>
+                        <td>
+                            <span class="text-key">Bittereinheiten</span>
+                            <span class="text-value">27 EBC</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <span class="text-key">Zutaten</span>
+                            <span class="text-value">Brauwasser, Gerstenmalz, Hopfenauszüge</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <span class="text-key">Verfügbarkeit</span>
+                            <span class="text-value">24 Flaschen</span>
+                        </td>
+                    </tr>
+                </table>
+
+                <!-- Price -->
+                <span class="text-price" th:text="${product.price}" />
+                <span class="text-vat">Preis inkl. Steuer</span>
+                
+                <!-- Button -->
+                <form th:action="@{/addProductToCart}"></form>
+                    <button class="btn btn-primary" type="submit" th:name="productID" th:value="${product.id}">In die Bierkiste legen</button>
+                </form>
+            </div>
+        </section>
+
+        <h1>Bestellungen unter 0176/34934106</h1>
+        <h1><a href="mailto:bierbestellen@gmail.com?subject=Bestellung">Bestellung per Mail an bierbestellen@gmail.com</a></h1>
+
+    </main>
+
+    <!--
     <table border=1>
         <caption><strong>Sortiment:</strong></caption>
         <tr>
@@ -30,9 +111,12 @@
             </td>
         </tr>
     </table><br>
-    <h1>Bestellungen unter 0176/34934106</h1>
-    <h1><a href="mailto:bierbestellen@gmail.com?subject=Bestellung">Bestellung per Mail an bierbestellen@gmail.com</a></h1>
+    -->
     
+    <!--==================================================
+    END CONTENT
+    ===================================================-->
     <div th:replace="fragments :: footer"></div>
+    <div th:replace="fragments :: scripts"></div>
 </body>
 </html>
