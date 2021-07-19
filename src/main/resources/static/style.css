@@ -11556,4 +11556,11 @@ fieldset:disabled .btn {
 .table-ingredients tr td:last-child {
   border-right: none;
 }
+
+.devider {
+  margin-top: 5rem;
+  margin-bottom: 5rem;
+  border: 0;
+  border-top: 1px solid #5a5756;
+}
 /*# sourceMappingURL=style.css.map */
