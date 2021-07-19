@@ -53,7 +53,7 @@ public class ShoppingCartController {
                                                 product.getName(),
                                                 product.getImgURL(),
                                                 pos.getQuantity().toString(),
-                                                product.getPrice().toString(),
+                                                String.format("%.2f", product.getPrice()),
                                                 String.format("%.2f", lineTotal)});
         }
         model.addAttribute("shoppingCartLines", shoppingCartLines);
