@@ -32,7 +32,7 @@
                         </td>
                         <td>
                             <span class="text-key">Volumen</span>
-                            <span class="text-value">0,33 L</span>
+                            <span class="text-value" th:text="${product.amount / 1000.0} + ' l'" />
                         </td>
                     </tr>
                     <tr>
@@ -77,7 +77,7 @@
                 <span class="text-vat">Preis inkl. Steuer</span>
                 
                 <!-- Button -->
-                <form th:action="@{/addProductToCart}"></form>
+                <form th:action="@{/addProductToCart}">
                     <div class="d-grid gap-2"> 
                         <!-- <input class="btn btn-primary" type="submit" th:name="productID" value="In die Bierkiste legen" /> Den hier verwenden oder den unteren? -->
                         <button class="btn btn-primary" type="submit" th:name="productID" th:value="${product.id}">In die Bierkiste legen</button>
