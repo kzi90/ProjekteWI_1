@@ -74,7 +74,7 @@
                 <span class="text-vat">Preis inkl. Steuer</span>
                 
                 <!-- Button -->
-                <form th:action="@{/addProductToCart}"></form>
+                <form th:action="@{/addProductToCart}">
                     <button class="btn btn-primary" type="submit" th:name="productID" th:value="${product.id}">In die Bierkiste legen</button>
                 </form>
             </div>
