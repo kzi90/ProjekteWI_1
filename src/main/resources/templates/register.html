@@ -1,26 +1,37 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="de" xmlns:th="http://www.thymeleaf.org">
-<div th:replace="fragments :: head"></div>
-<body>
-    <div th:replace="fragments :: header"></div>
+  <div th:replace="fragments :: head"></div>
+  <body>
+    <div class="container">
+      <div th:replace="fragments :: header"></div>
 
-    <h1>Registrierung</h1>
-    <form action="#" th:action="@{/register}" method="post">
-        <p>Vorname: <input type="text" th:field="${customer.firstname}" />
-        <p>Nachname: <input type="text" th:field="${customer.lastname}" />
-        <p>Geburtsdatum: <input type="text" th:field="${customer.birthdate}" />
-        <p>E-Mail: <input type="text" th:field="${customer.email}" />
-        <p>Telefonnummer: <input type="text" th:field="${customer.phonenumber}" />
-        <p>Passwort: <input type="password" th:field="${customer.passHash}" />
+      <h1>Registrierung</h1>
+      <form action="#" th:action="@{/register}" method="post">
+        <p>Vorname: <input type="text" th:field="${customer.firstname}" /></p>
+        <p>Nachname: <input type="text" th:field="${customer.lastname}" /></p>
+        <p>
+          Geburtsdatum: <input type="text" th:field="${customer.birthdate}" />
+        </p>
+        <p>E-Mail: <input type="text" th:field="${customer.email}" /></p>
+        <p>
+          Telefonnummer:
+          <input type="text" th:field="${customer.phonenumber}" />
+        </p>
+        <p>
+          Passwort: <input type="password" th:field="${customer.passHash}" />
+        </p>
         <p th:text="'Adresse (in Deutschland):'" />
-        <p>Straße: <input type="text" th:field="${address.street}" />
-        <p>Haus-Nr.: <input type="text" th:field="${address.housenr}" />
-        <p>PLZ: <input type="text" th:field="${address.postcode}" />
-        <p>Stadt: <input type="text" th:field="${address.city}" />
-        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" />
-    </form>
-
-    <div th:replace="fragments :: footer"></div>
+        <p>Straße: <input type="text" th:field="${address.street}" /></p>
+        <p>Haus-Nr.: <input type="text" th:field="${address.housenr}" /></p>
+        <p>PLZ: <input type="text" th:field="${address.postcode}" /></p>
+        <p>Stadt: <input type="text" th:field="${address.city}" /></p>
+        <p>
+          <input type="submit" value="Submit" />
+          <input type="reset" value="Reset" />
+        </p>
+      </form>
+      <div th:replace="fragments :: footer"></div>
+    </div>
     <div th:replace="fragments :: scripts"></div>
-</body>
+  </body>
 </html>

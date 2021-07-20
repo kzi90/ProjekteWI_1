@@ -1,35 +1,41 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="de" xmlns:th="http://www.thymeleaf.org">
-<div th:replace="fragments :: head (title='Warenkorb')"></div>
-<body>
-    <div th:replace="fragments :: header"></div>
+  <div th:replace="fragments :: head (title='Warenkorb')"></div>
+  <body>
+    <div class="container">
+      <div th:replace="fragments :: header"></div>
 
-    <table class="table caption-top">
-        <caption><strong>Warenkorb:</strong></caption>
+      <table class="table caption-top">
+        <caption>
+          <strong>Warenkorb:</strong>
+        </caption>
         <tr>
-            <th scope="col" th:text="'Artikelnummer'" />
-            <th scope="col" th:text="'Bezeichnung'" />
-            <th scope="col" th:text="''" />
-            <th scope="col" th:text="'Menge'" />
-            <th scope="col" th:text="'Einzelpreis'" />
-            <th scope="col" th:text="'Gesamtpreis'" />
+          <th scope="col" th:text="'Artikelnummer'" />
+          <th scope="col" th:text="'Bezeichnung'" />
+          <th scope="col" th:text="''" />
+          <th scope="col" th:text="'Menge'" />
+          <th scope="col" th:text="'Einzelpreis'" />
+          <th scope="col" th:text="'Gesamtpreis'" />
         </tr>
         <tr th:each="cartLine: ${shoppingCartLines}">
-            <td th:text="${cartLine[0]}" />
-            <td th:text="${cartLine[1]}" />
-            <td><img alt="Produktbild" th:src="@{${cartLine[2]}}" height="120"></td>
-            <td th:text="${cartLine[3]}" />
-            <td th:text="${cartLine[4]} + ' €'" />
-            <td th:text="${cartLine[5]} + ' €'" />
+          <td th:text="${cartLine[0]}" />
+          <td th:text="${cartLine[1]}" />
+          <td>
+            <img alt="Produktbild" th:src="@{${cartLine[2]}}" height="120" />
+          </td>
+          <td th:text="${cartLine[3]}" />
+          <td th:text="${cartLine[4]} + ' €'" />
+          <td th:text="${cartLine[5]} + ' €'" />
         </tr>
         <tr>
-            <td colspan=4 />
-            <td th:text="'Summe: '" />
-            <td th:text="${total} + ' €'" />
+          <td colspan="4" />
+          <td th:text="'Summe: '" />
+          <td th:text="${total} + ' €'" />
         </tr>
-    </table>
+      </table>
 
-    <div th:replace="fragments :: footer"></div>
+      <div th:replace="fragments :: footer"></div>
+    </div>
     <div th:replace="fragments :: scripts"></div>
-</body>
+  </body>
 </html>

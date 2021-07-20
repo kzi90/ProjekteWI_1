@@ -1,18 +1,20 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="de" xmlns:th="http://www.thymeleaf.org">
-<div th:replace="fragments :: head"></div>
-<body>
-    <div th:replace="fragments :: header"></div>
-    <!--==================================================
-    START CONTENT
-    ===================================================-->
-    <main>
+  <div th:replace="fragments :: head"></div>
+  <body>
+    <div class="container">
+      <div th:replace="fragments :: header"></div>
+      <!--==================================================
+      START CONTENT
+      ===================================================-->
+      <main>
         <i class="far fa-abacus"></i>
-    </main>
-    <!--==================================================
-    END CONTENT
-    ===================================================-->
-    <div th:replace="fragments :: footer"></div>
+      </main>
+      <!--==================================================
+      END CONTENT
+      ===================================================-->
+      <div th:replace="fragments :: footer"></div>
+    </div>
     <div th:replace="fragments :: scripts"></div>
-</body>
+  </body>
 </html>

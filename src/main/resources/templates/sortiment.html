@@ -5,8 +5,8 @@
     <div class="container">
       <div th:replace="fragments :: header"></div>
       <!--==================================================
-        START CONTENT
-        ===================================================-->
+      START CONTENT
+      ===================================================-->
 
       <main>
         <h1 class="display-1">
@@ -94,7 +94,6 @@
             <!-- Button -->
             <form th:action="@{/addProductToCart}">
               <div class="d-grid gap-2">
-                <!-- <input class="btn btn-primary" type="submit" th:name="productID" value="In die Bierkiste legen" /> Den hier verwenden oder den unteren? -->
                 <button
                   class="btn btn-primary"
                   type="submit"
@@ -111,15 +110,15 @@
 
         <h1>Bestellungen unter 0176/34934106</h1>
         <h1>
-          <a href="mailto:bierbestellen@gmail.com?subject=Bestellung"
-            >Bestellung per Mail an bierbestellen@gmail.com</a
-          >
+          <a href="mailto:bierbestellen@gmail.com?subject=Bestellung">
+            Bestellung per Mail an bierbestellen@gmail.com
+          </a>
         </h1>
       </main>
 
       <!--==================================================
-        END CONTENT
-        ===================================================-->
+      END CONTENT
+      ===================================================-->
       <div th:replace="fragments :: footer"></div>
     </div>
     <div th:replace="fragments :: scripts"></div>
