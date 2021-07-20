@@ -9,24 +9,30 @@
       ===================================================-->
 
       <main>
-        <h1 class="display-1">
-          Wir brauen limitiertes Premium-Bier mit Geschichte!
+        <h1 class="title display-1 text-center">
+          Wir&nbsp;brauen<br />limitiertes<br />Premium&nbsp;Bier<br />mit&nbsp;Geschichte.
         </h1>
+
+        <hr class="devider" />
 
         <section th:each="product: ${products}" class="row">
           <!-- Product image -->
-          <div class="col col-lg-3">
-            <img alt="Produktbild" th:src="@{${product.imgURL}}" />
+          <div class="col col-lg-2">
+            <img
+              alt="Produktbild"
+              th:src="@{${product.imgURL}}"
+              class="img-fluid w-75"
+            />
           </div>
 
           <!-- Name and description -->
-          <div class="col-md-6 col-lg-6">
+          <div class="col-md-5 col-lg-5 .offset-md-1">
             <h2 class="display-2" th:text="${product.name}" />
             <p class="description" th:text="${product.description}" />
           </div>
 
           <!-- Ingriedients -->
-          <div class="col-md-6 col-lg-3">
+          <div class="col-md-6 col-lg-3 .offset-md-1">
             <table class="table table-ingredients">
               <tr>
                 <td>
@@ -88,21 +94,19 @@
             </table>
 
             <!-- Price -->
-            <span class="text-price" th:text="${product.price}" />
-            <span class="text-vat">Preis inkl. Steuer</span>
+            <span class="text-price mx-auto mb-1" th:text="${product.price}" />
+            <span class="text-vat mx-auto mb-2">Preis inkl. Steuer</span>
 
             <!-- Button -->
             <form th:action="@{/addProductToCart}">
-              <div class="d-grid gap-2">
-                <button
-                  class="btn btn-primary"
-                  type="submit"
-                  th:name="productID"
-                  th:value="${product.id}"
-                >
-                  In die Bierkiste legen
-                </button>
-              </div>
+              <button
+                class="btn btn-primary mx-auto"
+                type="submit"
+                th:name="productID"
+                th:value="${product.id}"
+              >
+                In die Bierkiste legen
+              </button>
             </form>
           </div>
           <hr class="devider" />
