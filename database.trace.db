@@ -1,0 +1,8 @@
+2021-07-20 09:18:09 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax Fehler in SQL Befehl "IMAGE_URL[*] SELECT * FROM PRODUCTS"; erwartet "INSERT"
+Syntax error in SQL statement "IMAGE_URL[*] SELECT * FROM PRODUCTS"; expected "INSERT"; SQL statement:
+IMAGE_URL SELECT * FROM PRODUCTS [42001-200]
+2021-07-20 09:18:15 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax Fehler in SQL Befehl "IMAGE_URL[*] PRODUCTS SELECT * FROM PRODUCTS"; erwartet "INSERT"
+Syntax error in SQL statement "IMAGE_URL[*] PRODUCTS SELECT * FROM PRODUCTS"; expected "INSERT"; SQL statement:
+IMAGE_URL PRODUCTS SELECT * FROM PRODUCTS [42001-200]

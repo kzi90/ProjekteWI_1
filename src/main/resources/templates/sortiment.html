@@ -16,7 +16,7 @@
         <section th:each="product: ${products}" class="row">
           <!-- Product image -->
           <div class="col col-lg-3">
-            <img alt="Produktbild" th:src="@{${product.imgURL}}" height="120" />
+            <img alt="Produktbild" th:src="@{${product.imgURL}}" />
           </div>
 
           <!-- Name and description -->
