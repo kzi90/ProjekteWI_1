@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+  <div th:replace="fragments :: head"></div>
+  <body>
+    <div class="container">
+      <div th:replace="fragments :: header"></div>
+      <main>
+        <form action="#" th:action="@{/login}" method="post">
+          <p>E-Mail: <input type="text" th:field="${customer.email}" /></p>
+          <p>
+            Passwort: <input type="password" th:field="${customer.passHash}" />
+          </p>
+          <input type="submit" value="Submit" />
+          <input type="reset" value="Reset" />
+        </form>
+      </main>
+      <div th:replace="fragments :: footer"></div>
+    </div>
+    <div th:replace="fragments :: scripts"></div>
+  </body>
+</html>

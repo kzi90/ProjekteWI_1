@@ -3,6 +3,9 @@ package webshop;
 import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class CustomerController {
@@ -60,6 +64,68 @@ public class CustomerController {
         boolean emailAlreadyRegistered = (!saveCustWithAddress(customer, address));
         model.addAttribute("emailAlreadyRegistered", emailAlreadyRegistered);
         return "registered";
+    }
+
+    /**
+     * login form
+     * @param loggedInUser
+     * @param model
+     * @return login.html template
+     */
+    @GetMapping("/login")
+    public String login(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser, Model model){
+        model.addAttribute("loggedInUser", loggedInUser);
+        Customer customer = new Customer();
+        model.addAttribute(customer);
+        return "login";
+    }
+
+    /**
+     * trying login with submitted data
+     * @param customer
+     * @param response
+     * @param model
+     * @return redirects to /sortiment if login successful, else to /loginfail
+     * @throws NoSuchAlgorithmException
+     */
+    @PostMapping("/login")
+    public String loggedin(@ModelAttribute Customer customer, HttpServletResponse response, Model model) throws NoSuchAlgorithmException{
+        List<Customer> customers = db.query("SELECT * FROM customers WHERE email = ?", new CustomerRowMapper(), customer.getEmail());
+        // customer.passHash contains the plain text password right now!
+        if (!customers.isEmpty() && customers.get(0).login(customer.getPassHash())){
+            Cookie cookie = new Cookie("loggedInUser", customer.getEmail());
+            response.addCookie(cookie);
+            return "redirect:/sortiment";
+        } else {
+            return "redirect:/loginfail";
+        }
+    }
+
+    /**
+     * tell the user that his login-attempt failed
+     * @param loggedInUser
+     * @param model
+     * @return loginfail.html template
+     */
+    @GetMapping("/loginfail")
+    public String loginfail(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser, Model model){
+        model.addAttribute("loggedInUser", loggedInUser);
+        return "loginfail";
+    }
+
+    /**
+     * logout
+     * @param response
+     * @param model
+     * @return logout.html template
+     */
+    @GetMapping("/logout")
+    public String logout(HttpServletResponse response, Model model){
+        Cookie cookie = new Cookie("loggedInUser", null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+        model.addAttribute("loggedInUser", "");
+        return "logout";
     }
 
     /**
