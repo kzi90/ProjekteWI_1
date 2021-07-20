@@ -2,11 +2,19 @@ package webshop;
 
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
+import java.util.List;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import java.text.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class EmployeeController {
@@ -17,6 +25,68 @@ public class EmployeeController {
     @Autowired
     private AddressController addressController;
 
+    /**
+     * secret login for employees
+     * @param loggedInUser
+     * @param model
+     * @return s3cr3tl0g1n.html template
+     */
+    @GetMapping("/s3cr3tl0g1n")
+    public String s3cr3tl0g1n(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser, Model model){
+        model.addAttribute("loggedInUser", loggedInUser);
+        Employee employee = new Employee();
+        model.addAttribute(employee);
+        return "s3cr3tl0g1n";
+    }
+
+    /**
+     * trying employee login with submitted data
+     * @param employee
+     * @param response
+     * @param model
+     * @return redirects to /sortiment if login successful, else to /loginfail
+     * @throws NoSuchAlgorithmException
+     */
+    @PostMapping("/s3cr3tl0g1n")
+    public String loggedin(@ModelAttribute Employee employee, HttpServletResponse response, Model model) throws NoSuchAlgorithmException{
+        List<Employee> employees = db.query("SELECT * FROM employees WHERE email = ?", new EmployeeRowMapper(), employee.getEmail());
+        // employee.passHash contains the plain text password right now!
+        if (!employees.isEmpty() && employees.get(0).login(employee.getPassHash())){
+            Cookie cookie = new Cookie("loggedInEmp", employee.getEmail());
+            response.addCookie(cookie);
+            return "redirect:/sortiment";
+        } else {
+            return "redirect:/loginfail";
+        }
+    }
+
+    /**
+     * logout from employee account
+     * @param loggedInUser
+     * @param response
+     * @param model
+     * @return logout.html template (same as for customers)
+     */
+    @GetMapping("/s3cr3tl0g0ut")
+    public String s3cr3tl0g0ut(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
+                                                                                       HttpServletResponse response,
+                                                                                       Model model){
+        Cookie cookie = new Cookie("loggedInEmp", null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+        model.addAttribute("loggedInUser", loggedInUser);
+        return "logout";
+    }
+
+    /**
+     * save employee- and addressdata if not already existing in database
+     * @param employee
+     * @param address
+     * @return true if the email of the employee was not used before, else false
+     * @throws DataAccessException
+     * @throws ParseException
+     * @throws NoSuchAlgorithmException
+     */
     public boolean saveEmpWithAddress(Employee employee, Address address) throws DataAccessException,
                                                                                  ParseException,
                                                                                  NoSuchAlgorithmException{
