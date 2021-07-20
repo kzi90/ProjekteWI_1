@@ -11535,12 +11535,8 @@ fieldset:disabled .btn {
 }
 
 .title {
-  font-size: 18vw;
+  font-size: 15vw;
   line-height: .7;
-}
-
-.logo img {
-  width: 8.75rem;
 }
 
 .table-ingredients {
