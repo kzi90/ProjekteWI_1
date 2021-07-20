@@ -9,89 +9,93 @@
 </head>
 
 <header class="" th:fragment="header">
-<!--<header class="container d-flex justify-content-between align-items-center" th:fragment="header">-->
-    <div class="row">
+  <div class="row">
     <div class="col">
-  <nav class="navbar navbar-dark bg-dark">
-    <div class="container-fluid">
-      <button
-        class="navbar-toggler "
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >     
-        <i class="fas fa-bars"></i>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Kontakt</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Geschichte</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/sortiment">Sortiment</a>
-          </li>
-          <li>
-            <button class="btn btn-outline-primary" type="submit">
-              <a href="/login">Login</a>
+      <div class="d-flex justify-content-start">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+          <div class="container-fluid">
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <i class="fas fa-bars"></i>
             </button>
-            <button class="btn btn-primary" type="submit">
-              <a href="/register">Registrieren</a>
-            </button>
-          </li>
-        </ul>
-        
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                  <a class="nav-link" href="/"
+                    >Home</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Kontakt</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Geschichte</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/sortiment">Sortiment</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
       </div>
     </div>
-  </nav>
-</div>
-<div class="col">
-  <a class="navbar-brand" href="/">
-    <img
-      src="./images/Logo-Bielefelder-Unikat.svg"
-      alt="Bielefelder Unikat"
-      width="140"
-      height="69"
-    />
-  </a>
-</div>
-<div class="col">
-  <a href="/shoppingcart">
-    <i class="fas fa-wine-bottle"></i>
-  </a>
-</div>
-</div>
-  <!-- <a href="/" class="logo"
-    ><img src="images/Logo-Bielefelder-Unikat.svg" alt="Bielefelder Unikat"
-  /></a>
-  <div th:switch="${loggedInUser.isEmpty()}">
-    <span th:case="${true}">
-      <div><a href="/login">anmelden</a></div>
-      <div><a href="/register">registrieren</a></div>
-    </span>
-    <span th:case="${false}">
-      <div th:text="${loggedInUser}" />
-      <div><a href="/logout">abmelden</a></div>
-    </span>
-  </div>
-  <nav>
-    <ul>
-      <li><a href="/">Startseite</a></li>
-      <li><a href="/sortiment">Sortiment</a></li>
-      <li><a href="/shoppingcart">🛒</a></li>
-       Beliebig viele weitere Menüeinträge 
-    </ul>
-  </nav> 
--->
+    <div class="col">
+      <div class="d-flex justify-content-center">
+        <a class="navbar-brand" href="/">
+          <img
+            src="./images/Logo-Bielefelder-Unikat.svg"
+            alt="Bielefelder Unikat"
+            width="140"
+            height="69"
+          />
+        </a>
+      </div>
+    </div>
+    <div class="col">
+      <div class="d-flex justify-content-end">
+        <span th:switch="${loggedInUser.isEmpty()}">
+          <span th:case="${true}">
+            <div><a href="/login">anmelden</a></div>
+            <div><a href="/register">registrieren</a></div>
+          </span>
 
+          <span th:case="${false}" class="dropdown">
+            <button
+              class="btn btn-secondary dropdown-toggle"
+              type="button"
+              id="dropdownMenuButton2"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <i class="fas fa-user-circle"></i>
+              <i class="d-none d-md-inline" th:text="${loggedInUser}"></i>
+            </button>
+            <ul
+              class="dropdown-menu dropdown-menu-dark"
+              aria-labelledby="dropdownMenuButton2"
+            >
+              <li><a class="dropdown-item" href="#">Account</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+              <li><hr class="dropdown-divider" /></li>
+              <li><a class="dropdown-item" href="/logout">Abmelden</a></li>
+            </ul>
+          </span>
+        </span>
+        <a class="btn btn-primary" href="/shoppingcart" role="button">
+          <i class="fas fa-wine-bottle"></i>
+        </a>
+      </div>
+    </div>
+  </div>
 </header>
 
 <footer class="d-flex justify-content-between" th:fragment="footer">
