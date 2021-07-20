@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+  <div th:replace="fragments :: head"></div>
+  <body>
+    <div class="container">
+      <div th:replace="fragments :: header"></div>
+      <main>
+        Die Kombination aus E-Mail-Adresse und Passwort ist falsch, bitte
+        versuch es noch einmal.
+      </main>
+      <div th:replace="fragments :: footer"></div>
+    </div>
+    <div th:replace="fragments :: scripts"></div>
+  </body>
+</html>
