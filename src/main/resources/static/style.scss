@@ -103,6 +103,12 @@ $progress-bar-bg:                   $white; // changed
     text-transform: uppercase;
     opacity: .5;
 }
+
+.title {
+    font-size: 18vw;
+    line-height: .7;
+}
+
 // 2.3 General changes
 .logo img {
     width: 8.75rem;
@@ -134,3 +140,4 @@ $progress-bar-bg:                   $white; // changed
     border: 0;
     border-top: 1px solid $gray-700;
 }
+

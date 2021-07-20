@@ -11534,6 +11534,11 @@ fieldset:disabled .btn {
   opacity: .5;
 }
 
+.title {
+  font-size: 18vw;
+  line-height: .7;
+}
+
 .logo img {
   width: 8.75rem;
 }
