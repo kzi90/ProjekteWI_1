@@ -8,7 +8,10 @@
   <link rel="icon" th:href="@{/images/favicon.ico}" />
 </head>
 
-<header class="d-flex justify-content-between align-items-center" th:fragment="header">
+<header class="" th:fragment="header">
+<!--<header class="container d-flex justify-content-between align-items-center" th:fragment="header">-->
+    <div class="row">
+    <div class="col">
   <nav class="navbar navbar-dark bg-dark">
     <div class="container-fluid">
       <button
@@ -19,13 +22,13 @@
         aria-controls="navbarSupportedContent"
         aria-expanded="false"
         aria-label="Toggle navigation"
-      >
+      >     
         <i class="fas fa-bars"></i>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
+            <a class="nav-link active" aria-current="page" href="/">Home</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Kontakt</a>
@@ -41,7 +44,7 @@
               <a href="/login">Login</a>
             </button>
             <button class="btn btn-primary" type="submit">
-              <a href="/registrieren">Registrieren</a>
+              <a href="/register">Registrieren</a>
             </button>
           </li>
         </ul>
@@ -49,7 +52,9 @@
       </div>
     </div>
   </nav>
-  <a class="navbar-brand" href="#">
+</div>
+<div class="col">
+  <a class="navbar-brand" href="/">
     <img
       src="./images/Logo-Bielefelder-Unikat.svg"
       alt="Bielefelder Unikat"
@@ -57,10 +62,13 @@
       height="69"
     />
   </a>
+</div>
+<div class="col">
   <a href="/shoppingcart">
     <i class="fas fa-wine-bottle"></i>
   </a>
-
+</div>
+</div>
   <!-- <a href="/" class="logo"
     ><img src="images/Logo-Bielefelder-Unikat.svg" alt="Bielefelder Unikat"
   /></a>
