@@ -2,9 +2,8 @@
 <html lang="de" xmlns:th="http://www.thymeleaf.org">
   <div th:replace="fragments :: head"></div>
   <body>
-    <div class="container">
+    <div class="container-fluid">
       <div th:replace="fragments :: header"></div>
-
       <h1>Registrierung</h1>
       <form action="#" th:action="@{/register}" method="post">
         <p>Vorname: <input type="text" th:field="${customer.firstname}" /></p>

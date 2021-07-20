@@ -139,3 +139,7 @@ $progress-bar-bg:                   $white; // changed
     border-top: 1px solid $gray-700;
 }
 
+header {
+    z-index: 9999;
+    position: relative;
+}

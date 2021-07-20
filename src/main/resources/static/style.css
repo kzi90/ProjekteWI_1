@@ -11564,4 +11564,9 @@ fieldset:disabled .btn {
   border: 0;
   border-top: 1px solid #5a5756;
 }
+
+header {
+  z-index: 9999;
+  position: relative;
+}
 /*# sourceMappingURL=style.css.map */
