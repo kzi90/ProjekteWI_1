@@ -41,7 +41,7 @@ public class ShoppingCart {
      * @param productID
      */
     public void addToCart(Integer productID) {
-        for (ShoppingCartPosition shoppingCartPosition : cartList) {
+        for (ShoppingCartPosition shoppingCartPosition : this.cartList) {
             if (shoppingCartPosition.getProductID().equals(productID)) {
                 shoppingCartPosition.setQuantity(shoppingCartPosition.getQuantity() + 1);
                 return;
