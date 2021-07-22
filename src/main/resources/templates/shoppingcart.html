@@ -2,9 +2,8 @@
 <html lang="de" xmlns:th="http://www.thymeleaf.org">
   <div th:replace="fragments :: head (title='Warenkorb')"></div>
   <body>
+    <div th:replace="fragments :: header"></div>
     <div class="container-fluid">
-      <div th:replace="fragments :: header"></div>
-
       <table class="table caption-top">
         <caption>
           <strong>Warenkorb:</strong>
@@ -33,9 +32,8 @@
           <td th:text="${total} + ' €'" />
         </tr>
       </table>
-
-      <div th:replace="fragments :: footer"></div>
     </div>
+    <div th:replace="fragments :: footer"></div>
     <div th:replace="fragments :: scripts"></div>
   </body>
 </html>

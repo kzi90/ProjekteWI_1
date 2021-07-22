@@ -2,20 +2,18 @@
 <html lang="de" xmlns:th="http://www.thymeleaf.org">
   <div th:replace="fragments :: head (title='Sortiment')"></div>
   <body>
+    <div th:replace="fragments :: header"></div>
     <div class="container-fluid">
-      <div th:replace="fragments :: header"></div>
       <!--==================================================
       START CONTENT
       ===================================================-->
-
       <main>
         <h1 class="title display-1 text-center">
           Wir&nbsp;brauen<br />limitiertes<br />Premium&nbsp;Bier<br />mit&nbsp;Geschichte.
         </h1>
-
         <hr class="devider" />
-
         <section th:each="product: ${products}" class="row">
+
           <!-- Product image -->
           <div class="col col-lg-2">
             <img
@@ -118,19 +116,18 @@
           <hr class="devider" />
         </section>
 
-        <h1>Bestellungen unter 0176/34934106</h1>
+        <h1>Bestellungen unter <a href="tel:+4917634934106">0176/34934106</a></h1>
         <h1>
           <a href="mailto:bierbestellen@gmail.com?subject=Bestellung">
             Bestellung per Mail an bierbestellen@gmail.com
           </a>
         </h1>
       </main>
-
       <!--==================================================
       END CONTENT
       ===================================================-->
-      <div th:replace="fragments :: footer"></div>
     </div>
+    <div th:replace="fragments :: footer"></div>
     <div th:replace="fragments :: scripts"></div>
   </body>
 </html>
