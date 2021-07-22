@@ -1,3 +1,6 @@
+<!--==================================================
+Head
+===================================================-->
 <head th:fragment="head" th:with="title=${title} ?: 'Bielefelder Unikat'">
   <title th:text="${title}" />
   <meta charset="utf-8" />
@@ -8,12 +11,18 @@
   <link rel="icon" th:href="@{/images/favicon.ico}" />
 </head>
 
+<!--==================================================
+Header
+===================================================-->
 <header class="" th:fragment="header">
   <div class="row">
     <div class="col-5">
       <div class="d-flex justify-content-start">
+        <!-- Navbar -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+          <!-- Container wrapper -->
           <div class="container-fluid">
+            <!-- Toggle button -->
             <button
               class="navbar-toggler"
               type="button"
@@ -25,19 +34,42 @@
             >
               <i class="fas fa-bars"></i>
             </button>
+
+            <!-- Collapsible wrapper -->
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <!-- Nav links -->
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0 text-center">
                 <li class="nav-item">
-                  <a class="nav-link" href="/" th:classappend="${#request.requestURI == '/' ? 'active':''}">Home</a>
+                  <a
+                    class="nav-link"
+                    href="/"
+                    th:classappend="${#request.requestURI == '/' ? 'active':''}"
+                    >Home</a
+                  >
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#" th:classappend="${#request.requestURI == '/kontakt' ? 'active':''}">Kontakt</a>
+                  <a
+                    class="nav-link"
+                    href="#"
+                    th:classappend="${#request.requestURI == '/kontakt' ? 'active':''}"
+                    >Kontakt</a
+                  >
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#" th:classappend="${#request.requestURI == '/geschichte' ? 'active':''}">Geschichte</a>
+                  <a
+                    class="nav-link"
+                    href="#"
+                    th:classappend="${#request.requestURI == '/geschichte' ? 'active':''}"
+                    >Geschichte</a
+                  >
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="/sortiment" th:classappend="${#request.getRequestURI().startsWith('/sortiment') ? 'active':''}">Sortiment</a>
+                  <a
+                    class="nav-link"
+                    href="/sortiment"
+                    th:classappend="${#request.getRequestURI().startsWith('/sortiment') ? 'active':''}"
+                    >Sortiment</a
+                  >
                 </li>
               </ul>
             </div>
@@ -47,6 +79,7 @@
     </div>
     <div class="col-2">
       <div class="d-flex justify-content-center">
+        <!-- Logo -->
         <a class="navbar-brand" href="/">
           <img
             src="./images/Logo-Bielefelder-Unikat.svg"
@@ -59,12 +92,19 @@
     </div>
     <div class="col-5">
       <div class="d-flex justify-content-end">
+        <!-- LoggedIn? -->
         <span th:switch="${loggedInUser.isEmpty()}">
+          <!-- No -->
           <span th:case="${true}">
-            <div><a href="/login">anmelden</a></div>
-            <div><a href="/register">registrieren</a></div>
+            <a href="/login" class="btn btn-outline-primary" role="button"
+              >anmelden</a
+            >
+            <a href="/register" class="btn btn-primary" role="button"
+              >registrieren</a
+            >
           </span>
 
+          <!-- Yes -->
           <span th:case="${false}" class="dropdown">
             <button
               class="btn btn-secondary dropdown-toggle"
@@ -76,18 +116,20 @@
               <i class="fas fa-user-circle"></i>
               <i class="d-none d-md-inline" th:text="${loggedInUser}"></i>
             </button>
+
             <ul
               class="dropdown-menu dropdown-menu-dark"
               aria-labelledby="dropdownMenuButton2"
             >
               <li><a class="dropdown-item" href="#">Account</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
+              <li><a class="dropdown-item" href="#">Bestellungen</a></li>
               <li><hr class="dropdown-divider" /></li>
               <li><a class="dropdown-item" href="/logout">Abmelden</a></li>
             </ul>
           </span>
         </span>
+
+        <!-- Shopping cart -->
         <a class="btn btn-primary" href="/shoppingcart" role="button">
           <i class="fas fa-wine-bottle"></i>
         </a>
@@ -96,12 +138,62 @@
   </div>
 </header>
 
-<footer class="d-flex justify-content-between" th:fragment="footer">
-  <span>© Copyright Bielefelder Unikat. All Rights reserved.</span>
-  <span>You can't buy happiness, but you can buy beer.</span>
-  <a href="/impressum">Impressum</a>
+<!--==================================================
+Footer
+===================================================-->
+<footer th:fragment="footer">
+  
+  <!-- Divider -->
+  <div
+    class="divider d-flex justify-content-center mt-5 mb-3"
+    role="separator"
+  >
+    <div class="divider-content px-4 bg-dark">
+      <img
+        src="./images/wappen-bielefeld.svg"
+        alt="Bielefelder Wappen"
+        width="80"
+        height="94"
+      />
+    </div>
+  </div>
+
+  <!-- Title -->
+  <h6 class="title display-1 mb-5 text-muted">Glück&nbsp;kann&nbsp;man&nbsp;nicht<br />kaufen,&nbsp;aber&nbsp;Bier.</h6>
+
+  <!-- Social media -->
+  <div class="text-center display-4 mb-5">
+    <a href="https://de-de.facebook.com/" title="Facebook" class="me-1"
+      ><i class="fab fa-facebook-square"></i
+    ></a>
+    <a href="https://twitter.com/?lang=de" title="Twitter" class="me-1"
+      ><i class="fab fa-twitter-square"></i
+    ></a>
+    <a href="https://www.instagram.com/" title="Instagram" class="me-1"
+      ><i class="fab fa-instagram-square"></i
+    ></a>
+    <a href="https://www.youtube.com/?hl=de&gl=de" title="YouTube" class="me-1"
+      ><i class="fab fa-youtube-square"></i
+    ></a>
+    <a href="https://www.pinterest.de/" title="Pinterest" class="me-1"
+      ><i class="fab fa-pinterest-square"></i
+    ></a>
+  </div>
+
+  <!-- Legal -->
+  <div class="text-center text-muted legal">
+    <p>Copyright © 2021 Bielefelder Unikat. Alle Rechte vorbehalten.<br />
+      <a href="/impressum" class="text-decoration-none me-2 text-white-50">Impressum</a>
+      <a href="/datenschutz" class="text-decoration-none me-2 text-white-50">Datenschutz</a>
+      <a href="/agb" class="text-decoration-none text-white-50">AGB</a>
+    </p>
+  </div>
+
 </footer>
 
+<!--==================================================
+Scripts
+===================================================-->
 <div th:fragment="scripts">
   <!-- Bootstrap JavaScript -->
   <script

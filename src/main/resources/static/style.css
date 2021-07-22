@@ -94,7 +94,7 @@ hr:not([size]) {
 h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
   margin-top: 0;
   margin-bottom: 0.5rem;
-  font-family: "Enchanted Land";
+  font-family: "Roboto Slab";
   font-weight: 500;
   line-height: 1.2;
 }
@@ -11534,9 +11534,23 @@ fieldset:disabled .btn {
   opacity: .5;
 }
 
+.display-1, .display-2, .display-3, .display-4, .display-5, .display-6 {
+  margin-bottom: 0.5rem;
+  font-family: "Enchanted Land";
+  font-style: null;
+  font-weight: null;
+  line-height: 1.2;
+  color: null;
+}
+
 .title {
   font-size: 15vw;
   line-height: .7;
+  text-align: center;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .table-ingredients {
@@ -11568,5 +11582,30 @@ fieldset:disabled .btn {
 header {
   z-index: 9999;
   position: relative;
+}
+
+/*==================================================
+Footer
+==================================================*/
+.divider {
+  position: relative;
+}
+
+.divider:before {
+  border-top: 2px solid #464445;
+  position: absolute;
+  display: block;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  content: "";
+}
+
+.divider-content {
+  z-index: 1;
+}
+
+.legal a:hover {
+  color: #F9AB26 !important;
 }
 /*# sourceMappingURL=style.css.map */
