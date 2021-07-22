@@ -68,6 +68,18 @@ public class WebsiteController {
     }
 
     /**
+     * contact-webpage
+     * @param loggedInUser
+     * @param model
+     * @return contact.html template
+     */
+    @GetMapping("/contact")
+    public String contact(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser, Model model){
+        model.addAttribute("loggedInUser", loggedInUser);
+        return "contact";
+    }
+
+    /**
      * 
      * @param model
      * @return db.html template
