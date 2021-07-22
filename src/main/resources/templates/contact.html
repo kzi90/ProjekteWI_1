@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+  <div th:replace="fragments :: head"></div>
+  <body>
+    <div class="container-fluid">
+      <div th:replace="fragments :: header(title='Kontakt')"></div>
+      <!--==================================================
+      START CONTENT
+      ===================================================-->
+      <main>
+        <h1>Kontakt</h1>
+        <p>
+          Unsere Mitarbeiter:<br />
+          Pascal Bringer, Sven Hädrich, Lukas Kröker, Jens Trautmann und Kasimir
+          Eckhardt
+        </p>
+        <p>
+          Anschrift:<br />
+          Kupferhammer<br />
+          33649 Bielefeld
+        </p>
+        <p>Telefonnummer Kundennotdienst: <a href="tel:+4917634934106">0176/34934106</a></p>
+        <div>
+          <h2>Nachricht an Support senden</h2>
+          <p>Name: <input type="text" id="name" /></p>
+          <p>Betreff: <input type="text" id="subject" /></p>
+          <p>
+            Nachricht:<br />
+            <textarea id="message" cols="50" rows="10"></textarea>
+          </p>
+          <script>
+            function sendMessage() {
+              var name = document.getElementById("name").value;
+              var subject = document.getElementById("subject").value;
+              var message = document.getElementById("message").value;
+              message = message + "\n\nFreundliche Grüße\n\n" + name;
+              window.location.href =
+                "mailto:bierbestellen@gmail.com?subject=" +
+                encodeURIComponent(subject) +
+                "&body=" +
+                encodeURIComponent(message);
+            }
+          </script>
+          <button
+            type="button"
+            class="btn btn-primary"
+            onClick="sendMessage();"
+          >
+            Versenden
+          </button>
+        </div>
+      </main>
+
+      <!--==================================================
+      END CONTENT
+      ===================================================-->
+      <div th:replace="fragments :: footer"></div>
+    </div>
+    <div th:replace="fragments :: scripts"></div>
+  </body>
+</html>

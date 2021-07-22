@@ -11553,6 +11553,20 @@ fieldset:disabled .btn {
           user-select: none;
 }
 
+header {
+  z-index: 9998;
+  position: relative;
+}
+
+header img {
+  z-index: 9999;
+  position: relative;
+}
+
+footer {
+  background-color: #333135;
+}
+
 .table-ingredients {
   margin-bottom: 1rem;
   table-layout: fixed;

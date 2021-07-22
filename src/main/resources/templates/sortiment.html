@@ -97,17 +97,23 @@
             <span class="text-price mx-auto mb-1" th:text="${product.price}" />
             <span class="text-vat mx-auto mb-2">€ inkl. MwSt.</span>
 
-            <!-- Button -->
-            <form th:action="@{/addProductToCart}">
-              <button
-                class="btn btn-primary mx-auto"
-                type="submit"
-                th:name="productID"
-                th:value="${product.id}"
-              >
-                In die Bierkiste legen
-              </button>
-            </form>
+            <!-- Button zum Warenkorb hinzufügen -->
+            <button
+              th:id="'addToCart' + ${product.id}"
+              class="btn btn-primary mx-auto"
+            >
+              In die Bierkiste legen
+            </button>
+
+            <script th:inline="javascript">
+              document
+                .getElementById("addToCart[[${product.id}]]")
+                .addEventListener("click", function () {
+                  fetch("addProductToCart?productID=[[${product.id}]]", {
+                    mode: "no-cors",
+                  });
+                });
+            </script>
           </div>
           <hr class="devider" />
         </section>
