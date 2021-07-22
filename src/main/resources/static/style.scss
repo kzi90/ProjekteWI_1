@@ -110,7 +110,19 @@ $progress-bar-bg:                   $white; // changed
 }
 
 // 2.3 General changes
+header {
+    z-index: 9998;
+    position: relative;
+}
 
+header img {
+    z-index: 9999;
+    position: relative;
+}
+
+footer {
+    background-color: $gray-900;
+}
 
 // 2.X Ingredients table
 .table-ingredients {
@@ -137,9 +149,4 @@ $progress-bar-bg:                   $white; // changed
     margin-bottom: 5rem;
     border: 0;
     border-top: 1px solid $gray-700;
-}
-
-header {
-    z-index: 9999;
-    position: relative;
 }

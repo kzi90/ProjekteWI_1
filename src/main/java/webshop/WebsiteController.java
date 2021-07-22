@@ -79,6 +79,12 @@ public class WebsiteController {
         return "contact";
     }
 
+    @GetMapping("/history")
+    public String history(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser, Model model){
+        model.addAttribute("loggedInUser", loggedInUser);
+        return "history";
+    }
+
     /**
      * 
      * @param model

@@ -11539,6 +11539,20 @@ fieldset:disabled .btn {
   line-height: .7;
 }
 
+header {
+  z-index: 9998;
+  position: relative;
+}
+
+header img {
+  z-index: 9999;
+  position: relative;
+}
+
+footer {
+  background-color: #333135;
+}
+
 .table-ingredients {
   margin-bottom: 1rem;
   table-layout: fixed;
@@ -11563,10 +11577,5 @@ fieldset:disabled .btn {
   margin-bottom: 5rem;
   border: 0;
   border-top: 1px solid #5a5756;
-}
-
-header {
-  z-index: 9999;
-  position: relative;
 }
 /*# sourceMappingURL=style.css.map */
