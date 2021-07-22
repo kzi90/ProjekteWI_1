@@ -48,16 +48,28 @@ Header
                   >
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="/contact"
-                    th:classappend="${#request.requestURI == '/contact' ? 'active':''}">Kontakt</a>
+                  <a
+                    class="nav-link"
+                    href="/contact"
+                    th:classappend="${#request.requestURI == '/contact' ? 'active':''}"
+                    >Kontakt</a
+                  >
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="/history"
-                    th:classappend="${#request.requestURI == '/history' ? 'active':''}">Geschichte</a>
+                  <a
+                    class="nav-link"
+                    href="/history"
+                    th:classappend="${#request.requestURI == '/history' ? 'active':''}"
+                    >Geschichte</a
+                  >
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="/sortiment"
-                    th:classappend="${#request.getRequestURI().startsWith('/sortiment') ? 'active':''}">Sortiment</a>
+                  <a
+                    class="nav-link"
+                    href="/sortiment"
+                    th:classappend="${#request.getRequestURI().startsWith('/sortiment') ? 'active':''}"
+                    >Sortiment</a
+                  >
                 </li>
               </ul>
             </div>
@@ -69,7 +81,12 @@ Header
       <div class="d-flex justify-content-center">
         <!-- Logo -->
         <a class="navbar-brand" href="/">
-          <img src="./images/Logo-Bielefelder-Unikat.svg" alt="Bielefelder Unikat" width="140" height="69" />
+          <img
+            src="./images/Logo-Bielefelder-Unikat.svg"
+            alt="Bielefelder Unikat"
+            width="140"
+            height="69"
+          />
         </a>
       </div>
     </div>
@@ -89,8 +106,13 @@ Header
 
           <!-- Yes -->
           <span th:case="${false}" class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2"
-              data-bs-toggle="dropdown" aria-expanded="false">
+            <button
+              class="btn btn-secondary dropdown-toggle"
+              type="button"
+              id="dropdownMenuButton2"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
               <i class="fas fa-user-circle"></i>
               <i class="d-none d-md-inline" th:text="${loggedInUser}"></i>
             </button>
@@ -120,12 +142,8 @@ Header
 Footer
 ===================================================-->
 <footer th:fragment="footer">
-  
   <!-- Divider -->
-  <div
-    class="divider d-flex justify-content-center mt-5 mb-3"
-    role="separator"
-  >
+  <div class="divider d-flex justify-content-center mt-5 mb-3" role="separator">
     <div class="divider-content px-4 bg-dark">
       <img
         src="./images/wappen-bielefeld.svg"
@@ -137,7 +155,9 @@ Footer
   </div>
 
   <!-- Title -->
-  <h6 class="title display-1 mb-5 text-muted">Glück&nbsp;kann&nbsp;man&nbsp;nicht<br />kaufen,&nbsp;aber&nbsp;Bier.</h6>
+  <h6 class="title display-1 mb-5 text-muted">
+    Glück&nbsp;kann&nbsp;man&nbsp;nicht<br />kaufen,&nbsp;aber&nbsp;Bier.
+  </h6>
 
   <!-- Social media -->
   <div class="text-center display-4 mb-5">
@@ -156,17 +176,24 @@ Footer
     <a href="https://www.pinterest.de/" title="Pinterest" class="me-1"
       ><i class="fab fa-pinterest-square"></i
     ></a>
+    <a href="mailto:bierbestellen@gmail.com" title="E-Mail"
+      ><i class="fas fa-envelope-square"></i
+    ></a>
   </div>
 
   <!-- Legal -->
   <div class="text-center text-muted legal">
-    <p>Copyright © 2021 Bielefelder Unikat. Alle Rechte vorbehalten.<br />
-      <a href="/impressum" class="text-decoration-none me-2 text-white-50">Impressum</a>
-      <a href="/datenschutz" class="text-decoration-none me-2 text-white-50">Datenschutz</a>
+    <p>
+      Copyright © 2021 Bielefelder Unikat. Alle Rechte vorbehalten.<br />
+      <a href="/impressum" class="text-decoration-none me-2 text-white-50"
+        >Impressum</a
+      >
+      <a href="/datenschutz" class="text-decoration-none me-2 text-white-50"
+        >Datenschutz</a
+      >
       <a href="/agb" class="text-decoration-none text-white-50">AGB</a>
     </p>
   </div>
-
 </footer>
 
 <!--==================================================
@@ -174,7 +201,9 @@ Scripts
 ===================================================-->
 <div th:fragment="scripts">
   <!-- Bootstrap JavaScript -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-    crossorigin="anonymous"></script>
+    crossorigin="anonymous"
+  ></script>
 </div>
