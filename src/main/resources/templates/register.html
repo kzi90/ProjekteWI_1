@@ -2,8 +2,8 @@
 <html lang="de" xmlns:th="http://www.thymeleaf.org">
   <div th:replace="fragments :: head"></div>
   <body>
+    <div th:replace="fragments :: header"></div>
     <div class="container-fluid">
-      <div th:replace="fragments :: header"></div>
       <h1>Registrierung</h1>
       <form action="#" th:action="@{/register}" method="post">
         <p>Vorname: <input type="text" th:field="${customer.firstname}" /></p>
@@ -29,8 +29,8 @@
           <input type="reset" value="Reset" />
         </p>
       </form>
-      <div th:replace="fragments :: footer"></div>
     </div>
+    <div th:replace="fragments :: footer"></div>
     <div th:replace="fragments :: scripts"></div>
   </body>
 </html>

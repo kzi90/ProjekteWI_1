@@ -2,22 +2,20 @@
 <html lang="de" xmlns:th="http://www.thymeleaf.org">
   <div th:replace="fragments :: head"></div>
   <body th:switch="${emailAlreadyRegistered}">
+    <div th:replace="fragments :: header"></div>
     <div class="container-fluid">
-      <div th:replace="fragments :: header"></div>
-
-      <span th:case="false"
-        >Herzlich Willkommen
+      <span th:case="false">
+        Herzlich Willkommen
         <span th:text="${customer.firstname + ' ' + customer.lastname + ','}" />
         deine Registrierung war erfolgreich.
       </span>
-      <span th:case="true"
-        >Es gibt bereits ein Nutzerkonto mit der E-Mail-Adresse
+      <span th:case="true">
+        Es gibt bereits ein Nutzerkonto mit der E-Mail-Adresse
         <span th:text="${customer.email + '.'}" />
       </span>
       <span th:case="*">ERROR! Das hätte nicht passieren dürfen!</span>
-
-      <div th:replace="fragments :: footer"></div>
     </div>
+    <div th:replace="fragments :: footer"></div>
     <div th:replace="fragments :: scripts"></div>
   </body>
 </html>

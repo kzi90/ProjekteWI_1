@@ -2,9 +2,8 @@
 <html lang="de" xmlns:th="http://www.thymeleaf.org">
   <div th:replace="fragments :: head (title='Impressum')"></div>
   <body>
+    <div th:replace="fragments :: header"></div>
     <div class="container-fluid">
-      <div th:replace="fragments :: header"></div>
-
       <h1>Impressum</h1>
       <div>
         <p>
@@ -22,9 +21,8 @@
           Umsatzsteuer-ID: DE123456789
         </p>
       </div>
-
-      <div th:replace="fragments :: footer"></div>
     </div>
+    <div th:replace="fragments :: footer"></div>
     <div th:replace="fragments :: scripts"></div>
   </body>
 </html>
