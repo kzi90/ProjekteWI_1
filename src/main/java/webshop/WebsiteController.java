@@ -73,6 +73,20 @@ public class WebsiteController {
     }
 
     /**
+     * AGB
+     * @param loggedInUser
+     * @param model
+     * @return agb.html template
+     */
+    @GetMapping("/agb")
+    public String agb(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser, Model model){
+        model.addAttribute("loggedInUser", loggedInUser);
+        model.addAttribute("templateName", "agb");
+        model.addAttribute("title", "AGB");
+        return "layout";
+    }
+
+    /**
      * contact-webpage
      * @param loggedInUser
      * @param model
