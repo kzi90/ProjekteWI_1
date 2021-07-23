@@ -59,7 +59,9 @@ public class ShoppingCartController {
         model.addAttribute("shoppingCartLines", shoppingCartLines);
         total = Math.round(total * 100) / 100.0;
         model.addAttribute("total", String.format("%.2f", total));
-        return "shoppingcart";
+        model.addAttribute("templateName", "shoppingcart");
+        model.addAttribute("title", "Warenkorb");
+        return "layout";
     }
 
 }
