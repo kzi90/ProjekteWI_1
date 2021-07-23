@@ -87,6 +87,20 @@ public class WebsiteController {
     }
 
     /**
+     * Datenschutz
+     * @param loggedInUser
+     * @param model
+     * @return datenschutz.html template
+     */
+    @GetMapping("/datenschutz")
+    public String datenschutz(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser, Model model){
+        model.addAttribute("loggedInUser", loggedInUser);
+        model.addAttribute("templateName", "datenschutz");
+        model.addAttribute("title", "Datenschutz");
+        return "layout";
+    }
+
+    /**
      * contact-webpage
      * @param loggedInUser
      * @param model
