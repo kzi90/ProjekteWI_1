@@ -12,8 +12,11 @@ Table of contents
 
 =========================*/
 
-// 1. Variables overrides
-// 1.1 Color system
+
+
+/*==================================================
+Color
+==================================================*/
 // scss-docs-start gray-color-variables
 $white:    #f8efdd; // changed
 $gray-100: #e0d8c8; // changed
@@ -50,8 +53,6 @@ $danger:        $red;
 $light:         $white;
 $dark:          $black;
 
-// Body
-//
 // Settings for the `<body>` element.
 $body-bg:                   $black;
 $body-color:                $white;
@@ -132,6 +133,9 @@ header img {
     position: relative;
 }
 
+/*==================================================
+Table
+==================================================*/
 // 2.X Ingredients table
 .table-ingredients {
     margin-bottom: $spacer;
@@ -169,10 +173,18 @@ header {
 /*==================================================
 Footer
 ==================================================*/
-.divider {
-    position: relative
+.legal a:hover {
+    color: $light !important;
 }
-.divider:before {
+
+/*==================================================
+Components
+==================================================*/
+/* Divider */
+.divider-wrapper {
+    position: relative;
+}
+.divider-wrapper:before {
     border-top: 2px solid $gray-800;
     position: absolute;
     display: block;
@@ -181,11 +193,6 @@ Footer
     width: 100%;
     content: "";
 }
-
 .divider-content {
     z-index: 1;
-}
-
-.legal a:hover {
-    color: $light !important;
 }

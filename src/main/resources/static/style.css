@@ -11,6 +11,9 @@ Table of contents
 
 
 =========================*/
+/*==================================================
+Color
+==================================================*/
 @font-face {
   font-family: "Enchanted Land";
   src: url(./fonts/EnchantedLand.otf);
@@ -11563,6 +11566,9 @@ header img {
   position: relative;
 }
 
+/*==================================================
+Table
+==================================================*/
 .table-ingredients {
   margin-bottom: 1rem;
   table-layout: fixed;
@@ -11597,11 +11603,19 @@ header {
 /*==================================================
 Footer
 ==================================================*/
-.divider {
+.legal a:hover {
+  color: #f8efdd !important;
+}
+
+/*==================================================
+Components
+==================================================*/
+/* Divider */
+.divider-wrapper {
   position: relative;
 }
 
-.divider:before {
+.divider-wrapper:before {
   border-top: 2px solid #464445;
   position: absolute;
   display: block;
@@ -11613,9 +11627,5 @@ Footer
 
 .divider-content {
   z-index: 1;
-}
-
-.legal a:hover {
-  color: #f8efdd !important;
 }
 /*# sourceMappingURL=style.css.map */

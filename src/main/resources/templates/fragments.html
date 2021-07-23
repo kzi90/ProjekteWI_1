@@ -150,17 +150,9 @@ Header
 Footer
 ===================================================-->
 <footer th:fragment="footer">
+
   <!-- Divider -->
-  <div class="divider d-flex justify-content-center mt-5 mb-3" role="separator">
-    <div class="divider-content px-4 bg-dark">
-      <img
-        src="./images/wappen-bielefeld.svg"
-        alt="Bielefelder Wappen"
-        width="80"
-        height="94"
-      />
-    </div>
-  </div>
+  <div th:replace="fragments :: divider (src='wappen-bielefeld.svg',alt='Bielefelder Wappen',width='80',height='94')"></div>
 
   <!-- Title -->
   <h6 class="title display-1 mb-5 text-muted">
@@ -214,4 +206,18 @@ Scripts
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
     crossorigin="anonymous"
   ></script>
+</div>
+
+<!--==================================================
+Divider
+===================================================-->
+<div th:fragment="divider" th:with="src=${src},alt=${alt},width=${width},height=${height}" class="divider-wrapper d-flex justify-content-center my-5" role="separator">
+  <div class="divider-content px-4 bg-dark">
+    <img
+      th:src="'./images/' + ${src}"
+      th:alt="${alt}"
+      th:width="${width}"
+      th:height="${height}"
+    />
+  </div>
 </div>
