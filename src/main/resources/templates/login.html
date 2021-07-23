@@ -1,13 +1,18 @@
 <main th:fragment="login">
-
   <h1>Anmelden</h1>
   <form action="#" th:action="@{/login}" method="post">
     <!-- save referer for evtl. redirecting -->
-    <input type="hidden" id="cameFrom" name="cameFrom" th:value="${cameFrom}">
+    <input type="hidden" id="cameFrom" name="cameFrom" th:value="${cameFrom}" />
 
     <p>E-Mail: <input type="text" th:field="${customer.email}" /></p>
     <p>Passwort: <input type="password" th:field="${customer.passHash}" /></p>
-    <input type="submit" value="Submit" />
-    <input type="reset" value="Reset" />
+    <p>
+      <input type="submit" value="Submit" />
+      <input type="reset" value="Reset" />
+    </p>
   </form>
+  <p>
+    Du hast noch kein Nutzerkonto? Hier kannst du dich
+    <a href="/register">registrieren</a>.
+  </p>
 </main>
