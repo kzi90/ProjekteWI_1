@@ -70,6 +70,7 @@ $spacer: 1rem;
 @font-face {
     font-family: "Roboto Slab";
     src: url(./fonts/RobotoSlab.ttf);
+    font-weight: 100 900;
 }
 
 $font-family-sans-serif:      "Roboto Slab", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
@@ -156,13 +157,6 @@ Table
     }
 }
 
-.devider {
-    margin-top: 5rem;
-    margin-bottom: 5rem;
-    border: 0;
-    border-top: 1px solid $gray-700;
-}
-
 header {
     z-index: 9999;
     position: relative;
@@ -195,4 +189,14 @@ Components
 }
 .divider-content {
     z-index: 1;
+}
+
+/*==================================================
+Helpers
+==================================================*/
+/* No-link */
+.no-link { pointer-events: none; }
+.no-link > a {
+    text-decoration: none;
+    color: inherit;
 }
