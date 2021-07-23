@@ -94,6 +94,14 @@ public class WebsiteController {
         return "layout";
     }
 
+    @GetMapping("/philosophy")
+    public String philosophy(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser, Model model){
+        model.addAttribute("loggedInUser", loggedInUser);
+        model.addAttribute("templateName", "philosophy");
+        model.addAttribute("title", "Bierphilosophie");
+        return "layout";
+    }
+
     /**
      * 
      * @param model

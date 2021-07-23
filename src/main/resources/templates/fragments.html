@@ -50,9 +50,9 @@ Header
                 <li class="nav-item">
                   <a
                     class="nav-link"
-                    href="/contact"
-                    th:classappend="${#request.requestURI == '/contact' ? 'active':''}"
-                    >Kontakt</a
+                    href="/sortiment"
+                    th:classappend="${#request.getRequestURI().startsWith('/sortiment') ? 'active':''}"
+                    >Sortiment</a
                   >
                 </li>
                 <li class="nav-item">
@@ -66,9 +66,17 @@ Header
                 <li class="nav-item">
                   <a
                     class="nav-link"
-                    href="/sortiment"
-                    th:classappend="${#request.getRequestURI().startsWith('/sortiment') ? 'active':''}"
-                    >Sortiment</a
+                    href="/philosophy"
+                    th:classappend="${#request.requestURI == '/philosophy' ? 'active':''}"
+                    >Bierphilosiphie</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link"
+                    href="/contact"
+                    th:classappend="${#request.requestURI == '/contact' ? 'active':''}"
+                    >Kontakt</a
                   >
                 </li>
               </ul>
