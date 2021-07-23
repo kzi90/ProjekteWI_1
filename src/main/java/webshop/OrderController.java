@@ -20,9 +20,17 @@ public class OrderController {
     @Autowired
     private OrderPositionController orderPositionController;
 
+    /**
+     * complete order from shoppingcart (if not empty). If the customer isn't logged in,
+     * he/she will be redirected to /login.
+     * @param loggedInUser
+     * @param sessID
+     * @param model
+     * @return ordercompletion.html template (if shoppingcart not empty and customer logged in)
+     */
     @GetMapping("/ordercompletion")
     public String ordercompletion(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
-            @CookieValue(value = "SessionID", defaultValue = "") String sessID, Model model) {
+                                @CookieValue(value = "SessionID", defaultValue = "") String sessID, Model model) {
         if (loggedInUser.isEmpty()) {
             return "redirect:/login";
         }
@@ -80,6 +88,11 @@ public class OrderController {
         }
     }
 
+    /**
+     * save Order
+     * @param order
+     * @return order (with id)
+     */
     public Order saveOrder(Order order) {
         Date dateTime = new Date();
         order.setOrderDate(new SimpleDateFormat("yyyy-MM-dd").format(dateTime));
