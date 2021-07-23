@@ -11605,6 +11605,13 @@ Footer
 Components
 ==================================================*/
 /* Divider */
+.divider {
+  border-top: 2px solid #464445;
+  margin-bottom: 5rem;
+  margin-top: 5rem;
+  opacity: 1;
+}
+
 .divider-wrapper {
   position: relative;
 }

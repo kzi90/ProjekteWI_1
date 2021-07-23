@@ -14,7 +14,7 @@ Head
 <!--==================================================
 Header
 ===================================================-->
-<header class="" th:fragment="header">
+<header class="mb-5" th:fragment="header">
   <div class="row">
     <div class="col-5">
       <div class="d-flex justify-content-start">
@@ -103,10 +103,10 @@ Header
         <span th:switch="${loggedInUser.isEmpty()}">
           <!-- No -->
           <span th:case="${true}">
-            <a href="/login" class="btn btn-outline-primary" role="button"
+            <a href="/login" class="btn btn-outline-primary btn-sm" role="button"
               >anmelden</a
             >
-            <a href="/register" class="btn btn-primary" role="button"
+            <a href="/register" class="btn btn-primary btn-sm" role="button"
               >registrieren</a
             >
           </span>
