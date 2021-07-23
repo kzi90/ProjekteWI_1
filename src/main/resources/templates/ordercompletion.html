@@ -1,0 +1,13 @@
+<main th:fragment="ordercompletion">
+    <p>
+        <strong>Bestellvorgang erfolgreich abgeschlossen!</strong><br>
+        Zahle den Rechnungsbetrag in Höhe von <span th:text="${total}" /> € bitte auf folgendes Bankkonto:<br>
+        Inhaber: <strong>Bielefelder Unikat</strong><br>
+        IBAN: <strong>DE86 1203 0000 1061 8459 45</strong><br>
+        BIC: <strong>BYLADEM1001</strong><br>
+        Als Verwendungszweck geben Sie bitte die Bestellnummer an: <span th:text="${orderNumber}" /><br>
+        <br>
+        Du erhältst diese Zahlungsinformationen zusätzlich per E-Mail.
+        Die Lieferung wird nach Eingang der Zahlung unverzüglich veranlasst. Vielen Dank für deinen Einkauf und Prost!
+    </p>
+</main>

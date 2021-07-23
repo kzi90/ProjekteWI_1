@@ -10,6 +10,12 @@ public class OrderPositionController {
     @Autowired
     private JdbcTemplate db;
 
-    // hier Methoden zum Speichern von OrderPositions in der DB implementieren
+    public void saveOrderPos(OrderPosition orderPosition){
+        String saveOrderPosSQL = "INSERT INTO orderpositions (pos_nr, quantity, product_id, order_id) VALUES (?, ?, ?, ?);";
+        this.db.update(saveOrderPosSQL, orderPosition.getPosNr(),
+                                        orderPosition.getQuantity(),
+                                        orderPosition.getProductID(),
+                                        orderPosition.getOrderID());
+    }
 
 }
