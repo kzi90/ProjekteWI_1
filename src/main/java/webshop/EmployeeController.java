@@ -36,7 +36,8 @@ public class EmployeeController {
         model.addAttribute("loggedInUser", loggedInUser);
         Employee employee = new Employee();
         model.addAttribute(employee);
-        return "s3cr3tl0g1n";
+        model.addAttribute("templateName", "s3cr3tl0g1n");
+        return "layout";
     }
 
     /**
@@ -75,7 +76,8 @@ public class EmployeeController {
         cookie.setMaxAge(0);
         response.addCookie(cookie);
         model.addAttribute("loggedInUser", loggedInUser);
-        return "logout";
+        model.addAttribute("templateName", "logout");
+        return "layout";
     }
 
     /**

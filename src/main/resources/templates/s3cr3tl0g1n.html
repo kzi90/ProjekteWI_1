@@ -1,22 +1,9 @@
-<!DOCTYPE html>
-<html lang="de" xmlns:th="http://www.thymeleaf.org">
-  <div th:replace="fragments :: head"></div>
-  <body>
-    <div th:replace="fragments :: header"></div>
-    <div class="container-fluid">
-      <main>
-        <h1>Geheimer Mitarbeiter-Login</h1>
-        <form action="#" th:action="@{/s3cr3tl0g1n}" method="post">
-          <p>E-Mail: <input type="text" th:field="${employee.email}" /></p>
-          <p>
-            Passwort: <input type="password" th:field="${employee.passHash}" />
-          </p>
-          <input type="submit" value="Submit" />
-          <input type="reset" value="Reset" />
-        </form>
-      </main>
-    </div>
-    <div th:replace="fragments :: footer"></div>
-    <div th:replace="fragments :: scripts"></div>
-  </body>
-</html>
+<main th:fragment="s3cr3tl0g1n">
+  <h1>Geheimer Mitarbeiter-Login</h1>
+  <form action="#" th:action="@{/s3cr3tl0g1n}" method="post">
+    <p>E-Mail: <input type="text" th:field="${employee.email}" /></p>
+    <p>Passwort: <input type="password" th:field="${employee.passHash}" /></p>
+    <input type="submit" value="Submit" />
+    <input type="reset" value="Reset" />
+  </form>
+</main>

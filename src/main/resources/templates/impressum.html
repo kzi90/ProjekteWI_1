@@ -1,28 +1,18 @@
-<!DOCTYPE html>
-<html lang="de" xmlns:th="http://www.thymeleaf.org">
-  <div th:replace="fragments :: head (title='Impressum')"></div>
-  <body>
-    <div th:replace="fragments :: header"></div>
-    <div class="container-fluid">
-      <h1>Impressum</h1>
-      <div>
-        <p>
-          Inhaber <strong>Bielefelder Unikat</strong> und verantwortlich für
-          diese Website:<br />
-          Pascal Bringer, Sven Hädrich, Lukas Kröker, Jens Trautmann und Kasimir
-          Eckhardt<br />
-          Betriebssitz:<br />
-          Kupferhammer<br />
-          33649 Bielefeld<br /><br />
-          E-Mail:
-          <a href="mailto:bierbestellen@gmail.com">bierbestellen@gmail.com</a
-          ><br />
-          Tel.: <a href="tel:+4917634934106">0176/34934106</a><br />
-          Umsatzsteuer-ID: DE123456789
-        </p>
-      </div>
-    </div>
-    <div th:replace="fragments :: footer"></div>
-    <div th:replace="fragments :: scripts"></div>
-  </body>
-</html>
+<main th:fragment="impressum">
+  <h1>Impressum</h1>
+  <div>
+    <p>
+      Inhaber <strong>Bielefelder Unikat</strong> und verantwortlich für diese
+      Website:<br />
+      Pascal Bringer, Sven Hädrich, Lukas Kröker, Jens Trautmann und Kasimir
+      Eckhardt<br />
+      Betriebssitz:<br />
+      Kupferhammer<br />
+      33649 Bielefeld<br /><br />
+      E-Mail:
+      <a href="mailto:bierbestellen@gmail.com">bierbestellen@gmail.com</a><br />
+      Tel.: <a href="tel:+4917634934106">0176/34934106</a><br />
+      Umsatzsteuer-ID: DE123456789
+    </p>
+  </div>
+</main>
