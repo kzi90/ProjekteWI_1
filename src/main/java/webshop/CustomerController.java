@@ -38,7 +38,9 @@ public class CustomerController {
         model.addAttribute(customer);
         Address address = new Address();
         model.addAttribute(address);
-        return "register";
+        model.addAttribute("templateName", "register");
+        model.addAttribute("title", "Registrieren");
+        return "layout";
     }
 
     /**
@@ -62,7 +64,8 @@ public class CustomerController {
         model.addAttribute("loggedInUser", loggedInUser);
         boolean emailAlreadyRegistered = (!saveCustWithAddress(customer, address));
         model.addAttribute("emailAlreadyRegistered", emailAlreadyRegistered);
-        return "registered";
+        model.addAttribute("templateName", "registered");
+        return "layout";
     }
 
     /**
@@ -76,7 +79,8 @@ public class CustomerController {
         model.addAttribute("loggedInUser", loggedInUser);
         Customer customer = new Customer();
         model.addAttribute(customer);
-        return "login";
+        model.addAttribute("templateName", "login");
+        return "layout";
     }
 
     /**
@@ -109,7 +113,8 @@ public class CustomerController {
     @GetMapping("/loginfail")
     public String loginfail(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser, Model model){
         model.addAttribute("loggedInUser", loggedInUser);
-        return "loginfail";
+        model.addAttribute("templateName", "loginfail");
+        return "layout";
     }
 
     /**
@@ -124,7 +129,8 @@ public class CustomerController {
         cookie.setMaxAge(0);
         response.addCookie(cookie);
         model.addAttribute("loggedInUser", "");
-        return "logout";
+        model.addAttribute("templateName", "logout");
+        return "layout";
     }
 
     /**

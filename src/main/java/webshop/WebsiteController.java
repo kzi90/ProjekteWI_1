@@ -27,7 +27,8 @@ public class WebsiteController {
     @GetMapping("/")
     public String home(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser, Model model){
         model.addAttribute("loggedInUser", loggedInUser);
-        return "home";
+        model.addAttribute("templateName", "home");
+        return "layout";
     }
 
     /**
@@ -52,7 +53,9 @@ public class WebsiteController {
             cookie.setPath("/");
             response.addCookie(cookie);
         }
-        return "sortiment";
+        model.addAttribute("templateName", "sortiment");
+        model.addAttribute("title", "Sortiment");
+        return "layout";
     }
 
     /**
@@ -64,7 +67,9 @@ public class WebsiteController {
     @GetMapping("/impressum")
     public String impressum(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser, Model model){
         model.addAttribute("loggedInUser", loggedInUser);
-        return "impressum";
+        model.addAttribute("templateName", "impressum");
+        model.addAttribute("title", "Impressum");
+        return "layout";
     }
 
     /**
@@ -76,13 +81,17 @@ public class WebsiteController {
     @GetMapping("/contact")
     public String contact(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser, Model model){
         model.addAttribute("loggedInUser", loggedInUser);
-        return "contact";
+        model.addAttribute("templateName", "contact");
+        model.addAttribute("title", "Kontakt");
+        return "layout";
     }
 
     @GetMapping("/history")
     public String history(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser, Model model){
         model.addAttribute("loggedInUser", loggedInUser);
-        return "history";
+        model.addAttribute("templateName", "history");
+        model.addAttribute("title", "Geschichte");
+        return "layout";
     }
 
     /**

@@ -1,17 +1,6 @@
-<!DOCTYPE html>
-<html lang="de" xmlns:th="http://www.thymeleaf.org">
-  <div th:replace="fragments :: head"></div>
-  <body>
-    <div th:replace="fragments :: header"></div>
-    <div class="container-fluid">
-      <main>
-        <p>
-          Die Kombination aus E-Mail-Adresse und Passwort ist falsch, bitte
-          versuch es noch einmal.
-        </p>
-      </main>
-    </div>
-    <div th:replace="fragments :: footer"></div>
-    <div th:replace="fragments :: scripts"></div>
-  </body>
-</html>
+<main th:fragment="loginfail">
+  <p>
+    Die Kombination aus E-Mail-Adresse und Passwort ist falsch, bitte versuch es
+    noch einmal.
+  </p>
+</main>

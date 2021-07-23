@@ -1,134 +1,115 @@
-<!DOCTYPE html>
-<html lang="de" xmlns:th="http://www.thymeleaf.org">
-  <div th:replace="fragments :: head (title='Sortiment')"></div>
-  <body>
-    <div th:replace="fragments :: header"></div>
-    <div class="container-fluid">
-      <!--==================================================
-      START CONTENT
-      ===================================================-->
-      <main>
-        <h1 class="title display-1">
-          Wir&nbsp;brauen<br />limitiertes<br />Premium&nbsp;Bier<br />mit&nbsp;Geschichte.
-        </h1>
-        <hr class="devider" />
-        <section th:each="product: ${products}" class="row">
-          <!-- Product image -->
-          <div class="col col-lg-2">
-            <img
-              alt="Produktbild"
-              th:src="@{${product.imgURL}}"
-              class="img-fluid w-75"
-            />
-          </div>
-
-          <!-- Name and description -->
-          <div class="col-md-5 col-lg-5 .offset-md-1">
-            <h2 class="display-2" th:text="${product.name}" />
-            <p class="description" th:text="${product.description}" />
-          </div>
-
-          <!-- Ingriedients -->
-          <div class="col-md-6 col-lg-3 .offset-md-1">
-            <table class="table table-ingredients">
-              <tr>
-                <td>
-                  <span class="text-key">Type</span>
-                  <span class="text-value">Pils</span>
-                </td>
-                <td>
-                  <span class="text-key">Volumen</span>
-                  <span
-                    class="text-value"
-                    th:text="${product.amount / 1000.0} + ' l'"
-                  />
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <span class="text-key">Alkohol</span>
-                  <span class="text-value">4,3 % vol.</span>
-                </td>
-                <td>
-                  <span class="text-key">Stammwürze</span>
-                  <span class="text-value">18,9 % mas.</span>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <span class="text-key">Brauart</span>
-                  <span class="text-value">Untergärig</span>
-                </td>
-                <td>
-                  <span class="text-key">Bittereinheiten</span>
-                  <span class="text-value">27 EBC</span>
-                </td>
-              </tr>
-              <tr>
-                <td colspan="2">
-                  <span class="text-key">Zutaten</span>
-                  <span class="text-value"
-                    >Brauwasser, Gerstenmalz, Hopfenauszüge</span
-                  >
-                </td>
-              </tr>
-              <tr>
-                <td colspan="2">
-                  <span class="text-key">Verfügbarkeit</span>
-                  <span class="text-value">24 Flaschen</span>
-                  <div class="progress">
-                    <div
-                      class="progress-bar"
-                      role="progressbar"
-                      style="width: 25%"
-                      aria-valuenow="25"
-                      aria-valuemin="0"
-                      aria-valuemax="100"
-                    ></div>
-                  </div>
-                </td>
-              </tr>
-            </table>
-
-            <!-- Price -->
-            <span class="text-price mx-auto mb-1" th:text="${product.price}" />
-            <span class="text-vat mx-auto mb-2">€ inkl. MwSt.</span>
-
-            <!-- Button zum Warenkorb hinzufügen -->
-            <button
-              th:id="'addToCart' + ${product.id}"
-              class="btn btn-primary mx-auto"
-            >
-              In die Bierkiste legen
-            </button>
-
-            <script th:inline="javascript">
-              document
-                .getElementById("addToCart[[${product.id}]]")
-                .addEventListener("click", function () {
-                  fetch("addProductToCart?productID=[[${product.id}]]", {
-                    mode: "no-cors",
-                  });
-                });
-            </script>
-          </div>
-          <hr class="devider" />
-        </section>
-
-        <h1>
-          Bestellungen unter <a href="tel:+4917634934106">0176/34934106</a>
-        </h1>
-        <h1>
-          <a href="mailto:bierbestellen@gmail.com?subject=Bestellung">
-            Bestellung per Mail an bierbestellen@gmail.com
-          </a>
-        </h1>
-      </main>
-      <!--==================================================
-      END CONTENT
-      ===================================================-->
+<main th:fragment="sortiment">
+  <h1 class="title display-1">
+    Wir&nbsp;brauen<br />limitiertes<br />Premium&nbsp;Bier<br />mit&nbsp;Geschichte.
+  </h1>
+  <hr class="devider" />
+  <section th:each="product: ${products}" class="row">
+    <!-- Product image -->
+    <div class="col col-lg-2">
+      <img
+        alt="Produktbild"
+        th:src="@{${product.imgURL}}"
+        class="img-fluid w-75"
+      />
     </div>
-    <div th:replace="fragments :: footer"></div>
-    <div th:replace="fragments :: scripts"></div>
-  </body>
-</html>
+
+    <!-- Name and description -->
+    <div class="col-md-5 col-lg-5 .offset-md-1">
+      <h2 class="display-2" th:text="${product.name}" />
+      <p class="description" th:text="${product.description}" />
+    </div>
+
+    <!-- Ingriedients -->
+    <div class="col-md-6 col-lg-3 .offset-md-1">
+      <table class="table table-ingredients">
+        <tr>
+          <td>
+            <span class="text-key">Type</span>
+            <span class="text-value">Pils</span>
+          </td>
+          <td>
+            <span class="text-key">Volumen</span>
+            <span
+              class="text-value"
+              th:text="${product.amount / 1000.0} + ' l'"
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="text-key">Alkohol</span>
+            <span class="text-value">4,3 % vol.</span>
+          </td>
+          <td>
+            <span class="text-key">Stammwürze</span>
+            <span class="text-value">18,9 % mas.</span>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <span class="text-key">Brauart</span>
+            <span class="text-value">Untergärig</span>
+          </td>
+          <td>
+            <span class="text-key">Bittereinheiten</span>
+            <span class="text-value">27 EBC</span>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <span class="text-key">Zutaten</span>
+            <span class="text-value"
+              >Brauwasser, Gerstenmalz, Hopfenauszüge</span
+            >
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <span class="text-key">Verfügbarkeit</span>
+            <span class="text-value">24 Flaschen</span>
+            <div class="progress">
+              <div
+                class="progress-bar"
+                role="progressbar"
+                style="width: 25%"
+                aria-valuenow="25"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              ></div>
+            </div>
+          </td>
+        </tr>
+      </table>
+
+      <!-- Price -->
+      <span class="text-price mx-auto mb-1" th:text="${product.price}" />
+      <span class="text-vat mx-auto mb-2">€ inkl. MwSt.</span>
+
+      <!-- Button zum Warenkorb hinzufügen -->
+      <button
+        th:id="'addToCart' + ${product.id}"
+        class="btn btn-primary mx-auto"
+      >
+        In die Bierkiste legen
+      </button>
+
+      <script th:inline="javascript">
+        document
+          .getElementById("addToCart[[${product.id}]]")
+          .addEventListener("click", function () {
+            fetch("addProductToCart?productID=[[${product.id}]]", {
+              mode: "no-cors",
+            });
+          });
+      </script>
+    </div>
+    <hr class="devider" />
+  </section>
+
+  <h1>Bestellungen unter <a href="tel:+4917634934106">0176/34934106</a></h1>
+  <h1>
+    <a href="mailto:bierbestellen@gmail.com?subject=Bestellung">
+      Bestellung per Mail an bierbestellen@gmail.com
+    </a>
+  </h1>
+</main>
