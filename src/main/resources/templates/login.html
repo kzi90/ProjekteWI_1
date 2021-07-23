@@ -1,6 +1,10 @@
 <main th:fragment="login">
+
   <h1>Anmelden</h1>
   <form action="#" th:action="@{/login}" method="post">
+    <!-- save referer for evtl. redirecting -->
+    <input type="hidden" id="cameFrom" name="cameFrom" th:value="${cameFrom}">
+
     <p>E-Mail: <input type="text" th:field="${customer.email}" /></p>
     <p>Passwort: <input type="password" th:field="${customer.passHash}" /></p>
     <input type="submit" value="Submit" />

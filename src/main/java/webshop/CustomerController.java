@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -75,8 +76,11 @@ public class CustomerController {
      * @return login.html template
      */
     @GetMapping("/login")
-    public String login(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser, Model model){
+    public String login(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
+                                                                                HttpServletRequest request,
+                                                                                Model model){
         model.addAttribute("loggedInUser", loggedInUser);
+        model.addAttribute("cameFrom", request.getHeader("Referer"));
         Customer customer = new Customer();
         model.addAttribute(customer);
         model.addAttribute("templateName", "login");
@@ -92,13 +96,18 @@ public class CustomerController {
      * @throws NoSuchAlgorithmException
      */
     @PostMapping("/login")
-    public String loggedin(@ModelAttribute Customer customer, HttpServletResponse response, Model model) throws NoSuchAlgorithmException{
+    public String loggedin(@ModelAttribute Customer customer,
+                           @ModelAttribute("cameFrom") String cameFrom,
+                                           HttpServletRequest request,
+                                           HttpServletResponse response)
+                                                                            throws NoSuchAlgorithmException{
         List<Customer> customers = db.query("SELECT * FROM customers WHERE email = ?", new CustomerRowMapper(), customer.getEmail());
         // customer.passHash contains the plain text password right now!
         if (!customers.isEmpty() && customers.get(0).login(customer.getPassHash())){
             Cookie cookie = new Cookie("loggedInUser", customer.getEmail());
             response.addCookie(cookie);
-            return "redirect:/sortiment";
+            return cameFrom.endsWith("/logout") || cameFrom.endsWith("/register") || cameFrom.endsWith("/loginfail") ?
+                "redirect:/sortiment" : "redirect:" + cameFrom;
         } else {
             return "redirect:/loginfail";
         }
