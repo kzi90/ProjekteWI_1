@@ -1,30 +1,41 @@
 <main th:fragment="shoppingcart">
-  <table class="table caption-top">
-    <caption>
-      <strong>Warenkorb:</strong>
-    </caption>
-    <tr>
-      <th scope="col" th:text="'Artikelnummer'" />
-      <th scope="col" th:text="'Bezeichnung'" />
-      <th scope="col" th:text="''" />
-      <th scope="col" th:text="'Menge'" />
-      <th scope="col" th:text="'Einzelpreis'" />
-      <th scope="col" th:text="'Gesamtpreis'" />
-    </tr>
-    <tr th:each="cartLine: ${shoppingCartLines}">
-      <td th:text="${cartLine[0]}" />
-      <td th:text="${cartLine[1]}" />
-      <td>
-        <img alt="Produktbild" th:src="@{${cartLine[2]}}" height="120" />
-      </td>
-      <td th:text="${cartLine[3]}" />
-      <td th:text="${cartLine[4]} + ' €'" />
-      <td th:text="${cartLine[5]} + ' €'" />
-    </tr>
-    <tr>
-      <td colspan="4" />
-      <td th:text="'Summe: '" />
-      <td th:text="${total} + ' €'" />
-    </tr>
-  </table>
+  <div th:switch="${total != '0,00'}">
+    <div th:case="${true}">
+      <table class="table caption-top">
+        <caption>
+          <strong>Warenkorb:</strong>
+        </caption>
+        <tr>
+          <th scope="col" th:text="'Artikelnummer'" />
+          <th scope="col" th:text="'Bezeichnung'" />
+          <th scope="col" th:text="''" />
+          <th scope="col" th:text="'Menge'" />
+          <th scope="col" th:text="'Einzelpreis'" />
+          <th scope="col" th:text="'Gesamtpreis'" />
+        </tr>
+        <tr th:each="cartLine: ${shoppingCartLines}">
+          <td th:text="${cartLine[0]}" />
+          <td th:text="${cartLine[1]}" />
+          <td>
+            <img alt="Produktbild" th:src="@{${cartLine[2]}}" height="120" />
+          </td>
+          <td th:text="${cartLine[3]}" />
+          <td th:text="${cartLine[4]} + ' €'" />
+          <td th:text="${cartLine[5]} + ' €'" />
+        </tr>
+        <tr>
+          <td colspan="4" />
+          <td th:text="'Summe: '" />
+          <td th:text="${total} + ' €'" />
+        </tr>
+      </table>
+      <a href="/ordercompletion" class="btn btn-primary" role="button"
+        >Jetzt Bestellen</a
+      >
+    </div>
+    <div th:case="${false}">
+      <h2>Deine Bierkiste (Warenkorb) ist noch leer.</h2>
+      <a class="btn btn-primary" href="/sortiment">Hier kannst du sie füllen</a>
+    </div>
+  </div>
 </main>
