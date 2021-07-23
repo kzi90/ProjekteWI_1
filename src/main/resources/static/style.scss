@@ -175,6 +175,12 @@ Footer
 Components
 ==================================================*/
 /* Divider */
+.divider {
+    border-top: 2px solid $gray-800;
+    margin-bottom: $spacer * 5;
+    margin-top: $spacer * 5;
+    opacity: 1;
+}
 .divider-wrapper {
     position: relative;
 }
