@@ -2,8 +2,8 @@
 <html lang="de" xmlns:th="http://www.thymeleaf.org">
   <div th:replace="fragments :: head (title='Sortiment')"></div>
   <body>
+    <div th:replace="fragments :: header"></div>
     <div class="container-fluid">
-      <div th:replace="fragments :: header"></div>
       <!--==================================================
       START CONTENT
       ===================================================-->
@@ -127,8 +127,8 @@
       <!--==================================================
       END CONTENT
       ===================================================-->
-      <div th:replace="fragments :: footer"></div>
-      <div th:replace="fragments :: scripts"></div>
     </div>
+    <div th:replace="fragments :: footer"></div>
+    <div th:replace="fragments :: scripts"></div>
   </body>
 </html>
