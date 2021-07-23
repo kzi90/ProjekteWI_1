@@ -2,9 +2,11 @@
 <html lang="de" xmlns:th="http://www.thymeleaf.org">
   <div th:replace="fragments :: head"></div>
   <body>
-    <div th:replace="fragments :: header(title=${title})"></div>
-    <main class="container-fluid" th:include="${templateName} :: ${templateName}" />
-    <div th:replace="fragments :: footer"></div>
+    <div class="container">
+      <div th:replace="fragments :: header(title=${title})"></div>
+      <main th:include="${templateName} :: ${templateName}" />
+      <div th:replace="fragments :: footer"></div>
+    </div>
     <div th:replace="fragments :: scripts"></div>
   </body>
 </html>
