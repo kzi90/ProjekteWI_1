@@ -14,10 +14,10 @@ Head
 <!--==================================================
 Header
 ===================================================-->
-<header class="mb-5" th:fragment="header">
+<header class="mb-4 py-3" th:fragment="header">
   <div class="row">
     <div class="col-5">
-      <div class="d-flex justify-content-start">
+      <div class="d-flex justify-content-start align-items-center h-100">
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
           <!-- Container wrapper -->
@@ -44,6 +44,7 @@ Header
                     class="nav-link"
                     href="/"
                     th:classappend="${#request.requestURI == '/' ? 'active':''}"
+                    th:attr="aria-current=${#request.requestURI == '/' ? 'true':'false'}"
                     >Home</a
                   >
                 </li>
@@ -52,32 +53,104 @@ Header
                     class="nav-link"
                     href="/sortiment"
                     th:classappend="${#request.getRequestURI().startsWith('/sortiment') ? 'active':''}"
+                    th:attr="aria-current=${#request.requestURI == '/sortiment' ? 'true':'false'}"
                     >Sortiment</a
                   >
                 </li>
-                <li class="nav-item">
+                <li class="nav-item dropdown">
                   <a
-                    class="nav-link"
-                    href="/history"
-                    th:classappend="${#request.requestURI == '/history' ? 'active':''}"
-                    >Geschichte</a
+                    class="nav-link dropdown-toggle"
+                    href="#"
+                    id="navbarDropdown"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
                   >
-                </li>
-                <li class="nav-item">
-                  <a
-                    class="nav-link"
-                    href="/philosophy"
-                    th:classappend="${#request.requestURI == '/philosophy' ? 'active':''}"
-                    >Bierphilosiphie</a
-                  >
+                    Über uns
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="/history"
+                        th:classappend="${#request.requestURI == '/history' ? 'active':''}"
+                        th:attr="aria-current=${#request.requestURI == '/history' ? 'true':'false'}"
+                        >Geschichte</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="/philosophy"
+                        th:classappend="${#request.requestURI == '/philosophy' ? 'active':''}"
+                        th:attr="aria-current=${#request.requestURI == '/philosophy' ? 'true':'false'}"
+                        >Philosophie</a
+                      >
+                    </li>
+                  </ul>
                 </li>
                 <li class="nav-item">
                   <a
                     class="nav-link"
                     href="/contact"
                     th:classappend="${#request.requestURI == '/contact' ? 'active':''}"
+                    th:attr="aria-current=${#request.requestURI == '/contact' ? 'true':'false'}"
                     >Kontakt</a
                   >
+                </li>
+                <li class="nav-item">
+                  <!-- LoggedIn for small screens (Auslagern als Fragment da es zwei Stück davon gibt!!!) -->
+                  <span
+                    th:switch="${loggedInUser.isEmpty()}"
+                    class="d-inline d-lg-none"
+                  >
+                    <!-- No -->
+                    <span th:case="${true}">
+                      <a
+                        href="/login"
+                        class="btn btn-outline-primary btn-sm"
+                        role="button"
+                        >anmelden</a
+                      >
+                      <a
+                        href="/register"
+                        class="btn btn-primary btn-sm"
+                        role="button"
+                        >registrieren</a
+                      >
+                    </span>
+
+                    <!-- Yes -->
+                    <span th:case="${false}" class="dropdown">
+                      <button
+                        class="btn btn-secondary dropdown-toggle"
+                        type="button"
+                        id="dropdownMenuButton2"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        <i class="fas fa-user-circle"></i>
+                        <i
+                          class="d-none d-md-inline"
+                          th:text="${loggedInUser}"
+                        ></i>
+                      </button>
+
+                      <ul
+                        class="dropdown-menu dropdown-menu-dark"
+                        aria-labelledby="dropdownMenuButton2"
+                      >
+                        <li><a class="dropdown-item" href="#">Account</a></li>
+                        <li>
+                          <a class="dropdown-item" href="#">Bestellungen</a>
+                        </li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li>
+                          <a class="dropdown-item" href="/logout">Abmelden</a>
+                        </li>
+                      </ul>
+                    </span>
+                  </span>
                 </li>
               </ul>
             </div>
@@ -86,9 +159,9 @@ Header
       </div>
     </div>
     <div class="col-2">
-      <div class="d-flex justify-content-center">
+      <div class="d-flex justify-content-center align-items-center h-100">
         <!-- Logo -->
-        <a class="navbar-brand" href="/">
+        <a href="/">
           <img
             src="./images/Logo-Bielefelder-Unikat.svg"
             alt="Bielefelder Unikat"
@@ -98,15 +171,21 @@ Header
       </div>
     </div>
     <div class="col-5">
-      <div class="d-flex justify-content-end">
-        <!-- LoggedIn? -->
-        <span th:switch="${loggedInUser.isEmpty()}">
+      <div class="d-flex justify-content-end align-items-center h-100">
+        <!-- LoggedIn for large screens -->
+        <span th:switch="${loggedInUser.isEmpty()}" class="d-none d-lg-inline">
           <!-- No -->
           <span th:case="${true}">
-            <a href="/login" class="btn btn-outline-primary btn-sm" role="button"
+            <a
+              href="/login"
+              class="btn btn-outline-primary btn-sm"
+              role="button"
               >anmelden</a
             >
-            <a href="/register" class="btn btn-primary btn-sm" role="button"
+            <a
+              href="/register"
+              class="btn btn-primary btn-sm me-4"
+              role="button"
               >registrieren</a
             >
           </span>
@@ -137,9 +216,32 @@ Header
         </span>
 
         <!-- Shopping cart -->
-        <a class="btn btn-primary" href="/shoppingcart" role="button">
+        <a
+          class="btn btn-primary btn-sm position-relative"
+          href="/shoppingcart"
+          role="button"
+        >
+          <i class="fas fa-wine-bottle"></i
+          ><span
+            class="
+              position-absolute
+              top-0
+              start-0
+              translate-middle
+              badge
+              rounded-pill
+              bg-secondary
+            "
+            >12
+            <span class="visually-hidden">Bierflaschen im Warenkorb</span></span
+          >
+        </a>
+
+        <!--
+        <a class="btn btn-primary btn-sm" href="/shoppingcart" role="button">
           <i class="fas fa-wine-bottle"></i>
         </a>
+        -->
       </div>
     </div>
   </div>
@@ -149,9 +251,10 @@ Header
 Footer
 ===================================================-->
 <footer th:fragment="footer">
-
   <!-- Divider -->
-  <div th:replace="fragments :: divider (src='wappen-bielefeld.svg',alt='Bielefelder Wappen',width='80')"></div>
+  <div
+    th:replace="fragments :: divider (src='wappen-bielefeld.svg',alt='Bielefelder Wappen',width='80')"
+  ></div>
 
   <!-- Title -->
   <h6 class="title display-1 mb-5 text-muted">
@@ -210,12 +313,13 @@ Scripts
 <!--==================================================
 Divider
 ===================================================-->
-<div th:fragment="divider" th:with="src=${src},alt=${alt},width=${width}" class="divider-wrapper d-flex justify-content-center my-5" role="separator">
+<div
+  th:fragment="divider"
+  th:with="src=${src},alt=${alt},width=${width}"
+  class="divider-wrapper d-flex justify-content-center my-5"
+  role="separator"
+>
   <div class="divider-content px-4 bg-dark">
-    <img
-      th:src="'./images/' + ${src}"
-      th:alt="${alt}"
-      th:width="${width}"
-    />
+    <img th:src="'./images/' + ${src}" th:alt="${alt}" th:width="${width}" />
   </div>
 </div>
