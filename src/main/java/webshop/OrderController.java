@@ -80,6 +80,23 @@ public class OrderController {
             // clear shoppingCart
             shoppingCart.setCartList(new ArrayList<>());
 
+            // automatischer E-Mail-Versand
+            String fullName = customer.getFirstname() + " " + customer.getLastname();
+            // recipient format: "Real Name <email@addre.ss>"
+            String recipient = fullName + " <" + customer.getEmail() + ">";
+            String message = "Guten Tag " + fullName + ",\n\n"
+                + "vielen Dank für deine Bestellung mit der Bestellnummer " + order.getId().toString() + "! "
+                + "Hier noch einmal die Zahlungsdetails:\n"
+                + "Zahle den Rechnungsbetrag in Höhe von " + String.format("%.2f", total)
+                + " bitte auf folgendes Bankkonto:\n"
+                + "Inhaber: Bielefelder Unikat\n"
+                + "IBAN: DE86 1203 0000 1061 8459 45\n"
+                + "BIC: BYLADEM1001\n"
+                + "Als Verwendungszweck gib bitte die Bestellnummer (s.o.) an."
+                + " Die Lieferung wird nach Eingang der Zahlung unverzüglich veranlasst. "
+                + "Vielen Dank für deinen Einkauf und Prost!";
+            JavaMail.sendMessage(recipient, message);
+
             model.addAttribute("templateName", "ordercompletion");
             model.addAttribute("title", "Bestellabschluss");
             return "layout";
