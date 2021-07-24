@@ -87,8 +87,8 @@ public class OrderController {
             String message = "Guten Tag " + fullName + ",\n\n"
                 + "vielen Dank für deine Bestellung mit der Bestellnummer " + order.getId().toString() + "! "
                 + "Hier noch einmal die Zahlungsdetails:\n"
-                + "Zahle den Rechnungsbetrag in Höhe von " + String.format("%.2f", total)
-                + " bitte auf folgendes Bankkonto:\n"
+                + "Zahle den Rechnungsbetrag (" + String.format("%.2f", total) + " €) "
+                + "bitte auf folgendes Bankkonto:\n"
                 + "Inhaber: Bielefelder Unikat\n"
                 + "IBAN: DE86 1203 0000 1061 8459 45\n"
                 + "BIC: BYLADEM1001\n"
