@@ -12,6 +12,7 @@ import lombok.Builder;
 @Builder
 public class Product {
     private Integer id;
+    private String type;
     private String name;
     private String description;
     private String imgURL;

@@ -47,6 +47,7 @@ CREATE TABLE customers (
 
 CREATE TABLE products (
     id INTEGER NOT NULL AUTO_INCREMENT,
+    product_type VARCHAR(128) NOT NULL,
     product_name VARCHAR(128) NOT NULL,
     product_description VARCHAR(1024),
     image_url VARCHAR(512),

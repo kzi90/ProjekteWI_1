@@ -1,0 +1,4 @@
+2021-07-24 16:46:58 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax Fehler in SQL Befehl "PRODUCTS[*]"; erwartet "PREPARE"
+Syntax error in SQL statement "PRODUCTS[*]"; expected "PREPARE"; SQL statement:
+PRODUCTS [42001-200]

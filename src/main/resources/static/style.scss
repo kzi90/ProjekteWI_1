@@ -103,7 +103,7 @@ $progress-bar-bg:                   $white; // changed
     display: block;
     font-size: .75rem;
     text-transform: uppercase;
-    opacity: .5;
+    opacity: .5; // gegen color austauschen, siehe $gray-XXX
 }
 
 // Display headings
@@ -124,20 +124,37 @@ $progress-bar-bg:                   $white; // changed
 }
 
 // 2.3 General changes
-header {
-    z-index: 9998;
-    position: relative;
-}
 
-header img {
-    z-index: 9999;
-    position: relative;
+/*==================================================
+Header 
+==================================================*/
+// Navbar
+.navbar-collapse,
+.navbar-others {
+    flex-grow: 2; // needs to be set so the logo is always in the middle
+}
+.navbar-brand {
+    flex-grow: 1; // needs to be set so the logo is always in the middle
+    margin-right: 0;
 }
 
 /*==================================================
-Table
+Product range 
 ==================================================*/
-// 2.X Ingredients table
+// Text
+.description::first-letter {
+    padding: 0;
+    margin: 0 .3rem 0 0;
+    font-size: 5.3rem;
+    float: left;
+    line-height: .8;
+}
+.description::first-line {
+    font-variant: small-caps;
+    letter-spacing: .1rem;
+}
+
+// Ingredients table
 .table-ingredients {
     margin-bottom: $spacer;
     table-layout: fixed;
@@ -145,24 +162,11 @@ Table
 
     td {
         border: 1px solid $gray-800; // need a darker version of this
-        padding: .9375rem; // search for spacing variable and change the value
-    }
-
-    tr td:first-child {
         border-left: none;
-    }
-
-    tr td:last-child {
         border-right: none;
+        padding: .5rem 0; // search for spacing variable and change the value
     }
 }
-
-header {
-    z-index: 9999;
-    position: relative;
-}
-
-
 
 /*==================================================
 Footer

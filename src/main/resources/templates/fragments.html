@@ -14,206 +14,118 @@ Head
 <!--==================================================
 Header
 ===================================================-->
-<header class="mb-4 py-3" th:fragment="header">
-  <div class="row">
-    <div class="col-5">
-      <div class="d-flex justify-content-start align-items-center h-100">
-        <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-          <!-- Container wrapper -->
-          <div class="container-fluid">
-            <!-- Toggle button -->
-            <button
-              class="navbar-toggler"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#navbarSupportedContent"
-              aria-controls="navbarSupportedContent"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <i class="fas fa-bars"></i>
-            </button>
+<header class="mb-4" th:fragment="header">
+  <!-- Navbar -->
+  <nav
+    class="navbar navbar-expand-lg navbar-dark bg-dark"
+  >
+    <!-- Container fluid -->
+    <div class="container-fluid">
+      <!-- Toggler -->
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-            <!-- Collapsible wrapper -->
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <!-- Nav links -->
-              <ul class="navbar-nav me-auto mb-2 mb-lg-0 text-center">
-                <li class="nav-item">
-                  <a
-                    class="nav-link"
-                    href="/"
-                    th:classappend="${#request.requestURI == '/' ? 'active':''}"
-                    th:attr="aria-current=${#request.requestURI == '/' ? 'true':'false'}"
-                    >Home</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a
-                    class="nav-link"
-                    href="/sortiment"
-                    th:classappend="${#request.getRequestURI().startsWith('/sortiment') ? 'active':''}"
-                    th:attr="aria-current=${#request.requestURI == '/sortiment' ? 'true':'false'}"
-                    >Sortiment</a
-                  >
-                </li>
-                <li class="nav-item dropdown">
-                  <a
-                    class="nav-link dropdown-toggle"
-                    href="#"
-                    id="navbarDropdown"
-                    role="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    Über uns
-                  </a>
-                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li>
-                      <a
-                        class="dropdown-item"
-                        href="/history"
-                        th:classappend="${#request.requestURI == '/history' ? 'active':''}"
-                        th:attr="aria-current=${#request.requestURI == '/history' ? 'true':'false'}"
-                        >Geschichte</a
-                      >
-                    </li>
-                    <li>
-                      <a
-                        class="dropdown-item"
-                        href="/philosophy"
-                        th:classappend="${#request.requestURI == '/philosophy' ? 'active':''}"
-                        th:attr="aria-current=${#request.requestURI == '/philosophy' ? 'true':'false'}"
-                        >Philosophie</a
-                      >
-                    </li>
-                  </ul>
-                </li>
-                <li class="nav-item">
-                  <a
-                    class="nav-link"
-                    href="/contact"
-                    th:classappend="${#request.requestURI == '/contact' ? 'active':''}"
-                    th:attr="aria-current=${#request.requestURI == '/contact' ? 'true':'false'}"
-                    >Kontakt</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <!-- LoggedIn for small screens (Auslagern als Fragment da es zwei Stück davon gibt!!!) -->
-                  <span
-                    th:switch="${loggedInUser.isEmpty()}"
-                    class="d-inline d-lg-none"
-                  >
-                    <!-- No -->
-                    <span th:case="${true}">
-                      <a
-                        href="/login"
-                        class="btn btn-outline-primary btn-sm"
-                        role="button"
-                        >anmelden</a
-                      >
-                      <a
-                        href="/register"
-                        class="btn btn-primary btn-sm"
-                        role="button"
-                        >registrieren</a
-                      >
-                    </span>
-
-                    <!-- Yes -->
-                    <span th:case="${false}" class="dropdown">
-                      <button
-                        class="btn btn-secondary dropdown-toggle"
-                        type="button"
-                        id="dropdownMenuButton2"
-                        data-bs-toggle="dropdown"
-                        aria-expanded="false"
-                      >
-                        <i class="fas fa-user-circle"></i>
-                        <i
-                          class="d-none d-md-inline"
-                          th:text="${loggedInUser}"
-                        ></i>
-                      </button>
-
-                      <ul
-                        class="dropdown-menu dropdown-menu-dark"
-                        aria-labelledby="dropdownMenuButton2"
-                      >
-                        <li><a class="dropdown-item" href="#">Account</a></li>
-                        <li>
-                          <a class="dropdown-item" href="#">Bestellungen</a>
-                        </li>
-                        <li><hr class="dropdown-divider" /></li>
-                        <li>
-                          <a class="dropdown-item" href="/logout">Abmelden</a>
-                        </li>
-                      </ul>
-                    </span>
-                  </span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </nav>
-      </div>
-    </div>
-    <div class="col-2">
-      <div class="d-flex justify-content-center align-items-center h-100">
-        <!-- Logo -->
-        <a href="/">
-          <img
-            src="./images/Logo-Bielefelder-Unikat.svg"
-            alt="Bielefelder Unikat"
-            width="140"
-          />
-        </a>
-      </div>
-    </div>
-    <div class="col-5">
-      <div class="d-flex justify-content-end align-items-center h-100">
-        <!-- LoggedIn for large screens -->
-        <span th:switch="${loggedInUser.isEmpty()}" class="d-none d-lg-inline">
-          <!-- No -->
-          <span th:case="${true}">
+      <!-- Collapse -->
+      <div
+        class="collapse navbar-collapse order-2 order-lg-0"
+        id="navbarSupportedContent"
+      >
+        <!-- Nav -->
+        <ul class="navbar-nav">
+          <!-- Nav items -->
+          <li class="nav-item">
             <a
-              href="/login"
-              class="btn btn-outline-primary btn-sm"
-              role="button"
-              >anmelden</a
+              class="nav-link"
+              href="/"
+              th:classappend="${#request.requestURI == '/' ? 'active':''}"
+              th:attr="aria-current=${#request.requestURI == '/' ? 'true':'false'}"
+              >Home</a
             >
+          </li>
+          <li class="nav-item">
             <a
-              href="/register"
-              class="btn btn-primary btn-sm me-4"
-              role="button"
-              >registrieren</a
+              class="nav-link"
+              href="/sortiment"
+              th:classappend="${#request.getRequestURI().startsWith('/sortiment') ? 'active':''}"
+              th:attr="aria-current=${#request.requestURI == '/sortiment' ? 'true':'false'}"
+              >Sortiment</a
             >
-          </span>
-
-          <!-- Yes -->
-          <span th:case="${false}" class="dropdown">
-            <button
-              class="btn btn-secondary dropdown-toggle"
-              type="button"
-              id="dropdownMenuButton2"
+          </li>
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              id="navbarDropdown"
+              role="button"
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-              <i class="fas fa-user-circle"></i>
-              <i class="d-none d-md-inline" th:text="${loggedInUser}"></i>
-            </button>
-
-            <ul
-              class="dropdown-menu dropdown-menu-dark"
-              aria-labelledby="dropdownMenuButton2"
-            >
-              <li><a class="dropdown-item" href="#">Account</a></li>
-              <li><a class="dropdown-item" href="#">Bestellungen</a></li>
-              <li><hr class="dropdown-divider" /></li>
-              <li><a class="dropdown-item" href="/logout">Abmelden</a></li>
+              Über uns
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li>
+                <a
+                  class="dropdown-item"
+                  href="/history"
+                  th:classappend="${#request.requestURI == '/history' ? 'active':''}"
+                  th:attr="aria-current=${#request.requestURI == '/history' ? 'true':'false'}"
+                  >Geschichte</a
+                >
+              </li>
+              <li>
+                <a
+                  class="dropdown-item"
+                  href="/philosophy"
+                  th:classappend="${#request.requestURI == '/philosophy' ? 'active':''}"
+                  th:attr="aria-current=${#request.requestURI == '/philosophy' ? 'true':'false'}"
+                  >Philosophie</a
+                >
+              </li>
             </ul>
-          </span>
-        </span>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              href="/contact"
+              th:classappend="${#request.requestURI == '/contact' ? 'active':''}"
+              th:attr="aria-current=${#request.requestURI == '/contact' ? 'true':'false'}"
+              >Kontakt</a
+            >
+          </li>
+          <li class="nav-item">
+            <!-- Login/Register/User button -->
+            <div
+              th:replace="fragments :: login-register-user-buttons (class='d-inline d-lg-none')"
+            />
+          </li>
+        </ul>
+      </div>
+
+      <!-- Navbar brand -->
+      <a
+        class="navbar-brand order-0 order-lg-1"
+        href="/"
+        ><img
+          src="./images/Logo-Bielefelder-Unikat.svg"
+          alt="Bielefelder Unikat"
+          width="140"
+      /></a>
+
+      <!-- Navbar others -->
+      <div class="navbar-others order-1 order-lg-3 d-flex justify-content-end">
+        <!-- Login/Register/User button -->
+        <div
+          th:replace="fragments :: login-register-user-buttons (class='d-none d-lg-inline')"
+        />
 
         <!-- Shopping cart -->
         <a
@@ -236,15 +148,9 @@ Header
             <span class="visually-hidden">Bierflaschen im Warenkorb</span></span
           >
         </a>
-
-        <!--
-        <a class="btn btn-primary btn-sm" href="/shoppingcart" role="button">
-          <i class="fas fa-wine-bottle"></i>
-        </a>
-        -->
       </div>
     </div>
-  </div>
+  </nav>
 </header>
 
 <!--==================================================
@@ -322,4 +228,53 @@ Divider
   <div class="divider-content px-4 bg-dark">
     <img th:src="'./images/' + ${src}" th:alt="${alt}" th:width="${width}" />
   </div>
+</div>
+
+<!--==================================================
+Login/Register/User Buttons
+===================================================-->
+<!-- Is user already loggedin? -->
+<div
+  th:fragment="login-register-user-buttons"
+  th:switch="${loggedInUser.isEmpty()}"
+  th:with="class=${class}"
+  th:class="${class}"
+>
+  <!-- No -->
+  <span th:case="${true}">
+    <!-- Login button -->
+    <a href="/login" class="btn btn-outline-primary btn-sm" role="button"
+      >anmelden</a
+    >
+
+    <!-- Register button -->
+    <a href="/register" class="btn btn-primary btn-sm me-4" role="button"
+      >registrieren</a
+    >
+  </span>
+
+  <!-- Yes -->
+  <span th:case="${false}" class="dropdown">
+    <!-- User account button -->
+    <button
+      class="btn btn-secondary dropdown-toggle"
+      type="button"
+      id="dropdownMenuButton2"
+      data-bs-toggle="dropdown"
+      aria-expanded="false"
+    >
+      <i class="fas fa-user-circle"></i>
+      <i class="d-none d-md-inline" th:text="${loggedInUser}"></i>
+    </button>
+
+    <ul
+      class="dropdown-menu dropdown-menu-dark"
+      aria-labelledby="dropdownMenuButton2"
+    >
+      <li><a class="dropdown-item" href="#">Account</a></li>
+      <li><a class="dropdown-item" href="#">Bestellungen</a></li>
+      <li><hr class="dropdown-divider" /></li>
+      <li><a class="dropdown-item" href="/logout">Abmelden</a></li>
+    </ul>
+  </span>
 </div>
