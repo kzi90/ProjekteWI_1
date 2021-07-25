@@ -12,14 +12,15 @@ DELETE FROM addresses;
 -- Beispieldaten für Adressen
 INSERT INTO addresses VALUES (1, 'Ausgedachte Str.', 3, '12345', 'Entenhausen', 'Deutschland');
 INSERT INTO addresses VALUES (2, 'Musterstr.', 42, '42424', 'Nuketown', 'Deutschland');
+INSERT INTO addresses VALUES (3, 'Braker Mitte', 9, '32657', 'Lemgo', 'Deutschland');
 
 -- Beispieldaten für Kunden
 -- Passwort Bernd das Brot: Brot
 INSERT INTO customers VALUES (1, 'Bernd', 'das Brot', '1985-04-01', 1, 'Bernd@Brot.de', '012345678910', 'ef53751671e5219919b139afb43865b325192727a2f1ca216b018d4509abb57f');
-INSERT INTO customers VALUES (2, 'Kasimir', 'Eckhardt', '1990-08-10', 1, 'kzi-eckhardt@web.de', '0176/34934106', '15c7772149be0dce3d0c6352acb5cdf0578365de1ab8aa3ea2efc97467c3ea59');
+INSERT INTO customers VALUES (2, 'Kasimir', 'Eckhardt', '1990-08-10', 3, 'kzi-eckhardt@web.de', '0176/34934106', '15c7772149be0dce3d0c6352acb5cdf0578365de1ab8aa3ea2efc97467c3ea59');
 
 -- Beispieldaten für Angestellte
-INSERT INTO employees VALUES (1, 'Kasimir', 'Eckhardt', '1990-08-10', 2, 'kasimir.eckhardt@edu.fhdw.de', '017634934106',  'Webdevelopment', TRUE, '15c7772149be0dce3d0c6352acb5cdf0578365de1ab8aa3ea2efc97467c3ea59');
+INSERT INTO employees VALUES (1, 'Kasimir', 'Eckhardt', '1990-08-10', 3, 'kasimir.eckhardt@edu.fhdw.de', '017634934106',  'Webdevelopment', TRUE, '15c7772149be0dce3d0c6352acb5cdf0578365de1ab8aa3ea2efc97467c3ea59');
 
 -- Beispieldaten für Produkte
 INSERT INTO products VALUES (1, 'Pils', 'Sparrenpils', 'Die Burg, die nicht fällt“ - Genau das verkörpert unser Sparrenpils. Ein Vergleich der Burg mit unserem Gerstenmalz und dem Hopfen ist leicht gezogen, unsere Zutaten haben eine Reife hinter sich, welche dem Alter der Burg ebenbürtig ist. Genau diese führt zu dem einzigartig herben Geschmack unseres Bieres; mit dem wohlschmeckend hopfigen und malzigen Abgang spürst du deine Geschmacksnerven ohne Widerstand kapitulieren und es wird der volle Genuss entfaltet. Nicht umsonst erreichst du mit unserem Sparrenpils eine Pegelhöhe und das Gefühl der Uneinnehmbarkeit, aber sei gewarnt, der Graben drum herum ist tief und auch der beste Reiter landet mal im Graben.', './images/bier-pils.png', 333, 0.89);

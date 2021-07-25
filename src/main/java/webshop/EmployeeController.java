@@ -87,7 +87,7 @@ public class EmployeeController {
         Cookie cookie = new Cookie("loggedInEmp", null);
         cookie.setMaxAge(0);
         response.addCookie(cookie);
-        model.addAttribute("templateName", "logout");
+        model.addAttribute("templateName", "s3cr3tl0g0ut");
         return "layout";
     }
 

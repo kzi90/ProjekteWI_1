@@ -148,15 +148,14 @@ public class CustomerController {
      * @return logout.html template
      */
     @GetMapping("/logout")
-    public String logout(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
-            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
-            Model model) {
-        model.addAttribute("loggedInUser", loggedInUser);
+    public String logout(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
+            HttpServletResponse response, Model model) {
         ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
         model.addAttribute("shoppingcart", shoppingCart);
         Cookie cookie = new Cookie("loggedInUser", null);
         cookie.setMaxAge(0);
         response.addCookie(cookie);
+        model.addAttribute("loggedInUser", "");
         model.addAttribute("templateName", "logout");
         return "layout";
     }
