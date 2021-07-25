@@ -20,19 +20,25 @@ public class WebsiteController {
 
     /**
      * Homepage
+     * 
      * @param loggedInUser
      * @param model
      * @return home.html template
      */
     @GetMapping("/")
-    public String home(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser, Model model){
+    public String home(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
+            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
+            Model model) {
         model.addAttribute("loggedInUser", loggedInUser);
+        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
+        model.addAttribute("shoppingcart", shoppingCart);
         model.addAttribute("templateName", "home");
         return "layout";
     }
 
     /**
      * Sortiment / Bestellseite
+     * 
      * @param loggedInUser
      * @param sessID
      * @param response
@@ -41,18 +47,13 @@ public class WebsiteController {
      */
     @GetMapping("/sortiment")
     public String sortiment(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
-                               @CookieValue(value = "SessionID", defaultValue = "") String sessID,
-                                                                       HttpServletResponse response,
-                                                                                     Model model) {
+            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
+            Model model) {
         model.addAttribute("loggedInUser", loggedInUser);
         List<Product> products = db.query("SELECT * FROM products", new ProductRowMapper());
         model.addAttribute("products", products);
-        if (sessID.isEmpty()){
-            ShoppingCart shoppingCart = new ShoppingCart();
-            Cookie cookie = new Cookie("SessionID", shoppingCart.getSessID().toString());
-            cookie.setPath("/");
-            response.addCookie(cookie);
-        }
+        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
+        model.addAttribute("shoppingcart", shoppingCart);
         model.addAttribute("templateName", "sortiment");
         model.addAttribute("title", "Sortiment");
         return "layout";
@@ -60,13 +61,18 @@ public class WebsiteController {
 
     /**
      * Impressum
+     * 
      * @param loggedInUser
      * @param model
      * @return impressum.html template
      */
     @GetMapping("/impressum")
-    public String impressum(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser, Model model){
+    public String impressum(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
+            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
+            Model model) {
         model.addAttribute("loggedInUser", loggedInUser);
+        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
+        model.addAttribute("shoppingcart", shoppingCart);
         model.addAttribute("templateName", "impressum");
         model.addAttribute("title", "Impressum");
         return "layout";
@@ -74,13 +80,18 @@ public class WebsiteController {
 
     /**
      * AGB
+     * 
      * @param loggedInUser
      * @param model
      * @return agb.html template
      */
     @GetMapping("/agb")
-    public String agb(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser, Model model){
+    public String agb(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
+            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
+            Model model) {
         model.addAttribute("loggedInUser", loggedInUser);
+        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
+        model.addAttribute("shoppingcart", shoppingCart);
         model.addAttribute("templateName", "agb");
         model.addAttribute("title", "AGB");
         return "layout";
@@ -88,13 +99,18 @@ public class WebsiteController {
 
     /**
      * Datenschutz
+     * 
      * @param loggedInUser
      * @param model
      * @return datenschutz.html template
      */
     @GetMapping("/datenschutz")
-    public String datenschutz(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser, Model model){
+    public String datenschutz(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
+            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
+            Model model) {
         model.addAttribute("loggedInUser", loggedInUser);
+        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
+        model.addAttribute("shoppingcart", shoppingCart);
         model.addAttribute("templateName", "datenschutz");
         model.addAttribute("title", "Datenschutz");
         return "layout";
@@ -102,36 +118,49 @@ public class WebsiteController {
 
     /**
      * contact-webpage
+     * 
      * @param loggedInUser
      * @param model
      * @return contact.html template
      */
     @GetMapping("/contact")
-    public String contact(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser, Model model){
+    public String contact(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
+            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
+            Model model) {
         model.addAttribute("loggedInUser", loggedInUser);
+        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
+        model.addAttribute("shoppingcart", shoppingCart);
         model.addAttribute("templateName", "contact");
         model.addAttribute("title", "Kontakt");
         return "layout";
     }
 
     @GetMapping("/history")
-    public String history(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser, Model model){
+    public String history(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
+            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
+            Model model) {
         model.addAttribute("loggedInUser", loggedInUser);
+        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
+        model.addAttribute("shoppingcart", shoppingCart);
         model.addAttribute("templateName", "history");
         model.addAttribute("title", "Geschichte");
         return "layout";
     }
 
     @GetMapping("/philosophy")
-    public String philosophy(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser, Model model){
+    public String philosophy(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
+            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
+            Model model) {
         model.addAttribute("loggedInUser", loggedInUser);
+        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
+        model.addAttribute("shoppingcart", shoppingCart);
         model.addAttribute("templateName", "philosophy");
         model.addAttribute("title", "Bierphilosophie");
         return "layout";
     }
 
     /**
-     * 
+     * shows all database tables
      * @param model
      * @return db.html template
      */
@@ -157,18 +186,6 @@ public class WebsiteController {
         Cookie[] cookies = request.getCookies();
         model.addAttribute("cookies", cookies);
         return "cookieshow";
-    }
-
-    @GetMapping("/cookieset")
-    @ResponseBody
-    public String cookieset(HttpServletResponse response) {
-        Cookie cookie = new Cookie("username", "Kasimir");
-        response.addCookie(cookie);
-        cookie = new Cookie("CookieTestName", "CookieTestValue");
-        response.addCookie(cookie);
-        cookie = new Cookie("loggedInUser", "e@mail.ad");
-        response.addCookie(cookie);
-        return "Set some cookies";
     }
 
     @GetMapping("/cookiedel")

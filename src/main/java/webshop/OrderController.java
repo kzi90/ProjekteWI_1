@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
@@ -21,23 +22,29 @@ public class OrderController {
     private OrderPositionController orderPositionController;
 
     /**
-     * complete order from shoppingcart (if not empty). If the customer isn't logged in,
-     * he/she will be redirected to /login.
+     * complete order from shoppingcart (if not empty). If the customer isn't logged
+     * in, he/she will be redirected to /login.
+     * 
      * @param loggedInUser
      * @param sessID
      * @param model
-     * @return ordercompletion.html template (if shoppingcart not empty and customer logged in)
+     * @return ordercompletion.html template (if shoppingcart not empty and customer
+     *         logged in)
      */
     @GetMapping("/ordercompletion")
     public String ordercompletion(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
-                                @CookieValue(value = "SessionID", defaultValue = "") String sessID, Model model) {
+            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
+            Model model) {
+        model.addAttribute("loggedInUser", loggedInUser);
+
         if (loggedInUser.isEmpty()) {
             return "redirect:/login";
         }
         model.addAttribute("loggedInUser", loggedInUser);
 
-        // get shoppingCart
-        ShoppingCart shoppingCart = ShoppingCart.findBySessID(Integer.valueOf(sessID));
+        // get shoppingCart by session id
+        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
+        model.addAttribute("shoppingcart", shoppingCart);
 
         if (!shoppingCart.getCartList().isEmpty()) {
 
@@ -85,16 +92,13 @@ public class OrderController {
             // recipient format: "Real Name <email@addre.ss>"
             String recipient = fullName + " <" + customer.getEmail() + ">";
             String message = "Guten Tag " + fullName + ",\n\n"
-                + "vielen Dank für deine Bestellung mit der Bestellnummer " + order.getId().toString() + "! "
-                + "Hier noch einmal die Zahlungsdetails:\n"
-                + "Zahle den Rechnungsbetrag (" + String.format("%.2f", total) + " €) "
-                + "bitte auf folgendes Bankkonto:\n"
-                + "Inhaber: Bielefelder Unikat\n"
-                + "IBAN: DE86 1203 0000 1061 8459 45\n"
-                + "BIC: BYLADEM1001\n"
-                + "Als Verwendungszweck gib bitte die Bestellnummer (s.o.) an."
-                + " Die Lieferung wird nach Eingang der Zahlung unverzüglich veranlasst. "
-                + "Vielen Dank für deinen Einkauf und Prost!";
+                    + "vielen Dank für deine Bestellung mit der Bestellnummer " + order.getId().toString() + "! "
+                    + "Hier noch einmal die Zahlungsdetails:\n" + "Zahle den Rechnungsbetrag ("
+                    + String.format("%.2f", total) + " €) " + "bitte auf folgendes Bankkonto:\n"
+                    + "Inhaber: Bielefelder Unikat\n" + "IBAN: DE86 1203 0000 1061 8459 45\n" + "BIC: BYLADEM1001\n"
+                    + "Als Verwendungszweck gib bitte die Bestellnummer (s.o.) an."
+                    + " Die Lieferung wird nach Eingang der Zahlung unverzüglich veranlasst. "
+                    + "Vielen Dank für deinen Einkauf und Prost!";
             JavaMail.sendMessage(recipient, message);
 
             model.addAttribute("templateName", "ordercompletion");
@@ -107,6 +111,7 @@ public class OrderController {
 
     /**
      * save Order
+     * 
      * @param order
      * @return order (with id)
      */

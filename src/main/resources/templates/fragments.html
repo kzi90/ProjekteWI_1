@@ -135,6 +135,7 @@ Header
         >
           <i class="fas fa-wine-bottle"></i
           ><span
+            id="numOfBottles"
             class="
               position-absolute
               top-0
@@ -144,7 +145,7 @@ Header
               rounded-pill
               bg-secondary
             "
-            >12
+            th:text="${shoppingcart.getAmountOfBottles()}">
             <span class="visually-hidden">Bierflaschen im Warenkorb</span></span
           >
         </a>

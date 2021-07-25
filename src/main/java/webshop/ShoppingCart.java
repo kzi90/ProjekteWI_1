@@ -51,6 +51,18 @@ public class ShoppingCart {
     }
 
     /**
+     * 
+     * @return amount of bottles in shoppingcart
+     */
+    public Integer getAmountOfBottles(){
+        Integer amount = 0;
+        for (ShoppingCartPosition pos : cartList) {
+            amount += pos.getQuantity();
+        }
+        return amount;
+    }
+
+    /**
      * Find shopping cart from static list by session id.
      * @param sessID
      * @return the shoppingcart with the given session id.

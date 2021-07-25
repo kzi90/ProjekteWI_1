@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class EmployeeController {
-    
+
     @Autowired
     private JdbcTemplate db;
 
@@ -27,13 +27,18 @@ public class EmployeeController {
 
     /**
      * secret login for employees
+     * 
      * @param loggedInUser
      * @param model
      * @return s3cr3tl0g1n.html template
      */
     @GetMapping("/s3cr3tl0g1n")
-    public String s3cr3tl0g1n(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser, Model model){
+    public String s3cr3tl0g1n(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
+            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
+            Model model) {
         model.addAttribute("loggedInUser", loggedInUser);
+        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
+        model.addAttribute("shoppingcart", shoppingCart);
         Employee employee = new Employee();
         model.addAttribute(employee);
         model.addAttribute("templateName", "s3cr3tl0g1n");
@@ -42,6 +47,7 @@ public class EmployeeController {
 
     /**
      * trying employee login with submitted data
+     * 
      * @param employee
      * @param response
      * @param model
@@ -49,10 +55,12 @@ public class EmployeeController {
      * @throws NoSuchAlgorithmException
      */
     @PostMapping("/s3cr3tl0g1n")
-    public String loggedin(@ModelAttribute Employee employee, HttpServletResponse response, Model model) throws NoSuchAlgorithmException{
-        List<Employee> employees = db.query("SELECT * FROM employees WHERE email = ?", new EmployeeRowMapper(), employee.getEmail());
+    public String loggedin(@ModelAttribute Employee employee, HttpServletResponse response, Model model)
+            throws NoSuchAlgorithmException {
+        List<Employee> employees = db.query("SELECT * FROM employees WHERE email = ?", new EmployeeRowMapper(),
+                employee.getEmail());
         // employee.passHash contains the plain text password right now!
-        if (!employees.isEmpty() && employees.get(0).login(employee.getPassHash())){
+        if (!employees.isEmpty() && employees.get(0).login(employee.getPassHash())) {
             Cookie cookie = new Cookie("loggedInEmp", employee.getEmail());
             response.addCookie(cookie);
             return "redirect:/sortiment";
@@ -63,6 +71,7 @@ public class EmployeeController {
 
     /**
      * logout from employee account
+     * 
      * @param loggedInUser
      * @param response
      * @param model
@@ -70,18 +79,21 @@ public class EmployeeController {
      */
     @GetMapping("/s3cr3tl0g0ut")
     public String s3cr3tl0g0ut(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
-                                                                                       HttpServletResponse response,
-                                                                                       Model model){
+            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
+            Model model) {
+        model.addAttribute("loggedInUser", loggedInUser);
+        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
+        model.addAttribute("shoppingcart", shoppingCart);
         Cookie cookie = new Cookie("loggedInEmp", null);
         cookie.setMaxAge(0);
         response.addCookie(cookie);
-        model.addAttribute("loggedInUser", loggedInUser);
         model.addAttribute("templateName", "logout");
         return "layout";
     }
 
     /**
      * save employee- and addressdata if not already existing in database
+     * 
      * @param employee
      * @param address
      * @return true if the email of the employee was not used before, else false
@@ -89,28 +101,22 @@ public class EmployeeController {
      * @throws ParseException
      * @throws NoSuchAlgorithmException
      */
-    public boolean saveEmpWithAddress(Employee employee, Address address) throws DataAccessException,
-                                                                                 ParseException,
-                                                                                 NoSuchAlgorithmException{
+    public boolean saveEmpWithAddress(Employee employee, Address address)
+            throws DataAccessException, ParseException, NoSuchAlgorithmException {
         String testSQL = "SELECT * FROM employees WHERE email = ?;";
         boolean emailNotRegisteredBefore = db.query(testSQL, new EmployeeRowMapper(), employee.getEmail()).isEmpty();
-        if (emailNotRegisteredBefore){
+        if (emailNotRegisteredBefore) {
             address = addressController.saveAddress(address);
             // database generates id automatically
-            String saveSQL = "INSERT INTO customers (firstname, lastname, birthdate, " +
-                             "address_id, email, phonenumber, pass_hash, department, is_admin) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
-            this.db.update(saveSQL, employee.getFirstname(),
-                                    employee.getLastname(),
-                                    // database works correct with String in this format, but not with type Date.
-                                    new SimpleDateFormat("yyyy-MM-dd").format(
-                                        new SimpleDateFormat("dd.MM.yyyy").parse(employee.getBirthdate())),
-                                    address.getId(),
-                                    employee.getEmail(),
-                                    employee.getPhonenumber(),
-                                    // employee.passHash contains plain text password right now
-                                    Convert.stringToHash(employee.getPassHash()),
-                                    employee.getDepartment(),
-                                    employee.getIsAdmin());
+            String saveSQL = "INSERT INTO customers (firstname, lastname, birthdate, "
+                    + "address_id, email, phonenumber, pass_hash, department, is_admin) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+            this.db.update(saveSQL, employee.getFirstname(), employee.getLastname(),
+                    // database works correct with String in this format, but not with type Date.
+                    new SimpleDateFormat("yyyy-MM-dd")
+                            .format(new SimpleDateFormat("dd.MM.yyyy").parse(employee.getBirthdate())),
+                    address.getId(), employee.getEmail(), employee.getPhonenumber(),
+                    // employee.passHash contains plain text password right now
+                    Convert.stringToHash(employee.getPassHash()), employee.getDepartment(), employee.getIsAdmin());
         }
         return emailNotRegisteredBefore;
     }
