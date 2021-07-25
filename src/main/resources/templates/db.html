@@ -102,6 +102,7 @@
       </caption>
       <tr>
         <th scope="col" th:text="'ID'" />
+        <th scope="col" th:text="'Typ'" />
         <th scope="col" th:text="'Name'" />
         <th scope="col" th:text="'Beschreibung'" />
         <th scope="col" th:text="'Image-URL'" />
@@ -110,6 +111,7 @@
       </tr>
       <tr th:each="product: ${products}">
         <td th:text="${product.id}" />
+        <td th:text="${product.type}" />
         <td th:text="${product.name}" />
         <td th:text="${product.description}" />
         <td th:text="${product.imgURL}" />

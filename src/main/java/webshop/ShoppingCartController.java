@@ -50,6 +50,7 @@ public class ShoppingCartController {
             lineTotal = Math.round(pos.getQuantity() * product.getPrice() * 100) / 100.0;
             total += lineTotal;
             shoppingCartLines.add(new String[] {pos.getProductID().toString(),
+                                                product.getType(),
                                                 product.getName(),
                                                 product.getImgURL(),
                                                 pos.getQuantity().toString(),
