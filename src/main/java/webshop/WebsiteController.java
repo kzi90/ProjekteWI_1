@@ -10,6 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -56,6 +59,32 @@ public class WebsiteController {
         model.addAttribute("shoppingcart", shoppingCart);
         model.addAttribute("templateName", "sortiment");
         model.addAttribute("title", "Sortiment");
+        return "layout";
+    }
+
+    /**
+     * 
+     * Produktseite
+     * 
+     * @param productID
+     * @param loggedInUser
+     * @param sessID
+     * @param response
+     * @param model
+     * @return product.html template
+     */
+    @GetMapping("/product")
+    public String product(@RequestParam(value = "product", required = true) Integer productID,
+            @CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
+            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
+            Model model) {
+        Product product = db.queryForObject("SELECT * FROM products WHERE id = ?", new ProductRowMapper(), productID);
+        model.addAttribute(product);
+        model.addAttribute("loggedInUser", loggedInUser);
+        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
+        model.addAttribute("shoppingcart", shoppingCart);
+        model.addAttribute("templateName", "product");
+        model.addAttribute("title", product.getName());
         return "layout";
     }
 
@@ -161,6 +190,7 @@ public class WebsiteController {
 
     /**
      * shows all database tables
+     * 
      * @param model
      * @return db.html template
      */
