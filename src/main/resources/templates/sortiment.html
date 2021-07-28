@@ -27,10 +27,8 @@
         style="display: flex; justify-content: center; flex-direction: column"
         href="/product"
         th:href="@{/product(product=${product.id})}"
-        th:classappend="${#request.requestURI == '/product' ? 'active':''}"
-        th:attr="aria-current=${#request.requestURI == '/product' ? 'true':'false'}"
       >
-        <!-- TODO: Der Link soll entfernt werden, wenn es speziefische Logos gibt? -->
+        <!-- TODO: Der Link soll entfernt werden, wenn es spezifische Logos gibt? -->
         <h2
           style="text-align: center; z-index: 999; background-color: #212025"
           th:text="${product.name}"
@@ -44,6 +42,8 @@
           style="align-self: center"
         />
       </a>
+      <!-- TODO: hier zusätzlichen zum-Warenkorb-hinzufügen-Button einfügen
+           für die, die schon genau wissen, was sie wollen? -->
     </section>
   </div>
 </main>
