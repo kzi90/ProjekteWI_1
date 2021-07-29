@@ -50,9 +50,9 @@ public class JavaMail {
         try {
             Message msg = prepareMessage(recipient, message);
             Transport.send(msg);
-            System.out.println("e-mail sent!");
+            System.out.println("e-mail sent to " + recipient);
         } catch (Exception e) {
-            System.out.println("ERROR when trying to send e-mail:");
+            System.out.println("ERROR when trying to send e-mail to " + recipient);
             e.printStackTrace();
         }
     }
