@@ -19,7 +19,6 @@ INSERT INTO addresses VALUES (3, 'Braker Mitte', 9, '32657', 'Lemgo', 'Deutschla
 INSERT INTO customers VALUES (1, 'Bernd', 'das Brot', '1985-04-01', 1, 'Bernd@Brot.de', '012345678910', 'ef53751671e5219919b139afb43865b325192727a2f1ca216b018d4509abb57f');
 INSERT INTO customers VALUES (2, 'Kasimir', 'Eckhardt', '1990-08-10', 3, 'kzi-eckhardt@web.de', '0176/34934106', '15c7772149be0dce3d0c6352acb5cdf0578365de1ab8aa3ea2efc97467c3ea59');
 Insert into customers values (3, 'Lukas',	'Kröker',	'1997-04-19',	1,	'lukas.kroeker@edu.fhdw.de',	'015785724772',	'09597712a6fe5e3ea54e9ca35f496e65c672d1eb6f85e68b0de8bfa46b72a722');
-insert into customers values (4, 'Sven',	'Hädrich',	'1970-01-01',	2,	'sven.haedrich@web.de',	'05202158281',	'8588310a98676af6e22563c1559e1ae20f85950792bdcd0c8f334867c54581cd');
 
 -- Beispieldaten für Angestellte
 INSERT INTO employees VALUES (1, 'Kasimir', 'Eckhardt', '1990-08-10', 3, 'kasimir.eckhardt@edu.fhdw.de', '017634934106',  'Webdevelopment', TRUE, '15c7772149be0dce3d0c6352acb5cdf0578365de1ab8aa3ea2efc97467c3ea59');
