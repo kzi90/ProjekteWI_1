@@ -17,7 +17,7 @@ import javax.mail.Transport;
 
 public class JavaMail {
 
-    private static Message prepareMessage(String empfaenger, String message)
+    private static Message prepareMessage(String email, String name, String message)
             throws MessagingException, UnsupportedEncodingException {
 
         Properties properties = new Properties();
@@ -35,7 +35,7 @@ public class JavaMail {
 
         Message msg = new MimeMessage(session);
         msg.setFrom(new InternetAddress("bierbestellen@gmail.com", "Bielefelder Unikat"));
-        msg.setRecipient(Message.RecipientType.TO, new InternetAddress(empfaenger));
+        msg.setRecipient(Message.RecipientType.TO, new InternetAddress(email, name));
         msg.setSubject("Bestellbestätigung");
         Multipart multipart = new MimeMultipart();
         BodyPart messageBodyPart = new MimeBodyPart();
@@ -46,13 +46,13 @@ public class JavaMail {
     }
 
     // recipient format: "Real Name <email@addre.ss>"
-    public static void sendMessage(String recipient, String message) {
+    public static void sendMessage(String email, String name, String message) {
         try {
-            Message msg = prepareMessage(recipient, message);
+            Message msg = prepareMessage(email, name, message);
             Transport.send(msg);
-            System.out.println("e-mail sent to " + recipient);
+            System.out.println("e-mail sent to " + name + " <" + email + ">");
         } catch (Exception e) {
-            System.out.println("ERROR when trying to send e-mail to " + recipient);
+            System.out.println("ERROR when trying to send e-mail to " + name + " <" + email + ">");
             e.printStackTrace();
         }
     }

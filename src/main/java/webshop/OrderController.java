@@ -90,7 +90,6 @@ public class OrderController {
             // automatischer E-Mail-Versand
             String fullName = customer.getFirstname() + " " + customer.getLastname();
             // recipient format: "Real Name <email@addre.ss>"
-            String recipient = fullName + " <" + customer.getEmail() + ">";
             String message = "Guten Tag " + fullName + ",\n\n"
                     + "vielen Dank für deine Bestellung mit der Bestellnummer " + order.getId().toString() + "! "
                     + "Hier noch einmal die Zahlungsdetails:\n" + "Zahle den Rechnungsbetrag ("
@@ -99,7 +98,7 @@ public class OrderController {
                     + "Als Verwendungszweck gib bitte die Bestellnummer (s.o.) an."
                     + " Die Lieferung wird nach Eingang der Zahlung unverzüglich veranlasst. "
                     + "Vielen Dank für deinen Einkauf und Prost!";
-            JavaMail.sendMessage(recipient, message);
+            JavaMail.sendMessage(customer.getEmail(), fullName, message);
 
             model.addAttribute("templateName", "ordercompletion");
             model.addAttribute("title", "Bestellabschluss");
