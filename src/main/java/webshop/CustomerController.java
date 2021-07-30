@@ -160,6 +160,81 @@ public class CustomerController {
         return "layout";
     }
 
+    @GetMapping("/account")
+    public String account(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
+            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
+            Model model) {
+        if (loggedInUser.isEmpty()) {
+            return "redirect:/login";
+        }
+        model.addAttribute("loggedInUser", loggedInUser);
+        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
+        model.addAttribute("shoppingcart", shoppingCart);
+
+        // get customer and address data from database
+        Customer customer = db.queryForObject("SELECT * FROM customers WHERE email = ?", new CustomerRowMapper(),
+                loggedInUser);
+        Address address = db.queryForObject("SELECT * FROM addresses WHERE id = ?", new AddressRowMapper(),
+                customer.getAddressID());
+        model.addAttribute(customer);
+        model.addAttribute(address);
+
+        model.addAttribute("templateName", "account");
+        model.addAttribute("title", "Kundendaten");
+        return "layout";
+    }
+
+    @PostMapping("/account")
+    public String account(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
+            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
+            @ModelAttribute Customer customer, @ModelAttribute Address address, Model model)
+            throws DataAccessException, ParseException {
+        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
+        model.addAttribute("shoppingcart", shoppingCart);
+
+        Customer savedCust = db.queryForObject("SELECT * FROM customers WHERE email = ?", new CustomerRowMapper(),
+                loggedInUser);
+
+        if (!customer.equalsCust(savedCust)) {
+            db.update(
+                    "UPDATE customers SET firstname = ?, lastname = ?, birthdate = ?, email = ?, phonenumber = ? WHERE id = ?",
+                    customer.getFirstname(), customer.getLastname(),
+                    new SimpleDateFormat("yyyy-MM-dd")
+                            .format(new SimpleDateFormat("dd.MM.yyyy").parse(customer.getBirthdate())),
+                    customer.getEmail(), customer.getPhonenumber(), savedCust.getId());
+            if (!customer.getEmail().equals(savedCust.getEmail())) {
+                Cookie cookie = new Cookie("loggedInUser", customer.getEmail());
+                cookie.setPath("/");
+                response.addCookie(cookie);
+            }
+        }
+
+        Address savedAddress = db.queryForObject("SELECT * FROM addresses WHERE id = ?", new AddressRowMapper(),
+                savedCust.getAddressID());
+
+        if (!address.equalsAddress(savedAddress)) {
+            address = addressController.saveAddress(address);
+            db.update("UPDATE customers SET address_id = ? WHERE id = ?", address.getId(), savedCust.getId());
+            if (db.query("SELECT * FROM customers WHERE address_id = ?", new CustomerRowMapper(),
+                    savedCust.getAddressID()).isEmpty()
+                    && db.query("SELECT * FROM employees WHERE address_id = ?", new EmployeeRowMapper(),
+                            savedCust.getAddressID()).isEmpty()) {
+                db.update("DELETE FROM addresses WHERE id = ?", savedCust.getAddressID());
+            }
+        }
+
+        // logging messages for debugging
+        System.out.println(String.format("neu: %s", customer));
+        System.out.println(String.format("alt: %s", savedCust));
+        System.out.println(String.format("neu: %s", address));
+        System.out.println(String.format("alt: %s", savedAddress));
+
+        model.addAttribute("loggedInUser", customer.getEmail());
+        model.addAttribute("templateName", "account");
+        model.addAttribute("title", "Kundendaten");
+        return "layout";
+    }
+
     /**
      * save customer- and addressdata if not already existing in database
      * 
@@ -179,7 +254,7 @@ public class CustomerController {
             // database generates id automatically
             String saveSQL = "INSERT INTO customers (firstname, lastname, birthdate, "
                     + "address_id, email, phonenumber, pass_hash) VALUES (?, ?, ?, ?, ?, ?, ?);";
-            this.db.update(saveSQL, customer.getFirstname(), customer.getLastname(),
+            db.update(saveSQL, customer.getFirstname(), customer.getLastname(),
                     // database works correct with String in this format, but not with type Date.
                     new SimpleDateFormat("yyyy-MM-dd")
                             .format(new SimpleDateFormat("dd.MM.yyyy").parse(customer.getBirthdate())),

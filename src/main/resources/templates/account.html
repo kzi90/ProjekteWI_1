@@ -1,0 +1,22 @@
+<main th:fragment="account">
+  <h1>Kundendaten</h1>
+  <form action="#" th:action="@{/account}" method="post">
+    <p>Vorname: <input type="text" th:field="${customer.firstname}" th:value="${customer.firstname}" /></p>
+    <p>Nachname: <input type="text" th:field="${customer.lastname}" th:value="${customer.lastname}" /></p>
+    <p>Geburtsdatum: <input type="text" th:field="${customer.birthdate}" th:value="${customer.birthdate}" /></p>
+    <p>E-Mail: <input type="text" th:field="${customer.email}" th:value="${customer.email}" /></p>
+    <p>
+      Telefonnummer:
+      <input type="text" th:field="${customer.phonenumber}" th:value="${customer.phonenumber}" />
+    </p>
+    <p th:text="'Adresse (in Deutschland):'" />
+    <p>Straße: <input type="text" th:field="${address.street}" th:value="${address.street}"/></p>
+    <p>Haus-Nr.: <input type="text" th:field="${address.housenr}" th:value="${address.housenr}" /></p>
+    <p>PLZ: <input type="text" th:field="${address.postcode}" th:value="${address.postcode}" /></p>
+    <p>Stadt: <input type="text" th:field="${address.city}" th:value="${address.city}" /></p>
+    <p>
+      <input type="submit" value="Speichern" />
+    </p>
+  </form>
+  <!-- Möglichkeit zur Passwort-Änderung ergänzen -->
+</main>

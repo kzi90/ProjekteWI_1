@@ -6,8 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter @Setter
-@AllArgsConstructor  // needed for getting form-inputs via POST and thymeleaf
+@Getter
+@Setter
+@AllArgsConstructor // needed for getting form-inputs via POST and thymeleaf
 @NoArgsConstructor
 @Builder
 public class Address {
@@ -17,4 +18,15 @@ public class Address {
     private String postcode;
     private String city;
     private String country;
+
+    public boolean equalsAddress(Address address) {
+        return this.street.equals(address.street) && this.housenr.equals(address.housenr)
+                && this.postcode.equals(address.postcode) && this.city.equals(address.city);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("ID: %d, %s %s, %s %s, %s", this.id, this.street, this.housenr, this.postcode, this.city,
+                this.country);
+    }
 }
