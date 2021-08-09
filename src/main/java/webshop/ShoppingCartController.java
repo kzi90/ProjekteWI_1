@@ -19,8 +19,9 @@ public class ShoppingCartController {
     JdbcTemplate db;
 
     /**
-     * add product to shoppingcart, productnumber has to be given as parameter,
-     * e.g. /addProductToCart?productID=2
+     * add product to shoppingcart, productnumber has to be given as parameter, e.g.
+     * /addProductToCart?productID=2
+     * 
      * @param sessID
      * @param productID
      * @return
@@ -35,6 +36,7 @@ public class ShoppingCartController {
 
     /**
      * shoppingcart page
+     * 
      * @param loggedInUser
      * @param sessID
      * @param response
@@ -45,6 +47,13 @@ public class ShoppingCartController {
     public String shoppingCart(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
             @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
             Model model) {
+        // get customer and address data from database
+        Customer customer = db.queryForObject("SELECT * FROM customers WHERE email = ?", new CustomerRowMapper(),
+                loggedInUser);
+        Address address = db.queryForObject("SELECT * FROM addresses WHERE id = ?", new AddressRowMapper(),
+                customer.getAddressID());
+        model.addAttribute(address);
+
         model.addAttribute("loggedInUser", loggedInUser);
         ShoppingCart shoppingCart = getShoppingCart(sessID, response);
         model.addAttribute("shoppingcart", shoppingCart);
@@ -71,6 +80,7 @@ public class ShoppingCartController {
 
     /**
      * get shoppingcart and set cookie with session id if not existing
+     * 
      * @param sessionID
      * @param response
      * @return shoppingcart found by session id
