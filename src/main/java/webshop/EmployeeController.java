@@ -63,7 +63,7 @@ public class EmployeeController {
         if (!employees.isEmpty() && employees.get(0).login(employee.getPassHash())) {
             Cookie cookie = new Cookie("loggedInEmp", employee.getEmail());
             response.addCookie(cookie);
-            return "redirect:/sortiment";
+            return "redirect:/employee_area";
         } else {
             return "redirect:/loginfail";
         }
@@ -88,6 +88,22 @@ public class EmployeeController {
         cookie.setMaxAge(0);
         response.addCookie(cookie);
         model.addAttribute("templateName", "s3cr3tl0g0ut");
+        return "layout";
+    }
+
+    @GetMapping("/employee_area")
+    public String employee_area(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
+            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
+            @CookieValue(value = "loggedInEmp", defaultValue = "") String loggedInEmp, Model model) {
+        model.addAttribute("loggedInUser", loggedInUser);
+        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
+        model.addAttribute("shoppingcart", shoppingCart);
+        if (loggedInEmp.isEmpty()){
+            return "redirect:/";
+        }
+        model.addAttribute("loggedInEmp", loggedInEmp);
+        model.addAttribute("title", "Mitarbeiterbereich");
+        model.addAttribute("templateName", "employee_area");
         return "layout";
     }
 

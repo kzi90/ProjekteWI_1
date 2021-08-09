@@ -155,6 +155,32 @@ Header
   </nav>
 </header>
 
+<div th:fragment="emp_header">
+  <a href="/employee_area"><h2>Mitarbeiterbereich</h2></a>
+  <span class="dropdown">
+    <!-- Employee account button -->
+    <button
+      class="btn btn-secondary dropdown-toggle"
+      type="button"
+      id="dropdownMenuButton2"
+      data-bs-toggle="dropdown"
+      aria-expanded="false"
+    >
+      <i class="fas fa-user-circle"></i>
+      <i class="d-none d-md-inline" th:text="${loggedInEmp}"></i>
+    </button>
+
+    <ul
+      class="dropdown-menu dropdown-menu-dark"
+      aria-labelledby="dropdownMenuButton2"
+    >
+      <li><a class="dropdown-item" href="#">Mitarbeiterdaten</a></li>
+      <li><hr class="dropdown-divider" /></li>
+      <li><a class="dropdown-item" href="/s3cr3tl0g0ut">Abmelden</a></li>
+    </ul>
+  </span><br><br>
+</div>
+
 <!--==================================================
 Footer
 ===================================================-->

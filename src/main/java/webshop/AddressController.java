@@ -19,7 +19,7 @@ public class AddressController {
                                                                                     address.getCity());
         if (tAddresses.isEmpty()){
             String saveAddressSQL = "INSERT INTO addresses (street, housenr, postcode, city) VALUES (?, ?, ?, ?);";
-            this.db.update(saveAddressSQL, address.getStreet(),
+            db.update(saveAddressSQL, address.getStreet(),
                                            address.getHousenr(),
                                            address.getPostcode(),
                                            address.getCity());
