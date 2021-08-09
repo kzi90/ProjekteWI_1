@@ -4,7 +4,7 @@
   <body>
     <div class="container">
       <div th:replace="fragments :: header(title=${title})" />
-      <main th:include="${templateName} :: ${templateName}" />
+      <main th:include="${templateName} :: ${templateName}" id="content"/>
       <div th:replace="fragments :: footer" />
     </div>
     <div th:replace="fragments :: scripts" />

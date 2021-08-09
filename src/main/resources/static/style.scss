@@ -128,7 +128,20 @@ $progress-bar-bg:                   $white; // changed
 /*==================================================
 Header 
 ==================================================*/
+.skip-link {
+    left: 1em;
+    line-height: 1;
+    padding: .5em 1em;
+    position: absolute;
+    top: 0;
+}
+.skip-link:not(:focus) {
+    left: -9999em;
+    position: absolute;
+}
+
 // Navbar
+.navbar-toggler,
 .navbar-collapse,
 .navbar-others {
     flex-grow: 2; // needs to be set so the logo is always in the middle
