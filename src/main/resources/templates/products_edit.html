@@ -23,7 +23,8 @@
       <td th:text="${product.amount / 1000.0}" />
       <td th:text="${product.price}" />
       <td>
-        <a th:href="'/product_edit' + ${product.id}">Bearbeiten</a>
+        <a th:href="'/product_edit' + ${product.id}">Bearbeiten</a><br>
+        <a th:href="'/product_del' + ${product.id}">Löschen</a>
       </td>
     </tr>
     <tr>

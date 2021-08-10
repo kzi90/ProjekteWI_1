@@ -3,6 +3,7 @@ package webshop;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,7 +40,7 @@ public class ProductController {
     @GetMapping("/product_edit{id}")
     public String product_edit(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
             @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
-            @CookieValue(value = "loggedInEmp", defaultValue = "") String loggedInEmp, @PathVariable int id,
+            @CookieValue(value = "loggedInEmp", defaultValue = "") String loggedInEmp, @PathVariable Integer id,
             Model model) {
         model.addAttribute("loggedInUser", loggedInUser);
         ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
@@ -58,8 +59,23 @@ public class ProductController {
     @PostMapping("/product_edit{id}")
     public String product_edit(@CookieValue(value = "loggedInEmp", defaultValue = "") String loggedInEmp,
             @ModelAttribute Product product, @PathVariable Integer id) {
-        if (!loggedInEmp.isEmpty()){
+        if (!loggedInEmp.isEmpty()) {
             updateProduct(product, id);
+            return "redirect:/products_edit";
+        } else {
+            return "redirect:/";
+        }
+    }
+
+    @GetMapping("/product_del{id}")
+    public String product_del(@CookieValue(value = "loggedInEmp", defaultValue = "") String loggedInEmp,
+            @PathVariable Integer id) {
+        if (!loggedInEmp.isEmpty()) {
+            try {
+                deleteProduct(id);
+            } catch (DataIntegrityViolationException e) {
+                System.out.println("Löschen von Produkt Nr. " + id + " nicht möglich! DataIntegrityViolationException");
+            }
             return "redirect:/products_edit";
         } else {
             return "redirect:/";
@@ -83,7 +99,7 @@ public class ProductController {
                 product.getAmount(), product.getPrice(), id);
     }
 
-    public void deleteProduct(Product product) {
-        db.update("DELETE FROM products WHERE id = ?", product.getId());
+    public void deleteProduct(Integer id) {
+        db.update("DELETE FROM products WHERE id = ?", id);
     }
 }
