@@ -1,40 +1,27 @@
 <main th:fragment="product_edit">
-  <div th:replace="fragments :: emp_header" />
-  <table class="table caption-top">
-    <caption>
-      <strong>Produkte</strong>
-    </caption>
-    <tr>
-      <th scope="col" th:text="'ID'" />
-      <th scope="col" th:text="'Typ'" />
-      <th scope="col" th:text="'Name'" />
-      <th scope="col" th:text="'Beschreibung'" />
-      <th scope="col" th:text="'Image-URL'" />
-      <th scope="col" th:text="'Menge in l'" />
-      <th scope="col" th:text="'Preis in €'" />
-      <th scope="col" />
-    </tr>
-    <tr th:each="product: ${products}">
-      <td th:text="${product.id}" />
-      <td th:text="${product.type}" />
-      <td th:text="${product.name}" />
-      <td th:text="${product.description}" />
-      <td th:text="${product.imgURL}" />
-      <td th:text="${product.amount / 1000.0}" />
-      <td th:text="${product.price}" />
-      <td>
-        Hier kommt ein Bearbeiten-Button und ein Löschen-Button rein. Löschen ->
-        Nachfragen, dann ggf. löschen, Bearbeiten -> Felder werden beschreibbar
-        + Submit-Button in letzter Spalte einblenden
-      </td>
-    </tr>
-    <tr>
-      <td colspan="8">
-        Hier muss ein +-Button hin, der eine Zeile mit beschreibbaren Feldern
-        (ohne ID) zum Hinzufügen eines neuen Produkts einblendet. In der letzten
-        Spalte muss dann der Speichern-Button eingeblendet werden (Javascript).
-        Gespeichert wird über POST.
-      </td>
-    </tr>
-  </table>
+  <h1>Produktdatenänderung</h1>
+  <form action="#" th:action="@{'/product_edit' + ${product.id}}" method="post" th:object="${product}">
+    <table>
+      <tr>
+        <th scope="col" th:text="'ID'" />
+        <th scope="col" th:text="'Typ'" />
+        <th scope="col" th:text="'Name'" />
+        <th scope="col" th:text="'Beschreibung'" />
+        <th scope="col" th:text="'Image-URL'" />
+        <th scope="col" th:text="'Menge in ml'" />
+        <th scope="col" th:text="'Preis in €'" />
+        <th scope="col" />
+      </tr>
+      <tr>
+        <td th:text="*{id}" th:field="*{id}" />
+        <td><input type="text" th:field="*{type}" th:value="*{type}" /></td>
+        <td><input type="text" th:field="*{name}" th:value="*{name}" /></td>
+        <td><input type="text" th:field="*{description}" th:value="*{description}" /></td>
+        <td><input type="text" th:field="*{imgURL}" th:value="*{imgURL}" /></td>
+        <td><input type="text" th:field="*{amount}" th:value="*{amount}" /></td>
+        <td><input type="text" th:field="*{price}" th:value="*{price}" /></td>
+        <td><input type="submit" value="Speichern" /></td>
+      </tr>
+    </table>
+  </form>
 </main>

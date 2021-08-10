@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
@@ -17,8 +18,8 @@ public class ProductController {
     @Autowired
     private JdbcTemplate db;
 
-    @GetMapping("/product_edit")
-    public String product_edit(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
+    @GetMapping("/products_edit")
+    public String products_edit(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
             @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
             @CookieValue(value = "loggedInEmp", defaultValue = "") String loggedInEmp, Model model) {
         model.addAttribute("loggedInUser", loggedInUser);
@@ -31,17 +32,38 @@ public class ProductController {
         model.addAttribute("products", products);
         model.addAttribute("loggedInEmp", loggedInEmp);
         model.addAttribute("title", "Produktbearbeitung");
+        model.addAttribute("templateName", "products_edit");
+        return "layout";
+    }
+
+    @GetMapping("/product_edit{id}")
+    public String product_edit(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
+            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
+            @CookieValue(value = "loggedInEmp", defaultValue = "") String loggedInEmp, @PathVariable int id,
+            Model model) {
+        model.addAttribute("loggedInUser", loggedInUser);
+        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
+        model.addAttribute("shoppingcart", shoppingCart);
+        if (loggedInEmp.isEmpty()) {
+            return "redirect:/";
+        }
+        Product product = db.queryForObject("SELECT * FROM products WHERE id = ?", new ProductRowMapper(), id);
+        model.addAttribute(product);
+        model.addAttribute("loggedInEmp", loggedInEmp);
+        model.addAttribute("title", "Produktbearbeitung");
         model.addAttribute("templateName", "product_edit");
         return "layout";
     }
 
-    @PostMapping("/product_edit")
-    public String product_edit(@ModelAttribute Product product) {
-        // Hier muss die Logik zum Löschen / Ändern / Hinzufügen eines Produkts
-        // implementiert werden. Durch klicken des jeweiligen Submit-Buttons muss die
-        // Information übergeben werden, was mit welchem Produkt gemacht werden soll.
-        // Ggf. zusätzl. ModelAttribute, das aussagt, ob gelöscht, geändert, oder hinzugefügt werden soll?
-        return "redirect:/product_edit";
+    @PostMapping("/product_edit{id}")
+    public String product_edit(@CookieValue(value = "loggedInEmp", defaultValue = "") String loggedInEmp,
+            @ModelAttribute Product product, @PathVariable Integer id) {
+        if (!loggedInEmp.isEmpty()){
+            updateProduct(product, id);
+            return "redirect:/products_edit";
+        } else {
+            return "redirect:/";
+        }
     }
 
     public Product saveNewProduct(Product product) {
@@ -54,11 +76,11 @@ public class ProductController {
         return product;
     }
 
-    public void updateProduct(Product product) {
+    public void updateProduct(Product product, Integer id) {
         String updateProductSQL = "UPDATE products SET product_type = ?, product_name = ?, "
                 + "product_description = ?, image_url = ?, amount_ml = ?, price_eur = ? WHERE id = ?;";
         db.update(updateProductSQL, product.getType(), product.getName(), product.getDescription(), product.getImgURL(),
-                product.getAmount(), product.getPrice(), product.getId());
+                product.getAmount(), product.getPrice(), id);
     }
 
     public void deleteProduct(Product product) {
