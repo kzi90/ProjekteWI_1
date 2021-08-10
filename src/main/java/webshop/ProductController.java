@@ -82,6 +82,34 @@ public class ProductController {
         }
     }
 
+    @GetMapping("/product_add")
+    public String product_add(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
+            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
+            @CookieValue(value = "loggedInEmp", defaultValue = "") String loggedInEmp, Model model) {
+        model.addAttribute("loggedInUser", loggedInUser);
+        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
+        model.addAttribute("shoppingcart", shoppingCart);
+        if (loggedInEmp.isEmpty()) {
+            return "redirect:/";
+        }
+        model.addAttribute(new Product());
+        model.addAttribute("loggedInEmp", loggedInEmp);
+        model.addAttribute("title", "Produktbearbeitung");
+        model.addAttribute("templateName", "product_add");
+        return "layout";
+    }
+
+    @PostMapping("/product_add")
+    public String product_add(@CookieValue(value = "loggedInEmp", defaultValue = "") String loggedInEmp,
+            @ModelAttribute Product product) {
+        if (!loggedInEmp.isEmpty()) {
+            saveNewProduct(product);
+            return "redirect:/products_edit";
+        } else {
+            return "redirect:/";
+        }
+    }
+
     public Product saveNewProduct(Product product) {
         String saveProductSQL = "INSERT INTO products (product_type, product_name, product_description, "
                 + "image_url, amount_ml, price_eur) VALUES (?, ?, ?, ?, ?, ?);";

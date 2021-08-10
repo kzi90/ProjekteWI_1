@@ -1,0 +1,36 @@
+<main th:fragment="product_add">
+  <h1>Produktdatenänderung</h1>
+  <form
+    action="#"
+    th:action="@{/product_add}"
+    method="post"
+    th:object="${product}"
+  >
+    <table>
+      <tr>
+        <th scope="col" th:text="'Typ'" />
+        <th scope="col" th:text="'Name'" />
+        <th scope="col" th:text="'Beschreibung'" />
+        <th scope="col" th:text="'Image-URL'" />
+        <th scope="col" th:text="'Menge in ml'" />
+        <th scope="col" th:text="'Preis in €'" />
+        <th scope="col" />
+      </tr>
+      <tr>
+        <td><input type="text" th:field="*{type}" th:value="*{type}" /></td>
+        <td><input type="text" th:field="*{name}" th:value="*{name}" /></td>
+        <td>
+          <input
+            type="text"
+            th:field="*{description}"
+            th:value="*{description}"
+          />
+        </td>
+        <td><input type="text" th:field="*{imgURL}" th:value="*{imgURL}" /></td>
+        <td><input type="text" th:field="*{amount}" th:value="*{amount}" /></td>
+        <td><input type="text" th:field="*{price}" th:value="*{price}" /></td>
+        <td><input type="submit" value="Speichern" /></td>
+      </tr>
+    </table>
+  </form>
+</main>
