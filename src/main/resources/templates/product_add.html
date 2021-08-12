@@ -1,5 +1,6 @@
 <main th:fragment="product_add">
-  <h1>Produktdatenänderung</h1>
+  <div th:replace="fragments :: emp_header" />
+  <h1>Produkt hinzufügen</h1>
   <form
     action="#"
     th:action="@{/product_add}"
