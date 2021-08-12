@@ -1,27 +1,115 @@
 <main th:fragment="register">
-  <h1>Registrierung</h1>
-  <form action="#" th:action="@{/register}" method="post">
-    <p>Vorname: <input type="text" th:field="${customer.firstname}" /></p>
-    <p>Nachname: <input type="text" th:field="${customer.lastname}" /></p>
-    <p>Geburtsdatum: <input type="text" th:field="${customer.birthdate}" /></p>
-    <p>E-Mail: <input type="text" th:field="${customer.email}" /></p>
-    <p>
-      Telefonnummer:
-      <input type="text" th:field="${customer.phonenumber}" />
-    </p>
-    <p>Passwort: <input type="password" th:field="${customer.passHash}" /></p>
-    <p th:text="'Adresse (in Deutschland):'" />
-    <p>Straße: <input type="text" th:field="${address.street}" /></p>
-    <p>Haus-Nr.: <input type="text" th:field="${address.housenr}" /></p>
-    <p>PLZ: <input type="text" th:field="${address.postcode}" /></p>
-    <p>Stadt: <input type="text" th:field="${address.city}" /></p>
-    <p>
-      <input type="submit" value="Submit" />
-      <input type="reset" value="Reset" />
-    </p>
-  </form>
-  <p>
-    Du hast schon ein Nutzerkonto? Hier geht's zum
-    <a href="/login">login</a>.
-  </p>
+
+    <div class="row justify-content-center align-items-center vh-100">
+      <div class="col col-md-10 col-lg-8 col-xl-6">
+                
+        <!-- Brand -->
+        <a class="text-center my-5 d-block"
+        href="/"
+        ><img
+          src="./images/Logo-Bielefelder-Unikat.svg"
+          alt="Bielefelder Unikat"
+          width="140"
+      /></a>
+  
+      <!-- Box -->
+        <div class="border rounded-3 mt-5 mb-3 px-5 py-3">
+  
+        <!-- Title -->
+        <h1 class="text-center mb-5">Registrierung</h1>
+  
+        <!-- Form -->
+        <form action="#" th:action="@{/register}" method="post" class="row g-3">
+  
+          <!-- First name -->
+          <div class="col-md-6">
+            <label for="inputFirstName" class="form-label">Vorname*</label>
+            <input th:field="${customer.firstname}" type="text" class="form-control" id="inputFirstName" required>
+          </div>
+
+          <!-- Last name -->
+          <div class="col-md-6">
+            <label for="inputLastName" class="form-label">Nachname*</label>
+            <input th:field="${customer.lastname}" type="text" class="form-control" id="inputLastName" required>
+          </div>
+
+          <!-- Birthday -->
+          <div class="col-md-6">
+            <label for="inputBirthday" class="form-label">Geburtstag</label>
+            <input th:field="${customer.birthdate}" type="date" class="form-control" id="inputBirthday">
+          </div>
+
+          <!-- Tel -->
+          <div class="col-md-6">
+            <label for="inputTel" class="form-label">Telefon</label>
+            <input th:field="${customer.phonenumber}" type="tel" class="form-control" id="inputTel">
+          </div>
+
+          <!-- Email -->
+          <div class="col-md-6">
+            <label for="inputEmail" class="form-label">E-Mail*</label>
+            <input th:field="${customer.email}" type="email" class="form-control" id="inputEmail" required>
+          </div>
+  
+          <!-- Password -->
+          <div class="col-md-6">
+            <label for="exampleInputPassword1" class="form-label">Passwort*</label>
+            <input th:field="${customer.passHash}" type="password" class="form-control" id="exampleInputPassword1" required>
+          </div>
+         
+          <!-- Street -->
+          <div class="col-md-6">
+            <label for="inputStreet" class="form-label">Straße*</label>
+            <input th:field="${address.street}"  type="text" class="form-control" id="inputStreet" required>
+          </div>
+
+          <!-- Street number -->
+          <div class="col-md-6">
+            <label for="inputStreetNumber" class="form-label">Haus-Nr.*</label>
+            <input th:field="${address.housenr}"  type="number" class="form-control" id="inputStreetNumber" required>
+          </div>
+
+          <!-- City code -->
+          <div class="col-md-6">
+            <label for="inputCityCode" class="form-label">PLZ*</label>
+            <input th:field="${address.postcode}" type="number" class="form-control" id="inputCityCode" required>
+          </div>
+
+          <!-- City -->
+          <div class="col-md-6 mb-5">
+            <label for="inputCity" class="form-label">Stadt*</label>
+            <input th:field="${address.city}" type="text" class="form-control" id="inputCity" required>
+          </div>
+
+          <!-- Submit -->
+          <div class="d-grid">
+            <button type="submit" class="btn btn-primary mb-5">Registrieren</button>
+          </div>
+  
+        </form>
+  
+        <!-- Register -->
+        <p class="text-center">
+          Du hast schon ein Nutzerkonto? Hier geht's zum
+            <a href="/login">login</a>.
+        </p>
+  
+        </div>
+  
+        <!-- Legal -->
+        <div class="text-center text-muted legal">
+          <p>
+            <a href="/impressum" class="text-decoration-none me-2 text-white-50"
+              >Impressum</a
+            >
+            <a href="/datenschutz" class="text-decoration-none me-2 text-white-50"
+              >Datenschutz</a
+            >
+            <a href="/agb" class="text-decoration-none text-white-50">AGB</a>
+          </p>
+        </div>
+  
+      </div>
+    </div>
+
 </main>

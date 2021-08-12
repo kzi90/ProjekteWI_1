@@ -1,18 +1,71 @@
 <main th:fragment="login">
-  <h1>Anmelden</h1>
-  <form action="#" th:action="@{/login}" method="post">
-    <!-- save referer for evtl. redirecting -->
-    <input type="hidden" id="cameFrom" name="cameFrom" th:value="${cameFrom}" />
 
-    <p>E-Mail: <input type="text" th:field="${customer.email}" /></p>
-    <p>Passwort: <input type="password" th:field="${customer.passHash}" /></p>
-    <p>
-      <input type="submit" value="Submit" />
-      <input type="reset" value="Reset" />
-    </p>
-  </form>
-  <p>
-    Du hast noch kein Nutzerkonto? Hier kannst du dich
-    <a href="/register">registrieren</a>.
-  </p>
+  <div class="row justify-content-center align-items-center vh-100">
+    <div class="col col-sm-10 col-md-7 col-lg-5 col-xl-4">
+              
+      <!-- Brand -->
+      <a class="text-center my-5 d-block"
+      href="/"
+      ><img
+        src="./images/Logo-Bielefelder-Unikat.svg"
+        alt="Bielefelder Unikat"
+        width="140"
+    /></a>
+
+    <!-- Box -->
+      <div class="border rounded-3 mt-5 mb-3 px-5 py-3">
+
+      <!-- Title -->
+      <h1 class="text-center mb-5">Anmelden</h1>
+
+      <!-- Form -->
+      <form action="#" th:action="@{/login}" method="post">
+
+        <!-- Email -->
+        <div class="mb-3">
+          <label for="inputEmail" class="form-label">E-Mail</label>
+          <input th:field="${customer.email}" type="email" class="form-control" id="inputEmail">
+        </div>
+
+        <!-- Password -->
+        <div class="mb-5">
+          <label for="exampleInputPassword1" class="form-label">Passwort</label>
+          <input th:field="${customer.passHash}" type="password" class="form-control" id="exampleInputPassword1">
+        </div>
+       
+        <!-- Came from -->
+        <input type="hidden" id="cameFrom" name="cameFrom" th:value="${cameFrom}" />
+
+        <!-- Submit -->
+        <div class="d-grid">
+          <button type="submit" class="btn btn-primary mb-5">Anmelden</button>
+        </div>
+
+      </form>
+
+      <!-- Register -->
+      <p class="text-center">
+        Du hast noch kein Nutzerkonto?<br>
+        Hier kannst du dich
+        <a href="/register">registrieren</a>.
+      </p>
+
+      </div>
+
+      <!-- Legal -->
+      <div class="text-center text-muted legal">
+        <p>
+          <a href="/impressum" class="text-decoration-none me-2 text-white-50"
+            >Impressum</a
+          >
+          <a href="/datenschutz" class="text-decoration-none me-2 text-white-50"
+            >Datenschutz</a
+          >
+          <a href="/agb" class="text-decoration-none text-white-50">AGB</a>
+        </p>
+      </div>
+
+    </div>
+  </div>
+ 
 </main>

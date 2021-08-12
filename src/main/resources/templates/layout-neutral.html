@@ -3,9 +3,7 @@
   <div th:replace="fragments :: head(title=${title})" />
   <body>
     <div class="container">
-      <div th:replace="fragments :: header" />
       <main th:include="${templateName} :: ${templateName}" id="content"/>
-      <div th:replace="fragments :: footer" />
     </div>
     <div th:replace="fragments :: scripts" />
   </body>

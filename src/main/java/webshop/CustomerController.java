@@ -46,7 +46,7 @@ public class CustomerController {
         model.addAttribute(address);
         model.addAttribute("templateName", "register");
         model.addAttribute("title", "Registrieren");
-        return "layout";
+        return "layout-neutral";
     }
 
     /**
@@ -72,7 +72,7 @@ public class CustomerController {
         boolean emailAlreadyRegistered = (!saveCustWithAddress(customer, address));
         model.addAttribute("emailAlreadyRegistered", emailAlreadyRegistered);
         model.addAttribute("templateName", "registered");
-        return "layout";
+        return "layout-neutral";
     }
 
     /**
@@ -93,7 +93,7 @@ public class CustomerController {
         Customer customer = new Customer();
         model.addAttribute(customer);
         model.addAttribute("templateName", "login");
-        return "layout";
+        return "layout-neutral";
     }
 
     /**
@@ -137,7 +137,7 @@ public class CustomerController {
         ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
         model.addAttribute("shoppingcart", shoppingCart);
         model.addAttribute("templateName", "loginfail");
-        return "layout";
+        return "layout-neutral";
     }
 
     /**
@@ -157,7 +157,7 @@ public class CustomerController {
         response.addCookie(cookie);
         model.addAttribute("loggedInUser", "");
         model.addAttribute("templateName", "logout");
-        return "layout";
+        return "layout-neutral";
     }
 
     @GetMapping("/account")
@@ -181,7 +181,7 @@ public class CustomerController {
 
         model.addAttribute("templateName", "account");
         model.addAttribute("title", "Kundendaten");
-        return "layout";
+        return "layout-neutral";
     }
 
     @PostMapping("/account")
@@ -232,7 +232,7 @@ public class CustomerController {
         model.addAttribute("loggedInUser", customer.getEmail());
         model.addAttribute("templateName", "account");
         model.addAttribute("title", "Kundendaten");
-        return "layout";
+        return "layout-neutral";
     }
 
     /**

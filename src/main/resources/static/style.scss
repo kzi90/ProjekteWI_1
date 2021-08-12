@@ -58,6 +58,43 @@ $body-bg:                   $black;
 $body-color:                $white;
 $body-text-align:           null;
 
+// Form
+$input-bg: $white;
+$input-disabled-bg: $white;
+$input-disabled-border-color: null;
+
+$input-color: $black;
+$input-border-color: $gray-400;
+
+$input-focus-bg: $input-bg;
+$input-focus-border-color: $white;
+$input-focus-color: $input-color;
+$input-btn-focus-box-shadow: $white;
+$component-active-color: $black;
+$component-active-bg: $white;
+$form-check-input-checked-bg-color: $white;
+
+$input-placeholder-color: $gray-600;
+$input-plaintext-color: $black;
+
+// scss-docs-start form-check-variables
+$form-check-label-color:                  null;
+
+$form-check-input-active-filter:          brightness(90%);
+
+$form-check-input-bg:                     $input-bg;
+$form-check-input-border:                 1px solid rgba($black, .25);
+$form-check-input-focus-border:           $input-focus-border-color;
+$form-check-input-focus-box-shadow:       $input-btn-focus-box-shadow;
+
+$form-check-input-checked-color:          $component-active-color;
+$form-check-input-checked-bg-color:       $component-active-bg;
+$form-check-input-checked-border-color:   $form-check-input-checked-bg-color;
+
+$form-check-input-indeterminate-color:          $component-active-color;
+$form-check-input-indeterminate-bg-color:       $component-active-bg;
+$form-check-input-indeterminate-border-color:   $form-check-input-indeterminate-bg-color;
+
 // Spacing
 $spacer: 1rem;
 
@@ -141,7 +178,10 @@ Header
 }
 
 // Navbar
-.navbar-toggler,
+.navbar {
+    height: 80px;
+}
+
 .navbar-collapse,
 .navbar-others {
     flex-grow: 2; // needs to be set so the logo is always in the middle
