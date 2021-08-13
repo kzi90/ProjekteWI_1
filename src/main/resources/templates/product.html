@@ -83,9 +83,9 @@
       <!-- Price -->
       <span
         class="text-price mx-auto mb-1"
-        th:text="${#numbers.formatDecimal(product.price, 1, 2, 'COMMA')}"
+        th:text="${#numbers.formatDecimal(product.price, 1, 2, 'COMMA')} + ' €'"
       />
-      <span class="text-vat mx-auto mb-2">€ inkl. MwSt.</span>
+      <span class="text-vat mx-auto mb-2">inkl. MwSt.</span>
 
       <!-- Button zum Warenkorb hinzufügen -->
       <button
