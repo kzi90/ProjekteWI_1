@@ -1,69 +1,87 @@
 <main th:fragment="register">
-
-    <div class="row justify-content-center align-items-center vh-100">
-      <div class="col col-md-10 col-lg-8 col-xl-7 ol-xxl-6">
-                
-        <!-- Brand -->
-        <a class="text-center my-4 d-block"
-        href="/"
+  <div class="row justify-content-center align-items-center vh-100">
+    <div class="col col-md-10 col-lg-8 col-xl-7 ol-xxl-6">
+      <!-- Brand -->
+      <a class="text-center my-4 d-block" href="/"
         ><img
           src="./images/Logo-Bielefelder-Unikat.svg"
           alt="Bielefelder Unikat"
           width="140"
       /></a>
-  
+
       <!-- Box -->
-        <div class="border rounded-3 mt-5 mb-3 px-5 py-3">
-  
+      <div class="border rounded-3 mt-5 mb-3 px-5 py-3">
         <!-- Title -->
         <h1 class="text-center mb-5 display-1">Registrierung</h1>
-  
+
         <!-- Form -->
-        <form action="#" th:action="@{/register}" method="post" class="row g-3 needs-validation" novalidate>
-  
+        <form
+          action="#"
+          th:action="@{/register}"
+          method="post"
+          class="row g-3 needs-validation"
+          novalidate
+          oninput='confirmPassword.setCustomValidity(inputPassword2.value != inputPassword1.value ? true : false)'
+        >
+          <h5 class="text-muted">Über dich</h5>
+
           <!-- First name -->
-          <div class="col-md-6">
+          <div class="col-md-4">
             <label for="inputFirstName" class="form-label">Vorname</label>
-            <input th:field="${customer.firstname}" type="text" class="form-control" id="inputFirstName" autofocus required>
-            <div class="valid-feedback">
-              Sieht gut aus!
-            </div>
-            <div class="invalid-feedback">
-              Bitte Vorname eintragen.
-            </div>
+            <input
+              th:field="${customer.firstname}"
+              type="text"
+              class="form-control"
+              id="inputFirstName"
+              autofocus
+              required
+            />
+            <div class="valid-feedback">Sieht gut aus!</div>
+            <div class="invalid-feedback">Bitte Vorname eintragen.</div>
           </div>
 
           <!-- Last name -->
-          <div class="col-md-6">
+          <div class="col-md-4">
             <label for="inputLastName" class="form-label">Nachname</label>
-            <input th:field="${customer.lastname}" type="text" class="form-control" id="inputLastName" required>
-            <div class="valid-feedback">
-              Sieht gut aus!
-            </div>
-            <div class="invalid-feedback">
-              Bitte Nachname eintragen.
-            </div>
+            <input
+              th:field="${customer.lastname}"
+              type="text"
+              class="form-control"
+              id="inputLastName"
+              required
+            />
+            <div class="valid-feedback">Sieht gut aus!</div>
+            <div class="invalid-feedback">Bitte Nachname eintragen.</div>
           </div>
 
           <!-- Birthday -->
-          <div class="col-md-6">
+          <div class="col-md-4">
             <label for="inputBirthday" class="form-label">Geburtstag</label>
-            <input th:field="${customer.birthdate}" type="date" class="form-control" id="inputBirthday" required>
-            <div class="valid-feedback">
-              Sieht gut aus!
-            </div>
-            <div class="invalid-feedback">
-              Bitte Geburtsdatum eintragen.
-            </div>
+            <input
+              th:field="${customer.birthdate}"
+              type="date"
+              class="form-control"
+              id="inputBirthday"
+              required
+            />
+            <div class="valid-feedback">Sieht gut aus!</div>
+            <div class="invalid-feedback">Bitte Geburtsdatum eintragen.</div>
           </div>
+
+          <hr class="mt-4 mb-1" />
+          <h5 class="text-muted">Deine Kontaktdaten</h5>
 
           <!-- Tel -->
           <div class="col-md-6">
             <label for="inputTel" class="form-label">Telefon</label>
-            <input th:field="${customer.phonenumber}" type="tel" class="form-control" id="inputTel" required>
-            <div class="valid-feedback">
-              Sieht gut aus!
-            </div>
+            <input
+              th:field="${customer.phonenumber}"
+              type="tel"
+              class="form-control"
+              id="inputTel"
+              required
+            />
+            <div class="valid-feedback">Sieht gut aus!</div>
             <div class="invalid-feedback">
               Bitte eine Telefonnummer eintragen.
             </div>
@@ -72,58 +90,96 @@
           <!-- Email -->
           <div class="col-md-6">
             <label for="inputEmail" class="form-label">E-Mail</label>
-            <input th:field="${customer.email}" type="email" class="form-control" id="inputEmail" required>
-            <div class="valid-feedback">
-              Sieht gut aus!
-            </div>
-            <div class="invalid-feedback">
-              Bitte eine E-Mail eintragen.
-            </div>
+            <input
+              th:field="${customer.email}"
+              type="email"
+              class="form-control"
+              id="inputEmail"
+              required
+            />
+            <div class="valid-feedback">Sieht gut aus!</div>
+            <div class="invalid-feedback">Bitte eine E-Mail eintragen.</div>
           </div>
-  
+
+          <hr class="mt-4 mb-1" />
+          <h5 class="text-muted">Dein Passwort</h5>
+
           <!-- Password -->
           <div class="col-md-6">
-            <label for="exampleInputPassword1" class="form-label">Passwort</label>
-            <input th:field="${customer.passHash}" type="password" class="form-control" id="exampleInputPassword1" required>
-            <div class="valid-feedback">
-              Sieht gut aus!
-            </div>
-            <div class="invalid-feedback">
-              Bitte ein Passwort eintragen.
-            </div>
+            <label for="inputPassword" class="form-label"
+              >Passwort</label
+            >
+            <input
+              th:field="${customer.passHash}"
+              type="password"
+              class="form-control"
+              id="inputPassword"
+              required
+            />
+            <div class="valid-feedback">Sieht gut aus!</div>
+            <div class="invalid-feedback">Bitte ein Passwort eintragen.</div>
           </div>
-         
+
+          <!-- Password repeat -->
+          <div class="col-md-6">
+            <label for="inputPasswordRepeat" class="form-label"
+              >Passwort wiederholen</label
+            >
+            <input
+              th:field="${customer.passHash}"
+              type="password"
+              class="form-control"
+              id="inputPasswordRepeat"
+              required
+            />
+            <div class="valid-feedback">Sieht gut aus!</div>
+            <div class="invalid-feedback">Das Passwort ist anders!</div>
+          </div>
+
+          <hr class="mt-4 mb-1" />
+          <h5 class="text-muted">Deine Anschrift</h5>
+
           <!-- Street -->
           <div class="col-md-6">
             <label for="inputStreet" class="form-label">Straße</label>
-            <input th:field="${address.street}"  type="text" class="form-control" id="inputStreet" required>
-            <div class="valid-feedback">
-              Sieht gut aus!
-            </div>
-            <div class="invalid-feedback">
-              Bitte eine Straße eintragen.
-            </div>
+            <input
+              th:field="${address.street}"
+              type="text"
+              class="form-control"
+              id="inputStreet"
+              required
+            />
+            <div class="valid-feedback">Sieht gut aus!</div>
+            <div class="invalid-feedback">Bitte eine Straße eintragen.</div>
           </div>
 
           <!-- Street number -->
           <div class="col-md-6">
             <label for="inputStreetNumber" class="form-label">Haus-Nr.</label>
-            <input th:field="${address.housenr}"  type="number" class="form-control" id="inputStreetNumber" required>
-            <div class="valid-feedback">
-              Sieht gut aus!
-            </div>
-            <div class="invalid-feedback">
-              Bitte eine Hausnummer eintragen.
-            </div>
+            <input
+              th:field="${address.housenr}"
+              type="number"
+              class="form-control"
+              id="inputStreetNumber"
+              required
+            />
+            <div class="valid-feedback">Sieht gut aus!</div>
+            <div class="invalid-feedback">Bitte eine Hausnummer eintragen.</div>
           </div>
 
           <!-- City code -->
           <div class="col-md-6">
             <label for="inputCityCode" class="form-label">PLZ</label>
-            <input th:field="${address.postcode}" type="number" class="form-control" id="inputCityCode" min="01067" max="99998" required>
-            <div class="valid-feedback">
-              Sieht gut aus!
-            </div>
+            <input
+              th:field="${address.postcode}"
+              type="number"
+              class="form-control"
+              id="inputCityCode"
+              min="01067"
+              max="99998"
+              required
+            />
+            <div class="valid-feedback">Sieht gut aus!</div>
             <div class="invalid-feedback">
               Bitte eine Postleitzahl eintragen.
             </div>
@@ -132,46 +188,47 @@
           <!-- City -->
           <div class="col-md-6 mb-4">
             <label for="inputCity" class="form-label">Stadt</label>
-            <input th:field="${address.city}" type="text" class="form-control" id="inputCity" required>
-            <div class="valid-feedback">
-              Sieht gut aus!
-            </div>
-            <div class="invalid-feedback">
-              Bitte eine Stadt eintragen.
-            </div>
+            <input
+              th:field="${address.city}"
+              type="text"
+              class="form-control"
+              id="inputCity"
+              required
+            />
+            <div class="valid-feedback">Sieht gut aus!</div>
+            <div class="invalid-feedback">Bitte eine Stadt eintragen.</div>
           </div>
 
           <!-- Submit -->
           <div class="d-grid">
-            <button type="submit" class="btn btn-primary mb-5">Registrieren</button>
+            <button type="submit" class="btn btn-primary mb-5">
+              Registrieren
+            </button>
           </div>
-  
         </form>
-  
+
         <!-- Register -->
         <p class="text-center">
-          Du hast schon ein Nutzerkonto? Hier kannst du dich 
-            <a href="/login">anmelden</a>.
+          Du hast schon ein Nutzerkonto? Hier kannst du dich
+          <a href="/login">anmelden</a>.
         </p>
-  
-        </div>
-  
-        <!-- Legal -->
-        <div class="text-center text-muted legal">
-          <p>
-            <a href="/impressum" class="text-decoration-none me-2 text-white-50"
-              >Impressum</a
-            >
-            <a href="/datenschutz" class="text-decoration-none me-2 text-white-50"
-              >Datenschutz</a
-            >
-            <a href="/agb" class="text-decoration-none text-white-50">AGB</a>
-          </p>
-        </div>
-  
+      </div>
+
+      <!-- Legal -->
+      <div class="text-center text-muted legal">
+        <p>
+          <a href="/impressum" class="text-decoration-none me-2 text-white-50"
+            >Impressum</a
+          >
+          <a href="/datenschutz" class="text-decoration-none me-2 text-white-50"
+            >Datenschutz</a
+          >
+          <a href="/agb" class="text-decoration-none text-white-50">AGB</a>
+        </p>
       </div>
     </div>
+  </div>
 
-    <div th:replace="fragments :: scriptFormValidation" />
+  <div th:replace="fragments :: scriptFormValidation" />
 
 </main>
