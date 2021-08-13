@@ -1,7 +1,5 @@
 Das hier funktioniert bei mir mit jdk 16 (Windows 10) und OpenJDK 11 (Linux)
 (Java Version muss ggf. in pom.xml angepasst werden)
-Für VS Code ist es sinnvoll, die Lombok-Extension zu installieren, damit VS Code
-weiß, dass aufgrund der Annotations (z.B. @Getter / @Setter) die entsprechenden Methoden vorhanden sind.
 
 Zugang H2-Datenbank:
 URL: localhost/h2-console
@@ -17,5 +15,8 @@ Kommando muss dort jetzt mit root-Rechten gestartet werden:
 
 Zugriff über Webbrowser: localhost/
 Abbruch: Strg+C im Terminal
+
+Login zum Mitarbeiterbereich: localhost/s3cr3tl0g1n
+Mitarbeiterbereich: localhost/employee_area
 
 Mailadresse bierbestellen@gmail.com, gmail.zip, Schlüssel bierbestellen
