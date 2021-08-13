@@ -72,7 +72,7 @@ public class CustomerController {
         boolean emailAlreadyRegistered = (!saveCustWithAddress(customer, address));
         model.addAttribute("emailAlreadyRegistered", emailAlreadyRegistered);
         model.addAttribute("templateName", "registered");
-        return "layout-neutral";
+        return "layout";
     }
 
     /**
@@ -181,7 +181,7 @@ public class CustomerController {
 
         model.addAttribute("templateName", "account");
         model.addAttribute("title", "Kundendaten");
-        return "layout-neutral";
+        return "layout";
     }
 
     @PostMapping("/account")
@@ -232,7 +232,7 @@ public class CustomerController {
         model.addAttribute("loggedInUser", customer.getEmail());
         model.addAttribute("templateName", "account");
         model.addAttribute("title", "Kundendaten");
-        return "layout-neutral";
+        return "layout";
     }
 
     /**
@@ -256,8 +256,7 @@ public class CustomerController {
                     + "address_id, email, phonenumber, pass_hash) VALUES (?, ?, ?, ?, ?, ?, ?);";
             db.update(saveSQL, customer.getFirstname(), customer.getLastname(),
                     // database works correct with String in this format, but not with type Date.
-                    new SimpleDateFormat("yyyy-MM-dd")
-                            .format(new SimpleDateFormat("dd.MM.yyyy").parse(customer.getBirthdate())),
+                    customer.getBirthdate(),
                     address.getId(), customer.getEmail(), customer.getPhonenumber(),
                     // customer.passHash contains plain text password right now
                     Convert.stringToHash(customer.getPassHash()));
