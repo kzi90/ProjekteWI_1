@@ -137,7 +137,7 @@ public class CustomerController {
         ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
         model.addAttribute("shoppingcart", shoppingCart);
         model.addAttribute("templateName", "loginfail");
-        return "layout-neutral";
+        return "layout";
     }
 
     /**
@@ -157,7 +157,7 @@ public class CustomerController {
         response.addCookie(cookie);
         model.addAttribute("loggedInUser", "");
         model.addAttribute("templateName", "logout");
-        return "layout-neutral";
+        return "layout";
     }
 
     @GetMapping("/account")

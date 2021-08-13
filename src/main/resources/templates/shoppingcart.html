@@ -1,17 +1,19 @@
 <main th:fragment="shoppingcart">
   <div th:switch="${total != '0,00'}">
     <div th:case="${true}">
-      <div>
+      <div th:if="${!loggedInUser.isEmpty()}">
         <!-- TODO: aus dem style muss noch ne class werden, wie bei der  caption unten-->
         <p
           style="color: #6f6b68; font-weight: bolder"
           th:text="'Ihre Lieferadresse lautet:'"
         />
-        <p th:text="'Straße: ' + ${address.street}" />
-        <p th:text="'Haus-Nr.: ' + ${address.housenr}" />
-        <p th:text="'PLZ: ' + ${address.postcode}" />
-        <p th:text="'Stadt: ' + ${address.city}" />
-        <p class="text-muted legal">
+        <p
+          class="mb-0"
+          th:text="${address.street} + ' ' + ${address.housenr}"
+        />
+        <p class="mb-0" th:text="${address.postcode} + ' ' + ${address.city}" />
+        <p class="mb-0">Deutschland</p>
+        <p class="text-muted legal" style="font-size: 0.8rem">
           *Sie könnnen Ihre Lieferadresse in den Kundendaten ändern
         </p>
       </div>
