@@ -341,11 +341,18 @@ ScriptAddToCart
     document
       .getElementById("addToCart[[${product.id}]]")
       .addEventListener("click", function () {
-        fetch("addProductToCart?productID=[[${product.id}]]", {
-          mode: "no-cors",
-        });
+        fetch(
+          "addProductToCart?productID=[[${product.id}]]&quantity=" +
+            document.getElementById("quantity[[${product.id}]]").value,
+          {
+            mode: "no-cors",
+          }
+        );
         document.getElementById("numOfBottles").innerText =
-          parseInt(document.getElementById("numOfBottles").innerText) + 1;
+          parseInt(document.getElementById("numOfBottles").innerText) +
+          parseInt(
+            document.getElementById("quantity[[${product.id}]]").value
+          );
       });
   </script>
 </div>

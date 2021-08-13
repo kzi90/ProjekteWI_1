@@ -28,9 +28,10 @@ public class ShoppingCartController {
      */
     @GetMapping("/addProductToCart")
     public String addProductToCart(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
-            @RequestParam(value = "productID", required = true) Integer productID) {
+            @RequestParam(value = "productID", required = true) Integer productID,
+            @RequestParam(value = "quantity", required = true) Integer quantity) {
         ShoppingCart shoppingCart = ShoppingCart.findBySessID(Integer.valueOf(sessID));
-        shoppingCart.addToCart(productID);
+        shoppingCart.addToCart(productID, quantity);
         return "redirect:/sortiment";
     }
 

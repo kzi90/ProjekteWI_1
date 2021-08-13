@@ -255,7 +255,6 @@ public class CustomerController {
             String saveSQL = "INSERT INTO customers (firstname, lastname, birthdate, "
                     + "address_id, email, phonenumber, pass_hash) VALUES (?, ?, ?, ?, ?, ?, ?);";
             db.update(saveSQL, customer.getFirstname(), customer.getLastname(),
-                    // database works correct with String in this format, but not with type Date.
                     customer.getBirthdate(),
                     address.getId(), customer.getEmail(), customer.getPhonenumber(),
                     // customer.passHash contains plain text password right now

@@ -40,14 +40,14 @@ public class ShoppingCart {
      * Add product to shoppingcart
      * @param productID
      */
-    public void addToCart(Integer productID) {
+    public void addToCart(Integer productID, Integer quantity) {
         for (ShoppingCartPosition shoppingCartPosition : this.cartList) {
             if (shoppingCartPosition.getProductID().equals(productID)) {
-                shoppingCartPosition.setQuantity(shoppingCartPosition.getQuantity() + 1);
+                shoppingCartPosition.setQuantity(shoppingCartPosition.getQuantity() + quantity);
                 return;
             }
         }
-        cartList.add(new ShoppingCartPosition(productID, 1));
+        cartList.add(new ShoppingCartPosition(productID, quantity));
     }
 
     /**
