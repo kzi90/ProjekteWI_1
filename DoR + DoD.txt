@@ -18,6 +18,7 @@ Definition of Done (DoD)
 DT	keine bekannten Bugs
 DT	subtasks sind abgeschlossen
 DT	eine einzelne Person pro Story
+DT  mobile Responsivness gegeben
 DT	ggf. gegenseitige Prüfung des Codes (ein Bearbeiter der Story, ein Schließer der Story)
 DT	ggf. technische Dokumentation, zumindest Stichpunkte zum Ablauf und potentiellen Problemen
 DT	Check ob Akzeptenzkriterien der DoR abgeschlossen sind
