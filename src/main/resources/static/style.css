@@ -11604,8 +11604,21 @@ Header
 }
 
 /*==================================================
-Product range 
+Product 
 ==================================================*/
+.product h2, .product .h2 {
+  line-height: .9;
+}
+
+.text-price {
+  display: block;
+  font-size: 2rem;
+}
+
+.text-vat {
+  display: block;
+}
+
 .description::first-letter {
   padding: 0;
   margin: 0 .3rem 0 0;

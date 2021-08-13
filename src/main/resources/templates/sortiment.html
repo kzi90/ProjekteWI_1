@@ -10,27 +10,35 @@
   ></div>
 
   <!-- Products -->
-  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
-    <div th:each="product: ${products}" class="col">
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-5">
+    <div th:each="product: ${products}" class="col product text-center">
       <!-- Product link -->
-      <a
-        style="display: flex; justify-content: center; flex-direction: column"
-        href="/product"
-        th:href="@{/product(product=${product.id})}"
-      >
+      <a href="/product" th:href="@{/product(product=${product.id})}">
         <!-- Product image -->
         <img
           alt="Produktbild"
           th:src="@{${product.imgURL}}"
-          class="img-fluid w-50"
-          style="align-self: center"
-        />
-        <!-- Product name -->
-        <h2
-          style="text-align: center; z-index: 999; background-color: #212025"
-          th:text="${product.name}"
+          class="img-fluid w-50 mb-5"
         />
       </a>
+
+      <!-- Product name -->
+      <h2 class="display-2" th:text="${product.name}" />
+
+      <!-- Price -->
+      <span
+        class="text-price mx-auto mb-1"
+        th:text="${#numbers.formatDecimal(product.price, 1, 2, 'COMMA')}"
+      />
+      <span class="text-vat mx-auto mb-2">inkl. MwSt.</span>
+
+      <!-- Button zum Warenkorb hinzufügen -->
+      <button
+        th:id="'addToCart' + ${product.id}"
+        class="btn btn-primary mx-auto"
+      >
+        In die Bierkiste legen
+      </button>
     </div>
   </div>
 
