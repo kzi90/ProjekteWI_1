@@ -16,6 +16,7 @@ public class ProductRowMapper implements RowMapper<Product> {
                        .imgURL(rs.getString("image_url"))
                        .amount(rs.getInt("amount_ml"))
                        .price(rs.getDouble("price_eur"))
+                       .active(rs.getBoolean("active"))
                        .build();
     }
 }

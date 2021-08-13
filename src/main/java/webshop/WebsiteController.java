@@ -51,7 +51,7 @@ public class WebsiteController {
             @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
             Model model) {
         model.addAttribute("loggedInUser", loggedInUser);
-        List<Product> products = db.query("SELECT * FROM products", new ProductRowMapper());
+        List<Product> products = db.query("SELECT * FROM products WHERE active = TRUE", new ProductRowMapper());
         model.addAttribute("products", products);
         ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
         model.addAttribute("shoppingcart", shoppingCart);

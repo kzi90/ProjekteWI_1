@@ -29,7 +29,7 @@ public class ProductController {
         if (loggedInEmp.isEmpty()) {
             return "redirect:/";
         }
-        List<Product> products = db.query("SELECT * FROM products", new ProductRowMapper());
+        List<Product> products = db.query("SELECT * FROM products WHERE active = TRUE", new ProductRowMapper());
         model.addAttribute("products", products);
         model.addAttribute("loggedInEmp", loggedInEmp);
         model.addAttribute("title", "Produktbearbeitung");
@@ -71,11 +71,7 @@ public class ProductController {
     public String product_del(@CookieValue(value = "loggedInEmp", defaultValue = "") String loggedInEmp,
             @PathVariable Integer id) {
         if (!loggedInEmp.isEmpty()) {
-            try {
-                deleteProduct(id);
-            } catch (DataIntegrityViolationException e) {
-                System.out.println("Löschen von Produkt Nr. " + id + " nicht möglich! DataIntegrityViolationException");
-            }
+            deactivateProduct(id);
             return "redirect:/products_edit";
         } else {
             return "redirect:/";
@@ -127,7 +123,7 @@ public class ProductController {
                 product.getAmount(), product.getPrice(), id);
     }
 
-    public void deleteProduct(Integer id) {
-        db.update("DELETE FROM products WHERE id = ?", id);
+    public void deactivateProduct(Integer id) {
+        db.update("UPDATE products SET active = FALSE WHERE id = ?", id);
     }
 }

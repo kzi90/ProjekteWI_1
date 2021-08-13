@@ -108,6 +108,7 @@
         <th scope="col" th:text="'Image-URL'" />
         <th scope="col" th:text="'Menge in l'" />
         <th scope="col" th:text="'Preis in €'" />
+        <th scope="col" th:text="'Aktiv'" />
       </tr>
       <tr th:each="product: ${products}">
         <td th:text="${product.id}" />
@@ -117,6 +118,7 @@
         <td th:text="${product.imgURL}" />
         <td th:text="${product.amount / 1000.0}" />
         <td th:text="${product.price}" />
+        <td th:text="${product.active}" />
       </tr>
     </table>
 

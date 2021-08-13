@@ -18,4 +18,5 @@ public class Product {
     private String imgURL;
     private Integer amount;
     private Double price;
+    private Boolean active;
 }
