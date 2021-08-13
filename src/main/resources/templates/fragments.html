@@ -16,9 +16,7 @@ Header
 ===================================================-->
 <header class="mb-4" th:fragment="header">
   <!-- Navbar -->
-  <nav
-    class="navbar navbar-expand-lg navbar-dark bg-dark"
-  >
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <!-- Container fluid -->
     <div class="container-fluid">
       <a href="#content" class="skip-link">Zum Inhalt</a>
@@ -103,7 +101,7 @@ Header
             >
           </li>
           <li class="nav-item">
-             <!--Login/Register/User button -->
+            <!--Login/Register/User button -->
             <div
               th:replace="fragments :: login-register-user-buttons (class='d-inline d-lg-none')"
             />
@@ -113,7 +111,14 @@ Header
 
       <!-- Navbar brand -->
       <a
-        class="navbar-brand order-0 order-lg-1 position-absolute top-0 start-50 translate-middle-x"
+        class="
+          navbar-brand
+          order-0 order-lg-1
+          position-absolute
+          top-0
+          start-50
+          translate-middle-x
+        "
         href="/"
         ><img
           src="./images/Logo-Bielefelder-Unikat.svg"
@@ -146,7 +151,8 @@ Header
               rounded-pill
               bg-secondary
             "
-            th:text="${shoppingcart.getAmountOfBottles()}">
+            th:text="${shoppingcart.getAmountOfBottles()}"
+          >
             <span class="visually-hidden">Bierflaschen im Warenkorb</span></span
           >
         </a>
@@ -177,8 +183,8 @@ Header
       <li><a class="dropdown-item" href="#">Mitarbeiterdaten</a></li>
       <li><hr class="dropdown-divider" /></li>
       <li><a class="dropdown-item" href="/s3cr3tl0g0ut">Abmelden</a></li>
-    </ul>
-  </span><br><br>
+    </ul> </span
+  ><br /><br />
 </div>
 
 <!--==================================================
@@ -197,19 +203,39 @@ Footer
 
   <!-- Social media -->
   <div class="text-center display-4 mb-5">
-    <a href="https://de-de.facebook.com/" target="_blank" title="Facebook" class="me-1"
+    <a
+      href="https://de-de.facebook.com/"
+      target="_blank"
+      title="Facebook"
+      class="me-1"
       ><i class="fab fa-facebook-square"></i
     ></a>
-    <a href="https://twitter.com/?lang=de" target="_blank" title="Twitter" class="me-1"
+    <a
+      href="https://twitter.com/?lang=de"
+      target="_blank"
+      title="Twitter"
+      class="me-1"
       ><i class="fab fa-twitter-square"></i
     ></a>
-    <a href="https://www.instagram.com/" target="_blank" title="Instagram" class="me-1"
+    <a
+      href="https://www.instagram.com/"
+      target="_blank"
+      title="Instagram"
+      class="me-1"
       ><i class="fab fa-instagram-square"></i
     ></a>
-    <a href="https://www.youtube.com/?hl=de&gl=de" target="_blank" title="YouTube" class="me-1"
+    <a
+      href="https://www.youtube.com/?hl=de&gl=de"
+      target="_blank"
+      title="YouTube"
+      class="me-1"
       ><i class="fab fa-youtube-square"></i
     ></a>
-    <a href="https://www.pinterest.de/" target="_blank" title="Pinterest" class="me-1"
+    <a
+      href="https://www.pinterest.de/"
+      target="_blank"
+      title="Pinterest"
+      class="me-1"
       ><i class="fab fa-pinterest-square"></i
     ></a>
     <a href="mailto:bierbestellen@gmail.com" title="E-Mail"
@@ -308,29 +334,49 @@ Scripts
 </div>
 
 <!--==================================================
+ScriptAddToCart
+===================================================-->
+<div th:fragment="scriptAddToCart">
+  <script th:inline="javascript">
+    document
+      .getElementById("addToCart[[${product.id}]]")
+      .addEventListener("click", function () {
+        fetch("addProductToCart?productID=[[${product.id}]]", {
+          mode: "no-cors",
+        });
+        document.getElementById("numOfBottles").innerText =
+          parseInt(document.getElementById("numOfBottles").innerText) + 1;
+      });
+  </script>
+</div>
+
+<!--==================================================
 ScriptFormValidation
 ===================================================-->
 <div th:fragment="scriptFormValidation">
   <script>
     // Example starter JavaScript for disabling form submissions if there are invalid fields
-  (function () {
-    'use strict'
+    (function () {
+      "use strict";
 
-    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-    var forms = document.querySelectorAll('.needs-validation')
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      var forms = document.querySelectorAll(".needs-validation");
 
-    // Loop over them and prevent submission
-    Array.prototype.slice.call(forms)
-      .forEach(function (form) {
-        form.addEventListener('submit', function (event) {
-          if (!form.checkValidity()) {
-            event.preventDefault()
-            event.stopPropagation()
-          }
+      // Loop over them and prevent submission
+      Array.prototype.slice.call(forms).forEach(function (form) {
+        form.addEventListener(
+          "submit",
+          function (event) {
+            if (!form.checkValidity()) {
+              event.preventDefault();
+              event.stopPropagation();
+            }
 
-          form.classList.add('was-validated')
-        }, false)
-      })
-  })()
+            form.classList.add("was-validated");
+          },
+          false
+        );
+      });
+    })();
   </script>
 </div>
