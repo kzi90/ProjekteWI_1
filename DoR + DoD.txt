@@ -1,11 +1,11 @@
 Definition of Ready (DoR)												
 PO	Genauer, deskriptiver Titel, der das Ziel beschreibt
-PO	Sinnvolle Beschreibung mit vielen Details, des Was und Warum, der Funktionalität oder des Aussehens.
-PO/DT	Akzeptable Größe der Story, nicht zu groß, DT schätzt größe in Story-Points ein.
+PO	Sinnvolle Beschreibung mit vielen Details, des Was und Warum, der FunktionalitÃ¤t oder des Aussehens.
+PO/DT	Akzeptable GrÃ¶ÃŸe der Story, nicht zu groÃŸ, DT schÃ¤tzt grÃ¶ÃŸe in Story-Points ein.
 PO	legt Akzeptanzkriterien der Story fest, was muss erledigt sein, damit die Story abgeschlossen ist
-DT	Details der Story, die dem PO nicht bekannt sind, müssen vor Sprint Start hinzugefügt werden (Subtasks Creation)
-PO	marktiert Story als "ready_for_grooming", wenn Stories DoR Kriterien erfüllen
-SM	prüft die übereinstimmung mit  den DoR Kriterien, vor Erstellung des Sprints
+DT	Details der Story, die dem PO nicht bekannt sind, mÃ¼ssen vor Sprint Start hinzugefÃ¼gt werden (Subtasks Creation)
+PO	marktiert Story als "ready_for_grooming", wenn Stories DoR Kriterien erfÃ¼llen
+SM	prÃ¼ft die Ã¼bereinstimmung mit  den DoR Kriterien, vor Erstellung des Sprints
 
 Mandatory for Bugs
 - Sinnvoller Titel, mit Fokus auf das Problem
@@ -18,14 +18,15 @@ Definition of Done (DoD)
 DT	keine bekannten Bugs
 DT	subtasks sind abgeschlossen
 DT	eine einzelne Person pro Story
-DT	ggf. gegenseitige Prüfung des Codes (ein Bearbeiter der Story, ein Schließer der Story)
+DT	ggf. gegenseitige PrÃ¼fung des Codes (ein Bearbeiter der Story, ein SchlieÃŸer der Story)
 DT	ggf. technische Dokumentation, zumindest Stichpunkte zum Ablauf und potentiellen Problemen
 DT	Check ob Akzeptenzkriterien der DoR abgeschlossen sind
 DT	Source-Code is Checked-In and available for the team
-DT	Test präsentierbereit
+DT	Test prÃ¤sentierbereit
 
 
 
 Legende:
 PO - Product Owner
 DT - Development Team
+SM - Scrum Master
