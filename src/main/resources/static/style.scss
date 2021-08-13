@@ -95,6 +95,18 @@ $form-check-input-indeterminate-color:          $component-active-color;
 $form-check-input-indeterminate-bg-color:       $component-active-bg;
 $form-check-input-indeterminate-border-color:   $form-check-input-indeterminate-bg-color;
 
+// Prevent autofill styling from device
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    background-color: $input-bg;
+    background-image: none;
+    color: $input-color;
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: $input-color !important;
+}
+
 // Spacing
 $spacer: 1rem;
 

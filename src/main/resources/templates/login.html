@@ -16,21 +16,33 @@
       <div class="border rounded-3 mt-5 mb-3 px-5 py-3">
 
       <!-- Title -->
-      <h1 class="text-center mb-5">Anmelden</h1>
+      <h1 class="text-center mb-5 display-1">Anmelden</h1>
 
       <!-- Form -->
-      <form action="#" th:action="@{/login}" method="post">
+      <form action="#" th:action="@{/login}" method="post" class="needs-validation" novalidate>
 
         <!-- Email -->
         <div class="mb-3">
           <label for="inputEmail" class="form-label">E-Mail</label>
-          <input th:field="${customer.email}" type="email" class="form-control" id="inputEmail">
+          <input th:field="${customer.email}" type="email" class="form-control" id="inputEmail" autofocus required>
+          <div class="valid-feedback">
+            Sieht gut aus!
+          </div>
+          <div class="invalid-feedback">
+            Bitte eine E-Mail eintragen.
+          </div>
         </div>
 
         <!-- Password -->
         <div class="mb-5">
           <label for="exampleInputPassword1" class="form-label">Passwort</label>
-          <input th:field="${customer.passHash}" type="password" class="form-control" id="exampleInputPassword1">
+          <input th:field="${customer.passHash}" type="password" class="form-control" id="exampleInputPassword1" required>
+          <div class="valid-feedback">
+            Sieht gut aus!
+          </div>
+          <div class="invalid-feedback">
+            Bitte ein Passwort eintragen.
+          </div>
         </div>
        
         <!-- Came from -->
@@ -68,4 +80,6 @@
     </div>
   </div>
  
+  <div th:replace="fragments :: scriptFormValidation" />
+
 </main>
