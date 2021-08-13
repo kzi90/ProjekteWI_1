@@ -1,7 +1,7 @@
 <main th:fragment="shoppingcart">
   <div th:switch="${total != '0,00'}">
     <div th:case="${true}">
-      <div>
+      <div th:if="${!loggedInUser.isEmpty()}">
         <!-- TODO: aus dem style muss noch ne class werden, wie bei der  caption unten-->
         <p
           style="color: #6f6b68; font-weight: bolder"

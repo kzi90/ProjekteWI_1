@@ -47,12 +47,15 @@ public class ShoppingCartController {
     public String shoppingCart(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
             @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
             Model model) {
-        // get customer and address data from database
-        Customer customer = db.queryForObject("SELECT * FROM customers WHERE email = ?", new CustomerRowMapper(),
-                loggedInUser);
-        Address address = db.queryForObject("SELECT * FROM addresses WHERE id = ?", new AddressRowMapper(),
-                customer.getAddressID());
-        model.addAttribute(address);
+
+        if (!loggedInUser.isEmpty()) {
+            // get customer and address data from database
+            Customer customer = db.queryForObject("SELECT * FROM customers WHERE email = ?", new CustomerRowMapper(),
+                    loggedInUser);
+            Address address = db.queryForObject("SELECT * FROM addresses WHERE id = ?", new AddressRowMapper(),
+                    customer.getAddressID());
+            model.addAttribute(address);
+        }
 
         model.addAttribute("loggedInUser", loggedInUser);
         ShoppingCart shoppingCart = getShoppingCart(sessID, response);

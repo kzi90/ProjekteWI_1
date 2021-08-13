@@ -22,6 +22,7 @@ Insert into customers values (3, 'Lukas',	'Kröker',	'1997-04-19',	1,	'lukas.kro
 
 -- Beispieldaten für Angestellte
 INSERT INTO employees VALUES (1, 'Kasimir', 'Eckhardt', '1990-08-10', 3, 'kasimir.eckhardt@edu.fhdw.de', '017634934106',  'Webdevelopment', TRUE, '15c7772149be0dce3d0c6352acb5cdf0578365de1ab8aa3ea2efc97467c3ea59');
+Insert into employees values (3, 'Lukas',	'Kröker',	'1997-04-19',	1,	'lukas.kroeker@edu.fhdw.de',	'015785724772', 'Webdevelopment', TRUE, '09597712a6fe5e3ea54e9ca35f496e65c672d1eb6f85e68b0de8bfa46b72a722');
 
 -- Beispieldaten für Produkte
 INSERT INTO products VALUES (1, 'Pils', 'Sparrenpils', 'Die Burg, die nicht fällt - Genau das verkörpert unser Sparrenpils. Ein Vergleich der Burg mit unserem Gerstenmalz und dem Hopfen ist leicht gezogen, unsere Zutaten haben eine Reife hinter sich, welche dem Alter der Burg ebenbürtig ist. Genau diese führt zu dem einzigartig herben Geschmack unseres Bieres; mit dem wohlschmeckend hopfigen und malzigen Abgang spürst du deine Geschmacksnerven ohne Widerstand kapitulieren und es wird der volle Genuss entfaltet. Nicht umsonst erreichst du mit unserem Sparrenpils eine Pegelhöhe und das Gefühl der Uneinnehmbarkeit, aber sei gewarnt, der Graben drum herum ist tief und auch der beste Reiter landet mal im Graben.', './images/bier-pils.png', 333, 0.89);
