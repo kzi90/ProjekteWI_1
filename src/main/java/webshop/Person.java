@@ -20,7 +20,7 @@ public abstract class Person {
     protected String passHash;
 
     /**
-	 * 
+	 * Convert given password to SHA256-Hash and compare with saved Hash
 	 * @param password
 	 * @return boolean value that indicates whether the login was successful
 	 * @throws NoSuchAlgorithmException
