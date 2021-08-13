@@ -44,6 +44,9 @@ public class ShoppingCart {
         for (ShoppingCartPosition shoppingCartPosition : this.cartList) {
             if (shoppingCartPosition.getProductID().equals(productID)) {
                 shoppingCartPosition.setQuantity(shoppingCartPosition.getQuantity() + quantity);
+                if (shoppingCartPosition.getQuantity() <= 0){
+                    this.cartList.remove(shoppingCartPosition);
+                }
                 return;
             }
         }

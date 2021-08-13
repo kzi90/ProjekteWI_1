@@ -38,7 +38,25 @@
           <td>
             <img alt="Produktbild" th:src="@{${cartLine[3]}}" height="120" />
           </td>
-          <td th:text="${cartLine[4]}" />
+          <td>
+            <input
+              th:id="'quantity' + ${cartLine[0]}"
+              type="number"
+              min="0"
+              max="2400"
+              step="1"
+              th:value="${cartLine[4]}"
+            />
+            <button
+              th:onclick=
+                "let quantity = (document.getElementById('quantity' + [[${cartLine[0]}]]).value - parseInt([[${cartLine[4]}]]));
+                let productID = [[${cartLine[0]}]];
+                location.href='/addProductToCart?productID=' + productID + '&quantity=' + quantity;"
+              class="btn btn-primary mx-auto"
+            >
+              &#10004;
+            </button>
+          </td>
           <td th:text="${cartLine[5]} + ' €'" />
           <td th:text="${cartLine[6]} + ' €'" />
         </tr>

@@ -32,7 +32,7 @@ public class ShoppingCartController {
             @RequestParam(value = "quantity", required = true) Integer quantity) {
         ShoppingCart shoppingCart = ShoppingCart.findBySessID(Integer.valueOf(sessID));
         shoppingCart.addToCart(productID, quantity);
-        return "redirect:/sortiment";
+        return "redirect:/shoppingcart";
     }
 
     /**
