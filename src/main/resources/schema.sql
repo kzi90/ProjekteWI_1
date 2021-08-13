@@ -53,6 +53,7 @@ CREATE TABLE products (
     image_url VARCHAR(512),
     amount_ml INTEGER NOT NULL,
     price_eur DECIMAL(10,2) NOT NULL,
+    active BOOLEAN NOT NULL DEFAULT TRUE,
     PRIMARY KEY (id)
 );
 
