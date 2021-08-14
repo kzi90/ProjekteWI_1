@@ -1,22 +1,369 @@
 <main th:fragment="account">
-  <h1>Kundendaten</h1>
-  <form action="#" th:action="@{/account}" method="post">
-    <p>Vorname: <input type="text" th:field="${customer.firstname}" th:value="${customer.firstname}" /></p>
-    <p>Nachname: <input type="text" th:field="${customer.lastname}" th:value="${customer.lastname}" /></p>
-    <p>Geburtsdatum: <input type="text" th:field="${customer.birthdate}" th:value="${customer.birthdate}" /></p>
-    <p>E-Mail: <input type="text" th:field="${customer.email}" th:value="${customer.email}" /></p>
-    <p>
-      Telefonnummer:
-      <input type="text" th:field="${customer.phonenumber}" th:value="${customer.phonenumber}" />
-    </p>
-    <p th:text="'Adresse (in Deutschland):'" />
-    <p>Straße: <input type="text" th:field="${address.street}" th:value="${address.street}"/></p>
-    <p>Haus-Nr.: <input type="text" th:field="${address.housenr}" th:value="${address.housenr}" /></p>
-    <p>PLZ: <input type="text" th:field="${address.postcode}" th:value="${address.postcode}" /></p>
-    <p>Stadt: <input type="text" th:field="${address.city}" th:value="${address.city}" /></p>
-    <p>
-      <input type="submit" value="Speichern" />
-    </p>
-  </form>
-  <!-- Möglichkeit zur Passwort-Änderung ergänzen -->
+
+  <h1 class="title display-1 mb-5">
+    Hallo <span th:text="${customer.firstname}" />!
+  </h1>
+
+  <!-- Pills -->
+  <ul
+    class="nav nav-pills justify-content-center mb-3"
+    id="pills-tab"
+    role="tablist"
+  >
+    <li class="nav-item" role="presentation">
+      <button
+        class="nav-link active"
+        id="pills-home-tab"
+        data-bs-toggle="pill"
+        data-bs-target="#pills-user"
+        type="button"
+        role="tab"
+        aria-controls="pills-user"
+        aria-selected="true"
+      >
+        Benutzer
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button
+        class="nav-link"
+        id="pills-profile-tab"
+        data-bs-toggle="pill"
+        data-bs-target="#pills-contact"
+        type="button"
+        role="tab"
+        aria-controls="pills-contact"
+        aria-selected="false"
+      >
+        Kontaktdaten
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button
+        class="nav-link"
+        id="pills-contact-tab"
+        data-bs-toggle="pill"
+        data-bs-target="#pills-address"
+        type="button"
+        role="tab"
+        aria-controls="pills-address"
+        aria-selected="false"
+      >
+        Anschrift
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button
+        class="nav-link"
+        id="pills-contact-tab"
+        data-bs-toggle="pill"
+        data-bs-target="#pills-password"
+        type="button"
+        role="tab"
+        aria-controls="pills-password"
+        aria-selected="false"
+      >
+        Passwort
+      </button>
+    </li>
+  </ul>
+
+  <!-- row -->
+  <div class="row justify-content-center">
+    <div class="col col-sm-10 col-md-7 col-lg-6 col-xl-5 col-xxl-4">
+      <!-- Tab content -->
+      <div class="tab-content" id="pills-tabContent">
+        <!-- Tab user -->
+        <div
+          class="tab-pane fade show active"
+          id="pills-user"
+          role="tabpanel"
+          aria-labelledby="pills-user-tab"
+        >
+          <!-- Form -->
+          <form
+            action="#"
+            th:action="@{/account}"
+            method="post"
+            class="row g-3 needs-validation"
+            novalidate
+          >
+            <!-- First name -->
+            <div class="col-12">
+              <label for="inputFirstName" class="form-label">Vorname</label>
+              <input
+                th:field="${customer.firstname}"
+                th:value="${customer.firstname}"
+                type="text"
+                class="form-control"
+                id="inputFirstName"
+                autofocus
+                required
+              />
+              <div class="valid-feedback">Sieht gut aus!</div>
+              <div class="invalid-feedback">Bitte Vorname eintragen.</div>
+            </div>
+
+            <!-- Last name -->
+            <div class="ccol-12">
+              <label for="inputLastName" class="form-label">Nachname</label>
+              <input
+                th:field="${customer.lastname}"
+                th:value="${customer.lastname}"
+                type="text"
+                class="form-control"
+                id="inputLastName"
+                required
+              />
+              <div class="valid-feedback">Sieht gut aus!</div>
+              <div class="invalid-feedback">Bitte Nachname eintragen.</div>
+            </div>
+
+            <!-- Birthday -->
+            <div class="col-12">
+              <label for="inputBirthday" class="form-label">Geburtstag</label>
+              <input
+                th:field="${customer.birthdate}"
+                th:value="${customer.birthdate}"
+                type="date"
+                class="form-control"
+                id="inputBirthday"
+                required
+              />
+              <div class="valid-feedback">Sieht gut aus!</div>
+              <div class="invalid-feedback">Bitte Geburtsdatum eintragen.</div>
+            </div>
+
+            <!-- Submit -->
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary mb-5">
+                Änderungen speichern
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Tab contact -->
+        <div
+          class="tab-pane fade"
+          id="pills-contact"
+          role="tabpanel"
+          aria-labelledby="pills-contact-tab"
+        >
+          <!-- Form -->
+          <form
+            action="#"
+            th:action="@{/account}"
+            method="post"
+            class="row g-3 needs-validation"
+            novalidate
+          >
+            <!-- Tel -->
+            <div class="col-12">
+              <label for="inputTel" class="form-label">Telefon</label>
+              <input
+                th:field="${customer.phonenumber}"
+                th:value="${customer.phonenumber}"
+                type="tel"
+                class="form-control"
+                id="inputTel"
+                required
+              />
+              <div class="valid-feedback">Sieht gut aus!</div>
+              <div class="invalid-feedback">
+                Bitte eine Telefonnummer eintragen.
+              </div>
+            </div>
+
+            <!-- Email -->
+            <div class="col-12">
+              <label for="inputEmail" class="form-label">E-Mail</label>
+              <input
+                th:field="${customer.email}"
+                th:value="${customer.email}"
+                type="email"
+                class="form-control"
+                id="inputEmail"
+                required
+              />
+              <div class="valid-feedback">Sieht gut aus!</div>
+              <div class="invalid-feedback">Bitte eine E-Mail eintragen.</div>
+            </div>
+
+            <!-- Submit -->
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary mb-5">
+                Änderungen speichern
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Tab address -->
+        <div
+          class="tab-pane fade"
+          id="pills-address"
+          role="tabpanel"
+          aria-labelledby="pills-address-tab"
+        >
+          <!-- Form -->
+          <form
+            action="#"
+            th:action="@{/account}"
+            method="post"
+            class="row g-3 needs-validation"
+            novalidate
+          >
+            <!-- Street -->
+            <div class="col-12">
+              <label for="inputStreet" class="form-label">Straße</label>
+              <input
+                th:field="${address.street}"
+                th:value="${address.street}"
+                type="text"
+                class="form-control"
+                id="inputStreet"
+                required
+              />
+              <div class="valid-feedback">Sieht gut aus!</div>
+              <div class="invalid-feedback">Bitte eine Straße eintragen.</div>
+            </div>
+
+            <!-- Street number -->
+            <div class="col-12">
+              <label for="inputStreetNumber" class="form-label">Haus-Nr.</label>
+              <input
+                th:field="${address.housenr}"
+                th:value="${address.housenr}"
+                type="number"
+                class="form-control"
+                id="inputStreetNumber"
+                required
+              />
+              <div class="valid-feedback">Sieht gut aus!</div>
+              <div class="invalid-feedback">
+                Bitte eine Hausnummer eintragen.
+              </div>
+            </div>
+
+            <!-- City code -->
+            <div class="col-12">
+              <label for="inputCityCode" class="form-label">PLZ</label>
+              <input
+                th:field="${address.postcode}"
+                th:value="${address.postcode}"
+                type="number"
+                class="form-control"
+                id="inputCityCode"
+                min="01067"
+                max="99998"
+                required
+              />
+              <div class="valid-feedback">Sieht gut aus!</div>
+              <div class="invalid-feedback">
+                Bitte eine Postleitzahl eintragen.
+              </div>
+            </div>
+
+            <!-- City -->
+            <div class="col-12">
+              <label for="inputCity" class="form-label">Stadt</label>
+              <input
+                th:field="${address.city}"
+                th:value="${address.city}"
+                type="text"
+                class="form-control"
+                id="inputCity"
+                required
+              />
+              <div class="valid-feedback">Sieht gut aus!</div>
+              <div class="invalid-feedback">Bitte eine Stadt eintragen.</div>
+            </div>
+
+            <!-- Submit -->
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary mb-5">
+                Änderungen speichern
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Tab password -->
+        <div
+          class="tab-pane fade"
+          id="pills-password"
+          role="tabpanel"
+          aria-labelledby="pills-password-tab"
+        >
+          <!-- Form -->
+          <form
+            action="#"
+            th:action="@{/account}"
+            method="post"
+            class="row g-3 needs-validation"
+            novalidate
+          >
+            <!-- Current Password -->
+            <div class="col-12">
+              <label for="inputCurrentPassword" class="form-label"
+                >Aktuelles Passwort</label
+              >
+              <input
+                th:field="${customer.passHash}"
+                type="password"
+                class="form-control"
+                id="inputCurrentPassword"
+                required
+              />
+              <div class="valid-feedback">Sieht gut aus!</div>
+              <div class="invalid-feedback">Falsches Passwort eingetragen!</div>
+            </div>
+
+            <!-- New Password -->
+            <div class="col-12">
+              <label for="inputNewPassword" class="form-label"
+                >Neues Passwort</label
+              >
+              <input
+                th:field="${customer.passHash}"
+                type="password"
+                class="form-control"
+                id="inputNewPassword"
+                required
+              />
+              <div class="valid-feedback">Sieht gut aus!</div>
+              <div class="invalid-feedback">Bitte ein Passwort eintragen.</div>
+            </div>
+
+            <!-- Password repeat -->
+            <div class="col-12">
+              <label for="inputPasswordRepeat" class="form-label"
+                >Passwort wiederholen</label
+              >
+              <input
+                type="password"
+                class="form-control"
+                id="inputPasswordRepeat"
+                required
+              />
+              <div class="valid-feedback">Sieht gut aus!</div>
+              <div class="invalid-feedback">Das Passwort ist anders!</div>
+            </div>
+
+            <!-- Submit -->
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary mb-5">
+                Änderungen speichern
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
 </main>
