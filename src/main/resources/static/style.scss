@@ -474,7 +474,7 @@ $font-weight-bolder:          bolder;
 
 $font-weight-base:            $font-weight-normal;
 
-$line-height-base:            1.5;
+$line-height-base:            1.625; // 1.5
 $line-height-sm:              1.25;
 $line-height-lg:              2;
 
@@ -1613,14 +1613,14 @@ header {
     display: inline-block;
 }
 
-.description::first-letter {
+.initial-letter::first-letter {
     padding: 0;
     margin: 0 .3rem 0 0;
     font-size: 5.3rem;
     float: left;
     line-height: .8;
 }
-.description::first-line {
+.initial-letter::first-line {
     font-variant: small-caps;
     letter-spacing: .1rem;
 }
