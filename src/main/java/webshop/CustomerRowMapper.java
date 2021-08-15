@@ -13,7 +13,6 @@ public class CustomerRowMapper implements RowMapper<Customer> {
                        .firstname(rs.getString("firstname"))
                        .lastname(rs.getString("lastname"))
                        .birthdate(new SimpleDateFormat("yyyy-MM-dd").format(rs.getDate("birthdate")))
-                       //.birthdate(new SimpleDateFormat("dd.MM.yyyy").format(rs.getDate("birthdate")))
                        .addressID(rs.getInt("address_id"))
                        .email(rs.getString("email"))
                        .phonenumber(rs.getString("phonenumber"))

@@ -199,8 +199,7 @@ public class CustomerController {
             db.update(
                     "UPDATE customers SET firstname = ?, lastname = ?, birthdate = ?, email = ?, phonenumber = ? WHERE id = ?",
                     customer.getFirstname(), customer.getLastname(),
-                    new SimpleDateFormat("yyyy-MM-dd")
-                            .format(new SimpleDateFormat("dd.MM.yyyy").parse(customer.getBirthdate())),
+                    customer.getBirthdate(),
                     customer.getEmail(), customer.getPhonenumber(), savedCust.getId());
             if (!customer.getEmail().equals(savedCust.getEmail())) {
                 Cookie cookie = new Cookie("loggedInUser", customer.getEmail());
