@@ -5,12 +5,12 @@
   </h1>
 
   <!-- Divider -->
-  <div
+  <!--<div
     th:replace="fragments :: divider (src='wappen-sparrenburg.svg',alt='Sparrenburg Wappen',width='60')"
   ></div>
-
+-->
   <!-- Products -->
-  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-5">
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 g-5">
     <div th:each="product: ${products}" class="col product text-center">
       <!-- Product link -->
       <a href="/product" th:href="@{/product(product=${product.id})}">
@@ -23,27 +23,43 @@
       </a>
 
       <!-- Product name -->
-      <h2 class="display-2" th:text="${product.name}" />
+      <h2 class="display-5" th:text="${product.name}" />
 
       <!-- Price -->
-      <span
-        class="text-price mx-auto mb-1"
-        th:text="${#numbers.formatDecimal(product.price, 1, 2, 'COMMA')} + ' €'"
-      />
-      <span class="text-vat mx-auto mb-2">inkl. MwSt.</span>
+      <p class="text-center">
+        <span
+          class="text-price"
+          th:text="${#numbers.formatDecimal(product.price, 1, 2, 'COMMA')} + ' €'"
+        />
+        <span class="text-vat text-muted mb-2">inkl. MwSt.</span>
+      </p>
 
-      <!-- Textfeld für Eingabe der Anzahl -->
-      <input th:id="'quantity' + ${product.id}" type="number" min="1" max="2400" step="1" value="1">
+      <div class="input-group flex-nowrap mb-3 d-flex justify-content-center">
+        <!-- Textfeld für Eingabe der Anzahl -->
+        <input
+          th:id="'quantity' + ${product.id}"
+          type="number"
+          class="form-control"
+          min="1"
+          max="2400"
+          step="1"
+          value="1"
+          aria-label="Quantity"
+          aria-describedby="button-addon2"
+        />
 
-      <!-- Button zum Warenkorb hinzufügen -->
-      <button
-        th:id="'addToCart' + ${product.id}"
-        class="btn btn-primary mx-auto"
-      >
-        In die Bierkiste legen
-      </button>
+        <!-- Button zum Warenkorb hinzufügen -->
+        <button
+          th:id="'addToCart' + ${product.id}"
+          class="btn btn-primary"
+          type="button"
+          id="button-addon2"
+        >
+          In die Bierkiste
+        </button>
+      </div>
+
       <div th:replace="fragments :: scriptAddToCart" />
     </div>
   </div>
-
 </main>
