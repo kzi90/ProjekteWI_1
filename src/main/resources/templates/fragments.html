@@ -14,7 +14,7 @@ Head
 <!--==================================================
 Header
 ===================================================-->
-<header class="mb-4" th:fragment="header">
+<header th:fragment="header">
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <!-- Container fluid -->
@@ -197,12 +197,12 @@ Footer
   ></div>
 
   <!-- Title -->
-  <h6 class="title display-1 mb-5 text-muted">
-    Glück&nbsp;kann<br />man&nbsp;nicht&nbsp;kaufen,<br />aber&nbsp;Bier.
+  <h6 class="title display-2 mb-5 text-muted">
+    Glück kann man <br />nicht kaufen, aber&nbsp;Bier.
   </h6>
 
   <!-- Social media -->
-  <div class="text-center display-4 mb-5">
+  <div class="text-center display-5 mb-4">
     <a
       href="https://de-de.facebook.com/"
       target="_blank"
@@ -264,7 +264,7 @@ Divider
 <div
   th:fragment="divider"
   th:with="src=${src},alt=${alt},width=${width}"
-  class="divider-wrapper d-flex justify-content-center my-5"
+  class="divider-wrapper d-flex justify-content-center"
   role="separator"
 >
   <div class="divider-content px-4 py-5 bg-dark">
@@ -299,7 +299,7 @@ Login/Register/User Buttons
   <span th:case="${false}" class="dropdown">
     <!-- User account button -->
     <button
-      class="btn btn-secondary dropdown-toggle"
+      class="btn btn-secondary dropdown-toggle me-4"
       type="button"
       id="dropdownMenuButton2"
       data-bs-toggle="dropdown"
@@ -350,9 +350,7 @@ ScriptAddToCart
         );
         document.getElementById("numOfBottles").innerText =
           parseInt(document.getElementById("numOfBottles").innerText) +
-          parseInt(
-            document.getElementById("quantity[[${product.id}]]").value
-          );
+          parseInt(document.getElementById("quantity[[${product.id}]]").value);
       });
   </script>
 </div>
