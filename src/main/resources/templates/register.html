@@ -105,9 +105,7 @@
 
           <!-- Password -->
           <div class="col-md-6">
-            <label for="inputPassword" class="form-label"
-              >Passwort</label
-            >
+            <label for="inputPassword" class="form-label">Passwort</label>
             <input
               th:field="${customer.passHash}"
               type="password"
@@ -125,14 +123,23 @@
               >Passwort wiederholen</label
             >
             <input
-              
               type="password"
               class="form-control"
               id="inputPasswordRepeat"
+              oninput="check(this)"
               required
             />
+            <script>
+              function check(input) {
+                if (input.value != document.getElementById("inputPassword").value) {
+                  input.setCustomValidity("Passwörter sind nicht gleich!");
+                } else {
+                  input.setCustomValidity("");
+                }
+              }
+            </script>
             <div class="valid-feedback">Sieht gut aus!</div>
-            <div class="invalid-feedback">Das Passwort ist anders!</div>
+            <div class="invalid-feedback">Passwörter sind nicht gleich!</div>
           </div>
 
           <hr class="mt-4 mb-1" />
@@ -157,7 +164,7 @@
             <label for="inputStreetNumber" class="form-label">Haus-Nr.</label>
             <input
               th:field="${address.housenr}"
-              type="number"
+              type="text"
               class="form-control"
               id="inputStreetNumber"
               required
@@ -171,11 +178,9 @@
             <label for="inputCityCode" class="form-label">PLZ</label>
             <input
               th:field="${address.postcode}"
-              type="number"
+              type="text"
               class="form-control"
               id="inputCityCode"
-              min="01067"
-              max="99998"
               required
             />
             <div class="valid-feedback">Sieht gut aus!</div>
@@ -229,5 +234,4 @@
   </div>
 
   <div th:replace="fragments :: scriptFormValidation" />
-
 </main>
