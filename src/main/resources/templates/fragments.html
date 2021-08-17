@@ -331,6 +331,19 @@ Scripts
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
     crossorigin="anonymous"
   ></script>
+  <script>
+    const rotate = (el) =>
+      el.getAttribute("style") !=
+      "transform: rotate(360deg); transition:all 0.75s"
+        ? el.setAttribute(
+            "style",
+            "transform: rotate(360deg); transition:all 0.75s"
+          )
+        : el.setAttribute(
+            "style",
+            "transform: rotate(0deg); transition:all 0.75s"
+          );
+  </script>
 </div>
 
 <!--==================================================
@@ -341,6 +354,7 @@ ScriptAddToCart
     document
       .getElementById("addToCart[[${product.id}]]")
       .addEventListener("click", function () {
+        rotate(this);
         fetch(
           "addProductToCart?productID=[[${product.id}]]&quantity=" +
             document.getElementById("quantity[[${product.id}]]").value,

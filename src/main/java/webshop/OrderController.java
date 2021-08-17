@@ -89,7 +89,6 @@ public class OrderController {
 
             // automatischer E-Mail-Versand
             String fullName = customer.getFirstname() + " " + customer.getLastname();
-            // recipient format: "Real Name <email@addre.ss>"
             String message = "Guten Tag " + fullName + ",\n\n"
                     + "vielen Dank für deine Bestellung mit der Bestellnummer " + order.getId().toString() + "! "
                     + "Hier noch einmal die Zahlungsdetails:\n" + "Zahle den Rechnungsbetrag ("
