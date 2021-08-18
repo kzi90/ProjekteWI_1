@@ -216,7 +216,7 @@ public class CustomerController {
                                                            // dem Formular
                 db.update("UPDATE customers SET pass_hash = ? WHERE id = ?", Convert.stringToHash(newPass),
                         savedCust.getId());
-            }
+            } // else-Zweig, Kunde mitteilen, dass altes PW falsch war
         }
 
         Address savedAddress = db.queryForObject("SELECT * FROM addresses WHERE id = ?", new AddressRowMapper(),
