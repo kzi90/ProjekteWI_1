@@ -210,20 +210,13 @@ public class CustomerController {
             }
         }
 
-        System.out.println("newPass: " + newPass);
+        // change password
         if (!newPass.isEmpty()) {
-            System.out.println("newPass ist: " + newPass);
-            System.out.println("newPass Hash ist:" + Convert.stringToHash(newPass));
-            System.out.println("eingegebenes altes PW: " + customer.getPassHash());
-            System.out.println("altes Hash ist:" + Convert.stringToHash(customer.getPassHash()));
-            System.out.println("savesCustID" + savedCust.getId());
             if (savedCust.login(customer.getPassHash())) { // in PassHash steht temporaer das eingegebene KlartextPW aus
                                                            // dem Formular
                 db.update("UPDATE customers SET pass_hash = ? WHERE id = ?", Convert.stringToHash(newPass),
                         savedCust.getId());
             }
-        } else {
-            System.out.println("newPass ist empty");
         }
 
         Address savedAddress = db.queryForObject("SELECT * FROM addresses WHERE id = ?", new AddressRowMapper(),

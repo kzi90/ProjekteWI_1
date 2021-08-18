@@ -302,12 +302,9 @@
                   type="password"
                   class="form-control"
                   id="inputCurrentPassword"
-                  required
+                  oninput="check()"
                 />
-                <div class="valid-feedback">Sieht gut aus!</div>
-                <div class="invalid-feedback">
-                  Falsches Passwort eingetragen!
-                </div>
+                <div class="invalid-feedback">Bitte Passwort eingeben!</div>
               </div>
 
               <!-- New Password -->
@@ -321,7 +318,6 @@
                   class="form-control"
                   id="newPass"
                   name="newPass"
-                  required
                 />
                 <div class="valid-feedback">Sieht gut aus!</div>
                 <div class="invalid-feedback">
@@ -338,17 +334,33 @@
                   type="password"
                   class="form-control"
                   id="inputPasswordRepeat"
-                  oninput="check(this)"
-                  required
+                  oninput="check()"
                 />
                 <script>
-                  function check(input) {
+                  function check() {
                     if (
-                      input.value != document.getElementById("newPass").value
+                      document.getElementById("inputPasswordRepeat").value !=
+                      document.getElementById("newPass").value
                     ) {
-                      input.setCustomValidity("Passwörter sind nicht gleich!");
+                      document
+                        .getElementById("inputPasswordRepeat")
+                        .setCustomValidity("Passwörter sind nicht gleich!");
                     } else {
-                      input.setCustomValidity("");
+                      if (
+                        document.getElementById("inputCurrentPassword").value ==
+                        ""
+                      ) {
+                        document
+                          .getElementById("inputCurrentPassword")
+                          .setCustomValidity("Bitte altes Passwort eingeben");
+                      } else {
+                        document
+                          .getElementById("inputCurrentPassword")
+                          .setCustomValidity("");
+                      }
+                      document
+                        .getElementById("inputPasswordRepeat")
+                        .setCustomValidity("");
                     }
                   }
                 </script>
@@ -368,4 +380,5 @@
       </div>
     </div>
   </form>
+  <div th:replace="fragments :: scriptFormValidation" />
 </main>
