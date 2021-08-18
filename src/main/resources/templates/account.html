@@ -316,10 +316,11 @@
                   >Neues Passwort</label
                 >
                 <input
-                  th:field="${customer.passHash}"
+                  th:value="${newPass}"
                   type="password"
                   class="form-control"
-                  id="inputNewPassword"
+                  id="newPass"
+                  name="newPass"
                   required
                 />
                 <div class="valid-feedback">Sieht gut aus!</div>
@@ -337,8 +338,20 @@
                   type="password"
                   class="form-control"
                   id="inputPasswordRepeat"
+                  oninput="check(this)"
                   required
                 />
+                <script>
+                  function check(input) {
+                    if (
+                      input.value != document.getElementById("newPass").value
+                    ) {
+                      input.setCustomValidity("Passwörter sind nicht gleich!");
+                    } else {
+                      input.setCustomValidity("");
+                    }
+                  }
+                </script>
                 <div class="valid-feedback">Sieht gut aus!</div>
                 <div class="invalid-feedback">Das Passwort ist anders!</div>
               </div>

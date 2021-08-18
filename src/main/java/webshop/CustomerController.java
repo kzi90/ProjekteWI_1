@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
+
 @Controller
 public class CustomerController {
 
@@ -177,6 +179,7 @@ public class CustomerController {
                 customer.getAddressID());
         model.addAttribute(customer);
         model.addAttribute(address);
+        model.addAttribute("newPass", "");
 
         model.addAttribute("templateName", "account");
         model.addAttribute("title", "Kundendaten");
@@ -186,8 +189,9 @@ public class CustomerController {
     @PostMapping("/account")
     public String account(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
             @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
-            @ModelAttribute Customer customer, @ModelAttribute Address address, Model model)
-            throws DataAccessException, ParseException {
+            @ModelAttribute Customer customer, @ModelAttribute Address address,
+            @ModelAttribute("newPass") String newPass, Model model)
+            throws DataAccessException, NoSuchAlgorithmException {
         ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
         model.addAttribute("shoppingcart", shoppingCart);
 
@@ -197,14 +201,29 @@ public class CustomerController {
         if (!customer.equalsCust(savedCust)) {
             db.update(
                     "UPDATE customers SET firstname = ?, lastname = ?, birthdate = ?, email = ?, phonenumber = ? WHERE id = ?",
-                    customer.getFirstname(), customer.getLastname(),
-                    customer.getBirthdate(),
-                    customer.getEmail(), customer.getPhonenumber(), savedCust.getId());
+                    customer.getFirstname(), customer.getLastname(), customer.getBirthdate(), customer.getEmail(),
+                    customer.getPhonenumber(), savedCust.getId());
             if (!customer.getEmail().equals(savedCust.getEmail())) {
                 Cookie cookie = new Cookie("loggedInUser", customer.getEmail());
                 cookie.setPath("/");
                 response.addCookie(cookie);
             }
+        }
+
+        System.out.println("newPass: " + newPass);
+        if (!newPass.isEmpty()) {
+            System.out.println("newPass ist: " + newPass);
+            System.out.println("newPass Hash ist:" + Convert.stringToHash(newPass));
+            System.out.println("eingegebenes altes PW: " + customer.getPassHash());
+            System.out.println("altes Hash ist:" + Convert.stringToHash(customer.getPassHash()));
+            System.out.println("savesCustID" + savedCust.getId());
+            if (savedCust.login(customer.getPassHash())) { // in PassHash steht temporaer das eingegebene KlartextPW aus
+                                                           // dem Formular
+                db.update("UPDATE customers SET pass_hash = ? WHERE id = ?", Convert.stringToHash(newPass),
+                        savedCust.getId());
+            }
+        } else {
+            System.out.println("newPass ist empty");
         }
 
         Address savedAddress = db.queryForObject("SELECT * FROM addresses WHERE id = ?", new AddressRowMapper(),
@@ -252,8 +271,7 @@ public class CustomerController {
             // database generates id automatically
             String saveSQL = "INSERT INTO customers (firstname, lastname, birthdate, "
                     + "address_id, email, phonenumber, pass_hash) VALUES (?, ?, ?, ?, ?, ?, ?);";
-            db.update(saveSQL, customer.getFirstname(), customer.getLastname(),
-                    customer.getBirthdate(),
+            db.update(saveSQL, customer.getFirstname(), customer.getLastname(), customer.getBirthdate(),
                     address.getId(), customer.getEmail(), customer.getPhonenumber(),
                     // customer.passHash contains plain text password right now
                     Convert.stringToHash(customer.getPassHash()));
