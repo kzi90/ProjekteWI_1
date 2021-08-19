@@ -1,0 +1,21 @@
+<main th:fragment="img_upload">
+  <h1 class="title display-1">Bildupload</h1>
+  <p>
+    Hier kannst du ein Bild hochladen, im Anschluss kannst du dir dann den Link
+    zu dem Bild kopieren und einem Produkt hinzufügen.
+  </p>
+
+  <input id="imgUpload" type="file" name="imgUpload" />
+  <button id="upload-button" onclick="uploadFile()">Upload</button>
+
+  <script>
+    async function uploadFile() {
+      let formData = new FormData();
+      formData.append("img", imgUpload.files[0]);
+      let response = await fetch("/upload", { method: "POST", body: formData });
+      if (response.status == 200) {
+        alert("Hochladen erfolgreich!");
+      }
+    }
+  </script>
+</main>
