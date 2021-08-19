@@ -66,7 +66,7 @@ public class CustomerController {
     public String registered(@ModelAttribute Customer customer, @ModelAttribute Address address,
             @CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
             @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
-            Model model) throws DataAccessException, NoSuchAlgorithmException, ParseException {
+            Model model) throws DataAccessException, NoSuchAlgorithmException {
         model.addAttribute("loggedInUser", loggedInUser);
         ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
         model.addAttribute("shoppingcart", shoppingCart);
@@ -269,12 +269,10 @@ public class CustomerController {
         }
 
         // change password
-        if (!newPass.isEmpty()) {
-            if (savedCust.login(customer.getPassHash())) { // in PassHash steht temporaer das eingegebene KlartextPW aus
-                                                           // dem Formular
-                db.update("UPDATE customers SET pass_hash = ? WHERE id = ?", Convert.stringToHash(newPass),
-                        savedCust.getId());
-            } // else-Zweig, Kunde mitteilen, dass altes PW falsch war
+        if (!newPass.isEmpty() && savedCust.login(customer.getPassHash())) {
+            // in PassHash steht temporaer das eingegebene KlartextPW
+            db.update("UPDATE customers SET pass_hash = ? WHERE id = ?", Convert.stringToHash(newPass),
+                    savedCust.getId());
         }
 
         Address savedAddress = db.queryForObject("SELECT * FROM addresses WHERE id = ?", new AddressRowMapper(),
@@ -314,7 +312,7 @@ public class CustomerController {
      * @throws NoSuchAlgorithmException
      */
     public boolean saveCustWithAddress(Customer customer, Address address)
-            throws DataAccessException, ParseException, NoSuchAlgorithmException {
+            throws DataAccessException, NoSuchAlgorithmException {
         String testSQL = "SELECT * FROM customers WHERE email = ?;";
         boolean emailNotRegisteredBefore = db.query(testSQL, new CustomerRowMapper(), customer.getEmail()).isEmpty();
         if (emailNotRegisteredBefore) {
