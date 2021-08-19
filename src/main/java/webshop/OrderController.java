@@ -107,6 +107,37 @@ public class OrderController {
         }
     }
 
+    @GetMapping("my_orders")
+    public String my_orders(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
+            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
+            Model model) {
+        if (loggedInUser.isEmpty()){
+            return "redirect:/login";
+        }
+        model.addAttribute("loggedInUser", loggedInUser);
+        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
+        model.addAttribute("shoppingcart", shoppingCart);
+
+        Customer customer = db.queryForObject("SELECT * FROM customers WHERE email = ?", new CustomerRowMapper(), loggedInUser);
+        List<Order> orders = db.query("SELECT * FROM orders WHERE cust_id = ?", new OrderRowMapper(), customer.getId());
+        if (orders.isEmpty()){
+            return "redirect:/shoppingcart";
+        }
+        model.addAttribute("orders", orders);
+        List<OrderPosition> orderPositions = new ArrayList<>();
+        for (Order order : orders) {
+            orderPositions.addAll(db.query("SELECT * FROM orderpositions WHERE order_id = ?", new OrderPositionRowMapper(), order.getId()));
+        }
+        model.addAttribute("orderPositions", orderPositions);
+
+        List<Product> products = db.query("SELECT * FROM products", new ProductRowMapper());
+        model.addAttribute("products", products);
+
+        model.addAttribute("templateName", "my_orders");
+        model.addAttribute("title", "Bestellungen");
+        return "layout";
+    }
+
     /**
      * save Order
      * 
