@@ -3,6 +3,8 @@ package webshop;
 import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.util.List;
+import java.util.Random;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -114,8 +116,7 @@ public class CustomerController {
             Cookie cookie = new Cookie("loggedInUser", customer.getEmail());
             response.addCookie(cookie);
             return cameFrom.endsWith("/logout") || cameFrom.endsWith("/register") || cameFrom.endsWith("/loginfail")
-                    ? "redirect:/sortiment"
-                    : "redirect:" + cameFrom;
+                    || cameFrom.endsWith("/password_reset") ? "redirect:/sortiment" : "redirect:" + cameFrom;
         } else {
             return "redirect:/loginfail";
         }
@@ -157,6 +158,65 @@ public class CustomerController {
         model.addAttribute("loggedInUser", "");
         model.addAttribute("templateName", "logout");
         return "layout";
+    }
+
+    /**
+     * reset page
+     * 
+     * @param loggedInUser
+     * @param model
+     * @return password_reset.html template
+     */
+    @GetMapping("/password_reset")
+    public String passwordReset(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
+            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
+            Model model) {
+        model.addAttribute("loggedInUser", loggedInUser);
+        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
+        model.addAttribute("shoppingcart", shoppingCart);
+        System.out.println("passwort_reset page wurde aufgerufen");
+
+        model.addAttribute("email");
+
+        model.addAttribute("templateName", "password_reset");
+        model.addAttribute("title", "Passwort zurücksetzen");
+        return "layout-neutral";
+    }
+
+    /**
+     * reset page
+     * 
+     * @param loggedInUser
+     * @param model
+     * @return password_reset.html template
+     * @throws NoSuchAlgorithmException
+     */
+    @PostMapping("/password_reset")
+    public String passwordResetet(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
+            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
+            HttpServletRequest request, @ModelAttribute("email") String email, Model model)
+            throws NoSuchAlgorithmException {
+        model.addAttribute("loggedInUser", loggedInUser);
+        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
+        model.addAttribute("shoppingcart", shoppingCart);
+        if (db.query("SELECT * FROM customers WHERE email = ?", new CustomerRowMapper(), email).isEmpty()) {
+            return "redirect:/login";
+        }
+        // generates temorary password
+        int leftLimit = 99; // letter 'c'
+        int rightLimit = 122; // letter 'z'
+        int targetStringLength = 10;
+        Random random = new Random();
+        String generatedString = random.ints(leftLimit, rightLimit + 1).limit(targetStringLength)
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append).toString();
+
+        System.out.println("Das Passwort lautet: " + generatedString);
+        System.out.println("Der zugehörige Hash" + Convert.stringToHash(generatedString));
+        db.update("UPDATE customers SET pass_hash = ? WHERE email = ?", Convert.stringToHash(generatedString), email);
+        String message = "Guten Tag,\n\n" + "Ihr temporäres Passwort lautet: " + generatedString + "\n"
+                + "Bitte ändern Sie nach dem Login das Passwort schnellstmöglich.\n\nLiebe Grüße,\nIhr Bielefelder Unikat-Team";
+        JavaMail.sendMessage(email, email, message);
+        return "redirect:/login";
     }
 
     @GetMapping("/account")
