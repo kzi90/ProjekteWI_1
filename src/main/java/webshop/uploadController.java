@@ -14,7 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 
 @Controller
-public class uploadController {
+public class UploadController {
 
     @GetMapping("/img_upload")
     public String imgUplaod(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,

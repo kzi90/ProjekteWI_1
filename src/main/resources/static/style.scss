@@ -1703,3 +1703,12 @@ input:-webkit-autofill:active {
     transition: background-color 5000s ease-in-out 0s;
     -webkit-text-fill-color: $input-color !important;
 }
+
+// customer order history
+details summary {
+  display: block; // no arrow displayed
+}
+
+details summary:hover {
+  background-color: $gray-900;
+}

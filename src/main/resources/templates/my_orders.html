@@ -1,33 +1,63 @@
 <main th:fragment="my_orders">
-  <table class="table caption-top">
-    <caption>
-      <strong>Meine Bestellungen:</strong>
-    </caption>
-    <tr>
-      <th scope="col" th:text="'Bestellnummer'" />
-      <th scope="col" th:text="'Datum'" />
-      <th scope="col" th:text="'Zeit'" />
-      <th scope="col" th:text="'Gesamtpreis'" />
-      <th scope="col" th:text="'Bestellstatus'" />
-    </tr>
-    <div th:each="order: ${orders}">
-      <tr>
-        <td th:text="${order.id}" />
-        <td th:text="${order.orderDate}" />
-        <td th:text="${order.orderTime}" />
-        <td th:text="${order.totalPrice} + ' €'" />
-        <td th:text="${order.status}" />
-      </tr>
-      <tr>
-        <th scope="col" th:text="'Bestellposition'" />
-        <th scope="col" th:text="'Artikelnummer'" />
-        <th scope="col" th:text="'Anzahl'" />
-      </tr>
-      <tr th:each="orderPosition: ${orderPositions}">
-        <td th:if="${orderPosition.orderID == order.id}" th:text="${orderPosition.posNr}" />
-        <td th:if="${orderPosition.orderID == order.id}" th:text="${orderPosition.productID}" />
-        <td th:if="${orderPosition.orderID == order.id}" th:text="${orderPosition.quantity}" />
-      </tr>
-    </div>
-  </table>
+  <h2>Meine Bestellungen</h2>
+  <div th:each="order: ${orders}">
+    <details>
+      <summary>
+        <table class="table caption-top">
+          <caption>
+            <strong th:text="'Bestellnummer ' + ${order.id}" />
+          </caption>
+          <tr>
+            <th scope="col" th:text="'Datum: ' + ${order.orderDate}" />
+            <th scope="col" th:text="'Zeit: ' + ${order.orderTime}" />
+            <th
+              scope="col"
+              th:text="'Gesamtpreis: ' + ${order.totalPrice} + ' €'"
+            />
+            <th scope="col" th:text="'Bestellstatus: ' + ${order.status}" />
+          </tr>
+        </table>
+      </summary>
+      <table class="table">
+        <tr>
+          <th scope="col" th:text="'Bestellposition'" />
+          <th scope="col" th:text="'Artikelnummer'" />
+          <th scope="col" th:text="'Artikel'" />
+          <th scope="col" th:text="'Menge'" />
+          <th scope="col" />
+          <th scope="col" th:text="'Anzahl'" />
+        </tr>
+        <tr th:each="orderPosition: ${orderPositions}">
+          <td
+            th:if="${orderPosition.orderID == order.id}"
+            th:text="${orderPosition.posNr}"
+          />
+          <td
+            th:if="${orderPosition.orderID == order.id}"
+            th:text="${orderPosition.productID}"
+          />
+          <td
+            th:each="product: ${products}"
+            th:if="${orderPosition.orderID == order.id && orderPosition.productID == product.id}"
+            th:text="${product.type} + ' - ' + ${product.name}"
+          ></td>
+          <td
+            th:each="product: ${products}"
+            th:if="${orderPosition.orderID == order.id && orderPosition.productID == product.id}"
+            th:text="${product.amount / 1000.0} + ' l'"
+          />
+          <td
+            th:each="product: ${products}"
+            th:if="${orderPosition.orderID == order.id && orderPosition.productID == product.id}"
+          >
+            <img alt="Produktbild" th:src="@{${product.imgURL}}" height="120" />
+          </td>
+          <td
+            th:if="${orderPosition.orderID == order.id}"
+            th:text="${orderPosition.quantity}"
+          />
+        </tr>
+      </table>
+    </details>
+  </div>
 </main>

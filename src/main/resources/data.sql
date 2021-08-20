@@ -13,14 +13,14 @@ DELETE FROM addresses;
 INSERT INTO addresses VALUES (1, 'Ausgedachte Str.', '3', '12345', 'Entenhausen', 'Deutschland');
 INSERT INTO addresses VALUES (2, 'Musterstr.', '42', '42424', 'Nuketown', 'Deutschland');
 INSERT INTO addresses VALUES (3, 'Braker Mitte', '9', '32657', 'Lemgo', 'Deutschland');
-INSERT INTO addresses VALUES (4, 'Breslauer Straße', '18c', '33813', 'Oerlinghausen');
+INSERT INTO addresses VALUES (4, 'Breslauer Straße', '18c', '33813', 'Oerlinghausen', 'Deutschland');
 
 -- Beispieldaten für Kunden
 -- Passwort Bernd das Brot: Brot
-INSERT INTO customers VALUES (1, 'Bernd', 'das Brot', '1985-04-01', 1, 'Bernd@Brot.de', '012345678910', 'ef53751671e5219919b139afb43865b325192727a2f1ca216b018d4509abb57f');
-INSERT INTO customers VALUES (2, 'Kasimir', 'Eckhardt', '1990-08-10', 3, 'kzi-eckhardt@web.de', '0176/34934106', '15c7772149be0dce3d0c6352acb5cdf0578365de1ab8aa3ea2efc97467c3ea59');
-Insert into customers values (3, 'Lukas',	'Kröker',	'1997-04-19',	1,	'lukas.kroeker@edu.fhdw.de',	'015785724772',	'09597712a6fe5e3ea54e9ca35f496e65c672d1eb6f85e68b0de8bfa46b72a722');
-INSERT INTO customers VALUES (4, 'Sven', 'Hädrich', '1995-06-04', 4, 'sven.haedrich@edu.fhdw.de', '01707781756', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92');
+INSERT INTO customers VALUES (1, 'Bernd', 'das Brot', '1985-04-01', 1, 'Bernd@Brot.de', '012345678910', 'ef53751671e5219919b139afb43865b325192727a2f1ca216b018d4509abb57f', TRUE);
+INSERT INTO customers VALUES (2, 'Kasimir', 'Eckhardt', '1990-08-10', 3, 'kzi-eckhardt@web.de', '0176/34934106', '15c7772149be0dce3d0c6352acb5cdf0578365de1ab8aa3ea2efc97467c3ea59', TRUE);
+Insert into customers values (3, 'Lukas',	'Kröker',	'1997-04-19',	1,	'lukas.kroeker@edu.fhdw.de',	'015785724772',	'09597712a6fe5e3ea54e9ca35f496e65c672d1eb6f85e68b0de8bfa46b72a722', TRUE);
+INSERT INTO customers VALUES (4, 'Sven', 'Hädrich', '1995-06-04', 4, 'sven.haedrich@edu.fhdw.de', '01707781756', '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92', TRUE);
 
 -- Beispieldaten für Angestellte
 INSERT INTO employees VALUES (1, 'Kasimir', 'Eckhardt', '1990-08-10', 3, 'kasimir.eckhardt@edu.fhdw.de', '017634934106',  'Webdevelopment', TRUE, '15c7772149be0dce3d0c6352acb5cdf0578365de1ab8aa3ea2efc97467c3ea59');

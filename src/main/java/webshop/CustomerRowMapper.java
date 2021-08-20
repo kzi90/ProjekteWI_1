@@ -17,6 +17,7 @@ public class CustomerRowMapper implements RowMapper<Customer> {
                        .email(rs.getString("email"))
                        .phonenumber(rs.getString("phonenumber"))
                        .passHash(rs.getString("pass_hash"))
+                       .active(rs.getBoolean("active"))
                        .build();
     }
 }

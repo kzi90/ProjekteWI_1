@@ -1,4 +1,0 @@
-2021-08-19 17:08:50 jdbc[13]: exception
-org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax Fehler in SQL Befehl "ADDRESSES[*]"; erwartet "ALTER, ANALYZE"
-Syntax error in SQL statement "ADDRESSES[*]"; expected "ALTER, ANALYZE"; SQL statement:
-ADDRESSES [42001-200]

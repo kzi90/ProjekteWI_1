@@ -19,6 +19,7 @@ public class EmployeeRowMapper implements RowMapper<Employee> {
                         .department(rs.getString("department"))
                         .isAdmin(rs.getBoolean("is_admin"))
                         .passHash(rs.getString("pass_hash"))
+                        .active(true) // active-flag not saved in database
                         .build();
     }
 }

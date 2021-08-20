@@ -199,7 +199,8 @@ public class CustomerController {
         model.addAttribute("loggedInUser", loggedInUser);
         ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
         model.addAttribute("shoppingcart", shoppingCart);
-        if (db.query("SELECT * FROM customers WHERE email = ?", new CustomerRowMapper(), email).isEmpty()) {
+        List<Customer> customers = db.query("SELECT * FROM customers WHERE email = ?", new CustomerRowMapper(), email);
+        if (customers.isEmpty()) {
             return "redirect:/login";
         }
         // generates temorary password
@@ -210,9 +211,10 @@ public class CustomerController {
         String generatedString = random.ints(leftLimit, rightLimit + 1).limit(targetStringLength)
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append).toString();
         db.update("UPDATE customers SET pass_hash = ? WHERE email = ?", Convert.stringToHash(generatedString), email);
-        String message = "Guten Tag,\n\n" + "Ihr temporäres Passwort lautet: " + generatedString + "\n"
+        String fullname = customers.get(0).getFirstname() + " " + customers.get(0).getLastname();
+        String message = "Guten Tag " + fullname + ",\n\nIhr temporäres Passwort lautet: " + generatedString + "\n"
                 + "Bitte ändern Sie nach dem Login das Passwort schnellstmöglich.\n\nLiebe Grüße,\nIhr Bielefelder Unikat-Team";
-        JavaMail.sendMessage(email, email, "Passwort zurücksetzen", message);
+        JavaMail.sendMessage(email, fullname, "Passwort zurücksetzen", message);
         return "redirect:/login";
     }
 
@@ -243,26 +245,34 @@ public class CustomerController {
 
     @PostMapping("/account")
     public String account(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
-            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
-            @ModelAttribute Customer customer, @ModelAttribute Address address,
-            @ModelAttribute("newPass") String newPass, Model model)
-            throws DataAccessException, NoSuchAlgorithmException {
-        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
-        model.addAttribute("shoppingcart", shoppingCart);
+            HttpServletResponse response, @ModelAttribute Customer customer, @ModelAttribute Address address,
+            @ModelAttribute("newPass") String newPass) throws DataAccessException, NoSuchAlgorithmException {
 
         Customer savedCust = db.queryForObject("SELECT * FROM customers WHERE email = ?", new CustomerRowMapper(),
                 loggedInUser);
 
-        if (!customer.equalsCust(savedCust)) {
-            db.update(
-                    "UPDATE customers SET firstname = ?, lastname = ?, birthdate = ?, email = ?, phonenumber = ? WHERE id = ?",
-                    customer.getFirstname(), customer.getLastname(), customer.getBirthdate(), customer.getEmail(),
-                    customer.getPhonenumber(), savedCust.getId());
-            if (!customer.getEmail().equals(savedCust.getEmail())) {
-                Cookie cookie = new Cookie("loggedInUser", customer.getEmail());
-                cookie.setPath("/");
-                response.addCookie(cookie);
-            }
+        // update changed data in database
+        if (!customer.getFirstname().equals(savedCust.getFirstname())) {
+            db.update("UPDATE customers SET firstname = ? WHERE id = ?", customer.getFirstname(), savedCust.getId());
+        }
+        if (!customer.getLastname().equals(savedCust.getLastname())) {
+            db.update("UPDATE customers SET lastname = ? WHERE id = ?", customer.getLastname(), savedCust.getId());
+        }
+        if (!customer.getBirthdate().equals(savedCust.getBirthdate())) {
+            db.update("UPDATE customers SET birthdate = ? WHERE id = ?", customer.getBirthdate(), savedCust.getId());
+        }
+        if (!customer.getPhonenumber().equals(savedCust.getPhonenumber())) {
+            db.update("UPDATE customers SET phonenumber = ? WHERE id = ?", customer.getPhonenumber(),
+                    savedCust.getId());
+        }
+        // email is only changed if there isn't another account with this email yet
+        if (!customer.getEmail().equals(savedCust.getEmail())
+                && db.query("SELECT * FROM customers WHERE email = ?", new CustomerRowMapper(), customer.getEmail())
+                        .isEmpty()) {
+            db.update("UPDATE customers SET email = ? WHERE id = ?", customer.getEmail(), savedCust.getId());
+            Cookie cookie = new Cookie("loggedInUser", customer.getEmail());
+            cookie.setPath("/");
+            response.addCookie(cookie);
         }
 
         // change password
@@ -292,9 +302,23 @@ public class CustomerController {
         System.out.println(String.format("neu: %s", address));
         System.out.println(String.format("alt: %s", savedAddress));
 
-        model.addAttribute("loggedInUser", customer.getEmail());
-        model.addAttribute("templateName", "account");
-        model.addAttribute("title", "Kundendaten");
+        return "redirect:/account";
+    }
+
+    @GetMapping("/deluser")
+    public String deluser(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
+            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
+            Model model) {
+        if (loggedInUser.isEmpty()){
+            return "redirect:/";
+        }
+        model.addAttribute("loggedInUser", "");
+        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
+        model.addAttribute("shoppingcart", shoppingCart);
+
+        db.update("UPDATE customers SET active = FALSE WHERE email = ?", loggedInUser);
+
+        model.addAttribute("templateName", "deluser");
         return "layout";
     }
 

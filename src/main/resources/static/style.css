@@ -11700,4 +11700,12 @@ input:-webkit-autofill:active {
   transition: background-color 5000s ease-in-out 0s;
   -webkit-text-fill-color: #212025 !important;
 }
+
+details summary {
+  display: block;
+}
+
+details summary:hover {
+  background-color: #333135;
+}
 /*# sourceMappingURL=style.css.map */

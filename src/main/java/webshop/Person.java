@@ -6,7 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-@Getter @Setter
+@Getter
+@Setter
 @NoArgsConstructor
 @SuperBuilder
 public abstract class Person {
@@ -18,15 +19,17 @@ public abstract class Person {
     protected String email;
     protected String phonenumber;
     protected String passHash;
+    protected Boolean active;
 
     /**
-	 * Convert given password to SHA256-Hash and compare with saved Hash
-	 * @param password
-	 * @return boolean value that indicates whether the login was successful
-	 * @throws NoSuchAlgorithmException
-	 */
-	public boolean login(String password) throws NoSuchAlgorithmException{
-		return Convert.stringToHash(password).equalsIgnoreCase(this.passHash);
-	}
+     * Convert given password to SHA256-Hash and compare with saved Hash
+     * 
+     * @param password
+     * @return boolean value that indicates whether the login was successful
+     * @throws NoSuchAlgorithmException
+     */
+    public boolean login(String password) throws NoSuchAlgorithmException {
+        return Convert.stringToHash(password).equalsIgnoreCase(this.passHash) && this.active;
+    }
 
 }

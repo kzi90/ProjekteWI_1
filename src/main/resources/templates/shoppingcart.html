@@ -5,8 +5,12 @@
         <!-- TODO: aus dem style muss noch ne class werden, wie bei der  caption unten-->
         <p
           style="color: #6f6b68; font-weight: bolder"
-          th:text="'Ihre Lieferadresse lautet:'"
+          th:text="'Ihre Lieferanschrift lautet:'"
         />
+        <p
+          class="mb-0"
+          th:text="${customer.firstname} + ' ' + ${customer.lastname}"
+        / >
         <p
           class="mb-0"
           th:text="${address.street} + ' ' + ${address.housenr}"
@@ -14,7 +18,7 @@
         <p class="mb-0" th:text="${address.postcode} + ' ' + ${address.city}" />
         <p class="mb-0">Deutschland</p>
         <p class="text-muted legal" style="font-size: 0.8rem">
-          *Sie könnnen Ihre Lieferadresse in den Kundendaten ändern
+          *Sie könnnen Ihre Anschrift in den Kundendaten ändern
         </p>
       </div>
 
