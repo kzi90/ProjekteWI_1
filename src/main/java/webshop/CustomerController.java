@@ -199,7 +199,8 @@ public class CustomerController {
         model.addAttribute("loggedInUser", loggedInUser);
         ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
         model.addAttribute("shoppingcart", shoppingCart);
-        if (db.query("SELECT * FROM customers WHERE email = ?", new CustomerRowMapper(), email).isEmpty()) {
+        List<Customer> customers = db.query("SELECT * FROM customers WHERE email = ?", new CustomerRowMapper(), email);
+        if (customers.isEmpty()) {
             return "redirect:/login";
         }
         // generates temorary password
@@ -210,9 +211,10 @@ public class CustomerController {
         String generatedString = random.ints(leftLimit, rightLimit + 1).limit(targetStringLength)
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append).toString();
         db.update("UPDATE customers SET pass_hash = ? WHERE email = ?", Convert.stringToHash(generatedString), email);
-        String message = "Guten Tag,\n\n" + "Ihr temporäres Passwort lautet: " + generatedString + "\n"
+        String fullname = customers.get(0).getFirstname() + " " + customers.get(0).getLastname();
+        String message = "Guten Tag " + fullname + ",\n\nIhr temporäres Passwort lautet: " + generatedString + "\n"
                 + "Bitte ändern Sie nach dem Login das Passwort schnellstmöglich.\n\nLiebe Grüße,\nIhr Bielefelder Unikat-Team";
-        JavaMail.sendMessage(email, email, "Passwort zurücksetzen", message);
+        JavaMail.sendMessage(email, fullname, "Passwort zurücksetzen", message);
         return "redirect:/login";
     }
 
