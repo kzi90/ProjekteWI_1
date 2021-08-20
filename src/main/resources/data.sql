@@ -13,7 +13,7 @@ DELETE FROM addresses;
 INSERT INTO addresses VALUES (1, 'Ausgedachte Str.', '3', '12345', 'Entenhausen', 'Deutschland');
 INSERT INTO addresses VALUES (2, 'Musterstr.', '42', '42424', 'Nuketown', 'Deutschland');
 INSERT INTO addresses VALUES (3, 'Braker Mitte', '9', '32657', 'Lemgo', 'Deutschland');
-INSERT INTO addresses VALUES (4, 'Breslauer Straße', '18c', '33813', 'Oerlinghausen');
+INSERT INTO addresses VALUES (4, 'Breslauer Straße', '18c', '33813', 'Oerlinghausen', 'Deutschland');
 
 -- Beispieldaten für Kunden
 -- Passwort Bernd das Brot: Brot
