@@ -10,10 +10,10 @@
   ></div>
 -->
   <!-- Products -->
-  <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 g-5">
-    <div th:each="product: ${products}" class="col product text-center">
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 g-5 d-flex align-items-stretch ">
+    <div th:each="product: ${products}" class="col product text-center d-flex flex-column align-items-start justify-content-center">
       <!-- Product link -->
-      <a href="/product" th:href="@{/product(product=${product.id})}">
+      <a href="/product" th:href="@{/product(product=${product.id})}" >
         <!-- Product image -->
         <img
           alt="Produktbild"
@@ -23,10 +23,10 @@
       </a>
 
       <!-- Product name -->
-      <h2 class="display-5" th:text="${product.name}" />
+      <h2 class="display-5 mx-auto mb-auto" th:text="${product.name}" />
 
       <!-- Price -->
-      <p class="text-center">
+      <p class="mx-auto">
         <span
           class="text-price"
           th:text="${#numbers.formatDecimal(product.price, 1, 2, 'COMMA')} + ' €'"
