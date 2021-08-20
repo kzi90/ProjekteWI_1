@@ -83,6 +83,7 @@
         <th scope="col" th:text="'E-Mail'" />
         <th scope="col" th:text="'Tel.'" />
         <th scope="col" th:text="'Passwort-Hash'" />
+        <th scope="col" th:text="'Aktiv'" />
       </tr>
       <tr th:each="customer: ${customers}">
         <td th:text="${customer.id}" />
@@ -93,6 +94,7 @@
         <td th:text="${customer.email}" />
         <td th:text="${customer.phonenumber}" />
         <td th:text="${customer.passHash}" />
+        <td th:text="${customer.active}" />
       </tr>
     </table>
 
