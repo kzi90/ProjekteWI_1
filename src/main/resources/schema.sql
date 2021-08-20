@@ -40,6 +40,7 @@ CREATE TABLE customers (
     email VARCHAR(128) NOT NULL,
     phonenumber VARCHAR(128),
     pass_hash VARCHAR(128) NOT NULL,
+    active BOOLEAN NOT NULL DEFAULT TRUE,
     FOREIGN KEY (address_id) REFERENCES ADDRESSES(id),
     PRIMARY KEY (id),
     UNIQUE (email)

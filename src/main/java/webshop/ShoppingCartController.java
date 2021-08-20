@@ -55,6 +55,7 @@ public class ShoppingCartController {
                     loggedInUser);
             Address address = db.queryForObject("SELECT * FROM addresses WHERE id = ?", new AddressRowMapper(),
                     customer.getAddressID());
+            model.addAttribute(customer);
             model.addAttribute(address);
         }
 
