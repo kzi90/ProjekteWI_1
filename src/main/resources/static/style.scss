@@ -1525,6 +1525,13 @@ $pre-color:                         null;
 //==================================================
 
 //-------------------------
+// Body 
+//-------------------------
+body {
+  padding-top: 100px;
+}
+
+//-------------------------
 // Header 
 //-------------------------
 header {
@@ -1545,6 +1552,12 @@ header {
 }
 
 // Navbar
+.navbar {
+  min-height: 100px;
+  background-color: rgba(33, 32, 37, 0.5)!important;
+  backdrop-filter: blur(30px);
+  box-shadow: 0px 6px 12px #212025;
+}
 .navbar-collapse,
 .navbar-others {
     flex-grow: 2; // needs to be set so the logo is always in the middle
