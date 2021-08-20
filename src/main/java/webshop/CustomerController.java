@@ -209,13 +209,10 @@ public class CustomerController {
         Random random = new Random();
         String generatedString = random.ints(leftLimit, rightLimit + 1).limit(targetStringLength)
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append).toString();
-
-        System.out.println("Das Passwort lautet: " + generatedString);
-        System.out.println("Der zugehörige Hash" + Convert.stringToHash(generatedString));
         db.update("UPDATE customers SET pass_hash = ? WHERE email = ?", Convert.stringToHash(generatedString), email);
         String message = "Guten Tag,\n\n" + "Ihr temporäres Passwort lautet: " + generatedString + "\n"
                 + "Bitte ändern Sie nach dem Login das Passwort schnellstmöglich.\n\nLiebe Grüße,\nIhr Bielefelder Unikat-Team";
-        JavaMail.sendMessage(email, email, message);
+        JavaMail.sendMessage(email, email, "Passwort zurücksetzen", message);
         return "redirect:/login";
     }
 

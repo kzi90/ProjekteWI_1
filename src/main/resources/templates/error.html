@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Error</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="./style.css" rel="stylesheet" />
+    <link href="./fonts/fontawesome/css/all.css" rel="stylesheet" />
+    <link rel="icon" th:href="@{/images/favicon.ico}" />
+  </head>
+  <main id="content" class="mt-5">
+    <div style="display: flex; flex-direction: column; align-items: center">
+      <h1 class="title display-1">Etwas ist schiefgelaufen!</h1>
+      <h1 class="title display-1 rotate" style="width: 30%">👾</h1>
+    </div>
+
+    <h2 style="text-align: center">
+      Unsere Techniker arbeiten daran. <a href="/">Zurück zur Seite</a>
+    </h2>
+    <style>
+      .rotate:hover {
+        transition: 0.7s;
+        -webkit-transition: 0.7s;
+        -moz-transition: 0.7s;
+        -ms-transition: 0.7s;
+        -o-transition: 0.7s;
+        -webkit-transform: rotate(180deg);
+        -moz-transform: rotate(180deg);
+        -o-transform: rotate(180deg);
+        -ms-transform: rotate(180deg);
+        transform: rotate(180deg);
+      }
+    </style>
+  </main>
+</html>
