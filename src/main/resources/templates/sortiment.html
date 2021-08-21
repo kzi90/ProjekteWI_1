@@ -23,13 +23,13 @@
       </a>
 
       <!-- Product name -->
-      <h2 class="display-5 mx-auto mb-auto" th:text="${product.name}" />
+      <h2 class="display-5 mx-auto mb-auto text-break" th:text="${product.name}" />
 
       <!-- Price -->
       <p class="mx-auto">
         <span
           class="text-price"
-          th:text="${#numbers.formatDecimal(product.price, 1, 2, 'COMMA')} + ' €'"
+          th:text="${#numbers.formatDecimal(product.price, 1, 2, 'COMMA')} + ' € '"
         />
         <span class="text-vat text-muted mb-2">inkl. MwSt.</span>
       </p>

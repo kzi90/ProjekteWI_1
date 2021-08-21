@@ -1,16 +1,15 @@
 <main th:fragment="product">
-  <!-- Title -->
-  <h1 class="title display-1">Genau&nbsp;dein&nbsp;Bier<br /></h1>
-
-  <!-- Divider -->
-  <div
-    th:replace="fragments :: divider (src='wappen-sparrenburg.svg',alt='Sparrenburg Wappen',width='60')"
-  ></div>
-
   <!-- declares product for productpage -->
-  <div class="row">
+  <div class="row g-5 justify-content-center">
     <!-- Product image -->
-    <div class="col col-lg-2">
+    <div
+      class="
+        col-8 col-md-5 col-lg-4 col-xl-3
+        d-flex
+        align-items-center
+        justify-content-center
+      "
+    >
       <img
         alt="Produktbild"
         th:src="@{${product.imgURL}}"
@@ -19,15 +18,54 @@
     </div>
 
     <!-- Name and description -->
-    <div class="col-md-5 col-lg-5 offset-lg-1">
-      <p class="text-muted" th:text="${product.type}" />
-      <h2 class="display-2" th:text="${product.name}" />
+    <div class="col-12 col-md-7 col-lg-8 col-xl-5">
+      <h1 class="display-2 mb-5 text-break" th:text="${product.name}" />
       <p class="initial-letter" th:text="${product.description}" />
+
+      <!-- Price -->
+      <p class="mx-auto">
+        <span
+          class="text-price"
+          th:text="${#numbers.formatDecimal(product.price, 1, 2, 'COMMA')} + ' € '"
+        />
+        <span class="text-vat text-muted mb-2">inkl. MwSt.</span>
+      </p>
+
+      <div class="input-group flex-nowrap mb-3">
+        <!-- Textfeld für Eingabe der Anzahl -->
+        <input
+          th:id="'quantity' + ${product.id}"
+          type="number"
+          class="form-control"
+          min="1"
+          max="2400"
+          step="1"
+          value="1"
+          aria-label="Quantity"
+          aria-describedby="button-addon2"
+        />
+
+        <!-- Button zum Warenkorb hinzufügen -->
+        <button
+          th:id="'addToCart' + ${product.id}"
+          class="btn btn-primary"
+          type="button"
+          id="button-addon2"
+        >
+          In die Bierkiste
+        </button>
+      </div>
     </div>
 
     <!-- Ingriedients -->
-    <div class="col-md-6 col-lg-3 offset-lg-1">
+    <div class="col-12 col-xl-3 offset-xl-1 d-flex align-items-end">
       <table class="table table-ingredients">
+        <tr>
+          <td>
+            <span class="text-key">Typ</span>
+            <span class="text-value" th:text="${product.type}" />
+          </td>
+        </tr>
         <tr>
           <td>
             <span class="text-key">Volumen</span>
@@ -79,24 +117,6 @@
           </td>
         </tr>
       </table>
-
-      <!-- Price -->
-      <span
-        class="text-price mx-auto mb-1"
-        th:text="${#numbers.formatDecimal(product.price, 1, 2, 'COMMA')} + ' €'"
-      />
-      <span class="text-vat mx-auto mb-2">inkl. MwSt.</span>
-
-      <!-- Textfeld für Eingabe der Anzahl -->
-      <input th:id="'quantity' + ${product.id}" type="number" min="1" max="2400" step="1" value="1">
-
-      <!-- Button zum Warenkorb hinzufügen -->
-      <button
-        th:id="'addToCart' + ${product.id}"
-        class="btn btn-primary mx-auto"
-      >
-        In die Bierkiste legen
-      </button>
     </div>
 
     <div th:replace="fragments :: scriptAddToCart" />
