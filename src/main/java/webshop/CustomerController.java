@@ -316,7 +316,13 @@ public class CustomerController {
         ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
         model.addAttribute("shoppingcart", shoppingCart);
 
+        // set customer inactive
         db.update("UPDATE customers SET active = FALSE WHERE email = ?", loggedInUser);
+
+        // delete cookie
+        Cookie cookie = new Cookie("loggedInUser", null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
 
         model.addAttribute("templateName", "deluser");
         return "layout";
