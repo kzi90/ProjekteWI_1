@@ -97,7 +97,7 @@ public class OrderController {
                     + "! Hier noch einmal die Zahlungsdetails:\nZahle den Rechnungsbetrag ("
                     + String.format("%.2f", total) + " €) bitte auf folgendes Bankkonto:\n"
                     + "Inhaber: Bielefelder Unikat\nIBAN: DE86 1203 0000 1061 8459 45\nBIC: BYLADEM1001\n"
-                    + "Als Verwendungszweck gib bitte die Bestellnummer (s.o.) an."
+                    + "Als Verwendungszweck gib bitte die Bestellnummer (" + order.getId().toString() + ") an."
                     + " Die Lieferung wird nach Eingang der Zahlung unverzüglich veranlasst. "
                     + "Vielen Dank für deinen Einkauf und Prost!";
             JavaMail.sendMessage(customer.getEmail(), fullName, "Bestellbestätigung", message);
