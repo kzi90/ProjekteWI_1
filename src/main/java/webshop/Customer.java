@@ -5,12 +5,19 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-@Getter
-@Setter
+/**
+ * @author Kasimir Eckhardt
+ */
+@Getter @Setter
 @AllArgsConstructor // needed for getting form-inputs via POST and thymeleaf
 @SuperBuilder
 public class Customer extends Person {
 
+    /**
+     * compare customer by firstname, lastname, birthdate, email & phonenumber
+     * @param customer
+     * @return
+     */
     public boolean equalsCust(Customer customer) {
         return this.firstname.equals(customer.firstname) && this.lastname.equals(customer.lastname)
                 && this.birthdate.equals(customer.birthdate) && this.email.equals(customer.email)

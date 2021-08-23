@@ -6,8 +6,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-@Getter
-@Setter
+/**
+ * @author Kasimir Eckhardt
+ */
+@Getter @Setter
 @NoArgsConstructor
 @SuperBuilder
 public abstract class Person {

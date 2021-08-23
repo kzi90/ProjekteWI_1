@@ -5,6 +5,9 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import org.springframework.jdbc.core.RowMapper;
 
+/**
+ * @author Kasimir Eckhardt
+ */
 public class OrderRowMapper implements RowMapper<Order> {
     public Order mapRow(ResultSet rs, int rowNum) throws SQLException{
         return Order.builder()

@@ -5,12 +5,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 
+/**
+ * @author Kasimir Eckhardt
+ */
 @Controller
 public class AddressController {
     
     @Autowired
     private JdbcTemplate db;
 
+    /**
+     * save address in database if it doesn't exist already
+     * @param address
+     * @return
+     */
     public Address saveAddress(Address address){
         String testAddressSQL = "SELECT * FROM addresses WHERE street = ? AND housenr = ? AND postcode = ? AND city = ?;";
         List<Address> tAddresses = db.query(testAddressSQL, new AddressRowMapper(), address.getStreet(),

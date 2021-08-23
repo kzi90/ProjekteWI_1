@@ -5,8 +5,10 @@ import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
+/**
+ * @author Kasimir Eckhardt
+ */
+@Getter @Setter
 public class ShoppingCart {
     
     protected static final List<ShoppingCart> shoppingCarts = new ArrayList<>();

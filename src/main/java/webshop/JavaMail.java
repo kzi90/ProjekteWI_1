@@ -15,8 +15,21 @@ import javax.mail.internet.MimeMultipart;
 import javax.mail.Session;
 import javax.mail.Transport;
 
+/**
+ * @author Kasimir Eckhardt
+ */
 public class JavaMail {
 
+    /**
+     * prepare message to send via email
+     * @param email
+     * @param name
+     * @param topic
+     * @param message
+     * @return
+     * @throws MessagingException
+     * @throws UnsupportedEncodingException
+     */
     private static Message prepareMessage(String email, String name, String topic, String message)
             throws MessagingException, UnsupportedEncodingException {
 
@@ -45,7 +58,13 @@ public class JavaMail {
         return msg;
     }
 
-    // recipient format: "Real Name <email@addre.ss>"
+    /**
+     * send email to any recipient
+     * @param email
+     * @param name
+     * @param topic
+     * @param message
+     */
     public static void sendMessage(String email, String name, String topic, String message) {
         try {
             Message msg = prepareMessage(email, name, topic, message);

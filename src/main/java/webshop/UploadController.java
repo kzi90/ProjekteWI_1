@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 
+/**
+ * @author Lukas Kröker
+ */
 @Controller
 public class UploadController {
 

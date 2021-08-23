@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+/**
+ * @author Kasimir Eckhardt
+ */
 @Getter @Setter
 @AllArgsConstructor  // needed for getting form-inputs via POST and thymeleaf
 @NoArgsConstructor

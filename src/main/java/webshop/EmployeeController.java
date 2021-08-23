@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+/**
+ * @author Kasimir Eckhardt
+ */
 @Controller
 public class EmployeeController {
 
@@ -91,6 +94,15 @@ public class EmployeeController {
         return "layout";
     }
 
+    /**
+     * 
+     * @param loggedInUser
+     * @param sessID
+     * @param response
+     * @param loggedInEmp
+     * @param model
+     * @return employee_area.html template
+     */
     @GetMapping("/employee_area")
     public String employee_area(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
             @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,

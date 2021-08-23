@@ -4,6 +4,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.springframework.jdbc.core.RowMapper;
 
+/**
+ * @author Kasimir Eckhardt
+ */
 public class AddressRowMapper implements RowMapper<Address> {
     
     public Address mapRow(ResultSet rs, int rowNum) throws SQLException {

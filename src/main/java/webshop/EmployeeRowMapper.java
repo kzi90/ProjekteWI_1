@@ -5,6 +5,9 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import org.springframework.jdbc.core.RowMapper;
 
+/**
+ * @author Kasimir Eckhardt
+ */
 public class EmployeeRowMapper implements RowMapper<Employee> {
     
     public Employee mapRow(ResultSet rs, int rowNum) throws SQLException{

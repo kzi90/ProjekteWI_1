@@ -12,6 +12,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 
+/**
+ * @author Kasimir Eckhardt
+ */
 @Controller
 public class OrderController {
 
@@ -107,6 +110,14 @@ public class OrderController {
         }
     }
 
+    /**
+     * show order history for logged in customer
+     * @param loggedInUser
+     * @param sessID
+     * @param response
+     * @param model
+     * @return my_orders.html template
+     */
     @GetMapping("my_orders")
     public String my_orders(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
             @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
