@@ -71,7 +71,7 @@
             <span class="text-key">Volumen</span>
             <span
               class="text-value"
-              th:text="${product.amount / 1000.0} + ' l'"
+              th:text="${#numbers.formatDecimal(product.amount / 1000.0, 1, 3, 'COMMA')} + ' l'"
             />
           </td>
         </tr>
