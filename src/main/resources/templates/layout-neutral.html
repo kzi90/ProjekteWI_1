@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="de" xmlns:th="http://www.thymeleaf.org">
   <div th:replace="fragments :: head(title=${title})" />
-  <body>
+  <body style="padding: 0">
+    <!-- no padding, so the content starts at the top of the page because there is no header here -->
     <div class="container">
-      <main th:include="${templateName} :: ${templateName}" id="content"/>
+      <main th:include="${templateName} :: ${templateName}" id="content" />
     </div>
     <div th:replace="fragments :: scripts" />
   </body>
