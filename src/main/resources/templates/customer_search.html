@@ -1,0 +1,32 @@
+<main th:fragment="customer_search">
+  <p>
+    An dieser Stelle soll es möglich sein, nach einer E-Mail Adresse suchen zu
+    können.
+  </p>
+  <form
+    action="#"
+    th:action="@{/customer_search}"
+    method="post"
+    class="needs-validation"
+    novalidate
+  >
+    <!-- Email -->
+    <div class="mb-3">
+      <label for="inputEmail" class="form-label">E-Mail</label>
+      <input
+        type="email"
+        class="form-control"
+        id="inputEmail"
+        name="email"
+        autofocus
+        required
+      />
+      <div class="invalid-feedback">Bitte eine E-Mail eintragen.</div>
+    </div>
+
+    <!-- Submit -->
+    <div class="d-grid">
+      <button type="submit" class="btn btn-primary mb-5">Suchen</button>
+    </div>
+  </form>
+</main>

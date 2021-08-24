@@ -15,7 +15,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 /**
  * @author Kasimir Eckhardt
@@ -176,10 +179,7 @@ public class CustomerController {
         model.addAttribute("loggedInUser", loggedInUser);
         ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
         model.addAttribute("shoppingcart", shoppingCart);
-        System.out.println("passwort_reset page wurde aufgerufen");
-
         model.addAttribute("email");
-
         model.addAttribute("templateName", "password_reset");
         model.addAttribute("title", "Passwort zurücksetzen");
         return "layout-neutral";
@@ -195,12 +195,10 @@ public class CustomerController {
      */
     @PostMapping("/password_reset")
     public String passwordResetet(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
-            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
-            HttpServletRequest request, @ModelAttribute("email") String email, Model model)
-            throws NoSuchAlgorithmException {
-        model.addAttribute("loggedInUser", loggedInUser);
-        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
-        model.addAttribute("shoppingcart", shoppingCart);
+            @ModelAttribute("email") String email) throws NoSuchAlgorithmException {
+        if (!loggedInUser.isEmpty()) {
+            return "redirect:/";
+        }
         List<Customer> customers = db.query("SELECT * FROM customers WHERE email = ?", new CustomerRowMapper(), email);
         if (customers.isEmpty()) {
             return "redirect:/login";
@@ -239,7 +237,6 @@ public class CustomerController {
         model.addAttribute(customer);
         model.addAttribute(address);
         model.addAttribute("newPass", "");
-
         model.addAttribute("templateName", "account");
         model.addAttribute("title", "Kundendaten");
         return "layout";
@@ -311,7 +308,7 @@ public class CustomerController {
     public String deluser(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
             @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
             Model model) {
-        if (loggedInUser.isEmpty()){
+        if (loggedInUser.isEmpty()) {
             return "redirect:/";
         }
         model.addAttribute("loggedInUser", "");
@@ -355,6 +352,76 @@ public class CustomerController {
                     Convert.stringToHash(customer.getPassHash()));
         }
         return emailNotRegisteredBefore;
+    }
+
+    /**
+     * reset page
+     * 
+     * @param loggedInUser
+     * @param model
+     * @return customer_search.html template
+     */
+    @GetMapping("/customer_search")
+    public String customerSearch(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
+            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
+            Model model) {
+        // TODO check mitarbeiter login
+        model.addAttribute("loggedInUser", loggedInUser);
+        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
+        model.addAttribute("shoppingcart", shoppingCart);
+        model.addAttribute("email");
+        model.addAttribute("templateName", "customer_search");
+        model.addAttribute("title", "Benutzer suchen");
+        return "layout";
+    }
+
+    /**
+     * reset page
+     * 
+     * @param loggedInUser
+     * @param model
+     * @return redirect to customer_edit.html
+     * @throws NoSuchAlgorithmException
+     */
+    @PostMapping("/customer_search")
+    public String customerSearched(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
+            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
+            HttpServletRequest request, @ModelAttribute("email") String email, Model model)
+            throws NoSuchAlgorithmException {
+        // TODO check mitarbeiter login
+        model.addAttribute("loggedInUser", loggedInUser);
+        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
+        model.addAttribute("shoppingcart", shoppingCart);
+        List<Customer> customers = db.query("SELECT * FROM customers WHERE email = ?", new CustomerRowMapper(), email);
+        if (customers.isEmpty()) {
+            return "redirect:/customer_search";
+        }
+
+        return "redirect:/customer_edit" + customers.get(0).getId().toString();
+    }
+
+    /**
+     * reset page
+     * 
+     * @param loggedInUser
+     * @param model
+     * @return customer_edit.html template
+     */
+    @GetMapping("/customer_edit{id}")
+    public String customerEdit(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
+            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
+            @PathVariable String id, Model model) {
+        // TODO check mitarbeiter login
+        model.addAttribute("loggedInUser", loggedInUser);
+        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
+        model.addAttribute("shoppingcart", shoppingCart);
+
+        Customer customer = db.queryForObject("SELECT * FROM customers WHERE id = ?", new CustomerRowMapper(), id);
+        System.out.println(customer);
+        model.addAttribute("customer", customer);
+        model.addAttribute("templateName", "customer_edit");
+        model.addAttribute("title", "Benutzer ändern");
+        return "layout";
     }
 
 }
