@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
 
 /**
  * @author Kasimir Eckhardt
@@ -386,8 +384,7 @@ public class CustomerController {
     @PostMapping("/customer_search")
     public String customerSearched(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
             @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
-            HttpServletRequest request, @ModelAttribute("email") String email, Model model)
-            throws NoSuchAlgorithmException {
+            HttpServletRequest request, @ModelAttribute("email") String email, Model model) {
         // TODO check mitarbeiter login
         model.addAttribute("loggedInUser", loggedInUser);
         ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
