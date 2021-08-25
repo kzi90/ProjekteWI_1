@@ -412,13 +412,75 @@ public class CustomerController {
         model.addAttribute("loggedInUser", loggedInUser);
         ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
         model.addAttribute("shoppingcart", shoppingCart);
-
         Customer customer = db.queryForObject("SELECT * FROM customers WHERE id = ?", new CustomerRowMapper(), id);
-        System.out.println(customer);
-        model.addAttribute("customer", customer);
+        Address address = db.queryForObject("SELECT * FROM addresses WHERE id = ?", new AddressRowMapper(),
+                customer.getAddressID());
+        model.addAttribute(address);
+        model.addAttribute(customer);
         model.addAttribute("templateName", "customer_edit");
         model.addAttribute("title", "Benutzer ändern");
         return "layout";
     }
 
+    @PostMapping("/customer_edit{id}")
+    public String customerEdited(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
+            HttpServletResponse response, @ModelAttribute Customer customer, @ModelAttribute Address address,
+            @PathVariable String id, @ModelAttribute("newPass") String newPass)
+            throws DataAccessException, NoSuchAlgorithmException {
+        // TODO check mitarbeiter login
+        Customer savedCust = db.queryForObject("SELECT * FROM customers WHERE email = ?", new CustomerRowMapper(),
+                customer.getEmail());
+
+        // update changed data in database
+        if (!customer.getFirstname().equals(savedCust.getFirstname())) {
+            db.update("UPDATE customers SET firstname = ? WHERE id = ?", customer.getFirstname(), savedCust.getId());
+        }
+        if (!customer.getLastname().equals(savedCust.getLastname())) {
+            db.update("UPDATE customers SET lastname = ? WHERE id = ?", customer.getLastname(), savedCust.getId());
+        }
+        if (!customer.getBirthdate().equals(savedCust.getBirthdate())) {
+            db.update("UPDATE customers SET birthdate = ? WHERE id = ?", customer.getBirthdate(), savedCust.getId());
+        }
+        if (!customer.getPhonenumber().equals(savedCust.getPhonenumber())) {
+            db.update("UPDATE customers SET phonenumber = ? WHERE id = ?", customer.getPhonenumber(),
+                    savedCust.getId());
+        }
+        // email is only changed if there isn't another account with this email yet
+        if (!customer.getEmail().equals(savedCust.getEmail())
+                && db.query("SELECT * FROM customers WHERE email = ?", new CustomerRowMapper(), customer.getEmail())
+                        .isEmpty()) {
+            db.update("UPDATE customers SET email = ? WHERE id = ?", customer.getEmail(), savedCust.getId());
+            Cookie cookie = new Cookie("loggedInUser", customer.getEmail());
+            cookie.setPath("/");
+            response.addCookie(cookie);
+        }
+
+        // change password
+        if (!newPass.isEmpty()) {
+            db.update("UPDATE customers SET pass_hash = ? WHERE id = ?", Convert.stringToHash(newPass),
+                    savedCust.getId());
+        }
+
+        Address savedAddress = db.queryForObject("SELECT * FROM addresses WHERE id = ?", new AddressRowMapper(),
+                savedCust.getAddressID());
+
+        if (!address.equalsAddress(savedAddress)) {
+            address = addressController.saveAddress(address);
+            db.update("UPDATE customers SET address_id = ? WHERE id = ?", address.getId(), savedCust.getId());
+            if (db.query("SELECT * FROM customers WHERE address_id = ?", new CustomerRowMapper(),
+                    savedCust.getAddressID()).isEmpty()
+                    && db.query("SELECT * FROM employees WHERE address_id = ?", new EmployeeRowMapper(),
+                            savedCust.getAddressID()).isEmpty()) {
+                db.update("DELETE FROM addresses WHERE id = ?", savedCust.getAddressID());
+            }
+        }
+
+        // logging messages for debugging
+        System.out.println(String.format("neu: %s", customer));
+        System.out.println(String.format("alt: %s", savedCust));
+        System.out.println(String.format("neu: %s", address));
+        System.out.println(String.format("alt: %s", savedAddress));
+
+        return "redirect:/customer_edit" + customer.getId().toString();
+    }
 }
