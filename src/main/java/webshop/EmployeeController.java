@@ -32,13 +32,20 @@ public class EmployeeController {
      * secret login for employees
      * 
      * @param loggedInUser
+     * @param loggedInEmp
+     * @param sessID
+     * @param response
      * @param model
      * @return s3cr3tl0g1n.html template
      */
     @GetMapping("/s3cr3tl0g1n")
     public String s3cr3tl0g1n(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
+            @CookieValue(value = "loggedInEmp", defaultValue = "") String loggedInEmp,
             @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
             Model model) {
+        if (!loggedInEmp.isEmpty()) {
+            return "redirect:/employee_area";
+        }
         model.addAttribute("loggedInUser", loggedInUser);
         ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
         model.addAttribute("shoppingcart", shoppingCart);
@@ -110,7 +117,7 @@ public class EmployeeController {
         model.addAttribute("loggedInUser", loggedInUser);
         ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
         model.addAttribute("shoppingcart", shoppingCart);
-        if (loggedInEmp.isEmpty()){
+        if (loggedInEmp.isEmpty()) {
             return "redirect:/";
         }
         model.addAttribute("loggedInEmp", loggedInEmp);
