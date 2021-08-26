@@ -216,6 +216,14 @@ public class CustomerController {
         return "redirect:/login";
     }
 
+    /**
+     * change customer data by customer
+     * @param loggedInUser
+     * @param sessID
+     * @param response
+     * @param model
+     * @return account.html template
+     */
     @GetMapping("/account")
     public String account(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
             @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
@@ -245,6 +253,17 @@ public class CustomerController {
         return "layout";
     }
 
+    /**
+     * change customer data by customer
+     * @param loggedInUser
+     * @param response
+     * @param customer
+     * @param address
+     * @param newPass
+     * @return redirect to /account
+     * @throws DataAccessException
+     * @throws NoSuchAlgorithmException
+     */
     @PostMapping("/account")
     public String account(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
             HttpServletResponse response, @ModelAttribute Customer customer, @ModelAttribute Address address,
@@ -300,6 +319,14 @@ public class CustomerController {
         return "redirect:/account";
     }
 
+    /**
+     * deactivate user-account by customer
+     * @param loggedInUser
+     * @param sessID
+     * @param response
+     * @param model
+     * @return deluser.html template
+     */
     @GetMapping("/deluser")
     public String deluser(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
             @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
@@ -373,12 +400,14 @@ public class CustomerController {
     }
 
     /**
-     * reset page
      * 
      * @param loggedInUser
+     * @param sessID
+     * @param response
+     * @param request
+     * @param email
      * @param model
      * @return redirect to customer_edit.html
-     * @throws NoSuchAlgorithmException
      */
     @PostMapping("/customer_search")
     public String customerSearched(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
@@ -397,9 +426,11 @@ public class CustomerController {
     }
 
     /**
-     * reset page
      * 
      * @param loggedInUser
+     * @param sessID
+     * @param response
+     * @param id
      * @param model
      * @return customer_edit.html template
      */
