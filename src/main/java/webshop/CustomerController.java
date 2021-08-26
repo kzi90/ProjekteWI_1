@@ -210,14 +210,15 @@ public class CustomerController {
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append).toString();
         db.update("UPDATE customers SET pass_hash = ? WHERE email = ?", Convert.stringToHash(generatedString), email);
         String fullname = customers.get(0).getFirstname() + " " + customers.get(0).getLastname();
-        String message = "Guten Tag " + fullname + ",\n\nIhr temporäres Passwort lautet: " + generatedString + "\n"
-                + "Bitte ändern Sie nach dem Login das Passwort schnellstmöglich.\n\nLiebe Grüße,\nIhr Bielefelder Unikat-Team";
+        String message = "Guten Tag " + fullname + ",\n\ndein temporäres Passwort lautet: " + generatedString + "\n"
+                + "Bitte ändere nach dem Login das Passwort schnellstmöglich.\n\nLiebe Grüße,\nDein Bielefelder Unikat-Team";
         JavaMail.sendMessage(email, fullname, "Passwort zurücksetzen", message);
         return "redirect:/login";
     }
 
     /**
      * change customer data by customer
+     * 
      * @param loggedInUser
      * @param sessID
      * @param response
@@ -239,11 +240,11 @@ public class CustomerController {
         Customer customer = db.queryForObject("SELECT * FROM customers WHERE email = ?", new CustomerRowMapper(),
                 loggedInUser);
         Address address;
-        if (customer != null){
+        if (customer != null) {
             address = db.queryForObject("SELECT * FROM addresses WHERE id = ?", new AddressRowMapper(),
-                customer.getAddressID());
+                    customer.getAddressID());
             model.addAttribute(customer);
-            if (address != null){
+            if (address != null) {
                 model.addAttribute(address);
             }
         }
@@ -255,6 +256,7 @@ public class CustomerController {
 
     /**
      * change customer data by customer
+     * 
      * @param loggedInUser
      * @param response
      * @param customer
@@ -321,6 +323,7 @@ public class CustomerController {
 
     /**
      * deactivate user-account by customer
+     * 
      * @param loggedInUser
      * @param sessID
      * @param response
