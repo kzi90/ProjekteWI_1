@@ -32,11 +32,9 @@ public class UploadController {
     }
 
     @PostMapping("/upload")
-    public ResponseEntity<?> handleFileUpload(@RequestParam("img") MultipartFile img) {
+    public ResponseEntity<String> handleFileUpload(@RequestParam("img") MultipartFile img) {
         String imgName = img.getOriginalFilename();
-
         try {
-            // TODO: relativer Pfad und Ausgabe in HTML
             String filePath = new File("").getAbsolutePath();
             img.transferTo(new File(filePath + "\\src\\main\\resources\\static\\images\\" + imgName));
         } catch (Exception e) {

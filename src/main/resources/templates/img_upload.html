@@ -4,9 +4,15 @@
     Hier kannst du ein Bild hochladen, im Anschluss kannst du dir dann den Link
     zu dem Bild kopieren und einem Produkt hinzufügen.
   </p>
-
+  <style>
+    input[type=file]::file-selector-button {
+      color: #212025;
+      background-color: #f9ab26;
+      border-color: #f9ab26;
+    }
+  </style>
   <input id="imgUpload" type="file" name="imgUpload" />
-  <button id="upload-button" onclick="uploadFile()">Upload</button>
+  <button id="upload-button" class="btn btn-primary" onclick="uploadFile()">Upload</button>
 
   <script>
     async function uploadFile() {
@@ -14,7 +20,7 @@
       formData.append("img", imgUpload.files[0]);
       let response = await fetch("/upload", { method: "POST", body: formData });
       if (response.status == 200) {
-        alert("Hochladen erfolgreich!");
+        alert("Hochladen erfolgreich!\nDateipfad: .\\images\\" + imgUpload.files[0].name);
       }
     }
   </script>
