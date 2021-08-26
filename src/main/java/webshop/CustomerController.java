@@ -230,10 +230,15 @@ public class CustomerController {
         // get customer and address data from database
         Customer customer = db.queryForObject("SELECT * FROM customers WHERE email = ?", new CustomerRowMapper(),
                 loggedInUser);
-        Address address = db.queryForObject("SELECT * FROM addresses WHERE id = ?", new AddressRowMapper(),
+        Address address;
+        if (customer != null){
+            address = db.queryForObject("SELECT * FROM addresses WHERE id = ?", new AddressRowMapper(),
                 customer.getAddressID());
-        model.addAttribute(customer);
-        model.addAttribute(address);
+            model.addAttribute(customer);
+            if (address != null){
+                model.addAttribute(address);
+            }
+        }
         model.addAttribute("newPass", "");
         model.addAttribute("templateName", "account");
         model.addAttribute("title", "Kundendaten");
@@ -292,13 +297,6 @@ public class CustomerController {
                 db.update("DELETE FROM addresses WHERE id = ?", savedCust.getAddressID());
             }
         }
-
-        // logging messages for debugging
-        System.out.println(String.format("neu: %s", customer));
-        System.out.println(String.format("alt: %s", savedCust));
-        System.out.println(String.format("neu: %s", address));
-        System.out.println(String.format("alt: %s", savedAddress));
-
         return "redirect:/account";
     }
 
@@ -353,9 +351,10 @@ public class CustomerController {
     }
 
     /**
-     * reset page
      * 
      * @param loggedInUser
+     * @param sessID
+     * @param response
      * @param model
      * @return customer_search.html template
      */
