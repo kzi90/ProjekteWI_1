@@ -51,6 +51,8 @@ CREATE TABLE products (
     product_type VARCHAR(128) NOT NULL,
     product_name VARCHAR(128) NOT NULL,
     product_description VARCHAR(1024),
+    alc_content DECIMAL(10,2) NOT NULL,
+    ingredients VARCHAR(512) NOT NULL,
     image_url VARCHAR(512),
     amount_ml INTEGER NOT NULL,
     price_eur DECIMAL(10,2) NOT NULL,

@@ -16,6 +16,8 @@ public class ProductRowMapper implements RowMapper<Product> {
                        .type(rs.getString("product_type"))
                        .name(rs.getString("product_name"))
                        .description(rs.getString("product_description"))
+                       .alcContent(rs.getDouble("alc_content"))
+                       .ingredients(rs.getString("ingredients"))
                        .imgURL(rs.getString("image_url"))
                        .amount(rs.getInt("amount_ml"))
                        .price(rs.getDouble("price_eur"))

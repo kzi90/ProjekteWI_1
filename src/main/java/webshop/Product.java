@@ -18,6 +18,8 @@ public class Product {
     private String type;
     private String name;
     private String description;
+    private Double alcContent;
+    private String ingredients;
     private String imgURL;
     private Integer amount;
     private Double price;
