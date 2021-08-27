@@ -129,6 +129,16 @@ public class EmployeeController {
         return "layout";
     }
 
+    /**
+     * view and edit orders
+     * @param suffix
+     * @param loggedInUser
+     * @param sessID
+     * @param response
+     * @param loggedInEmp
+     * @param model
+     * @return order_suffix.html template
+     */
     @GetMapping("/order_{suffix}")
     public String orderProcessing(@PathVariable String suffix,
             @CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
@@ -172,6 +182,13 @@ public class EmployeeController {
         return "layout";
     }
 
+    /**
+     * set order_status to "sent"
+     * @param id
+     * @param loggedInEmp
+     * @param request
+     * @return redirect to same page
+     */
     @GetMapping("/send_order{id}")
     public String sendOrder(@PathVariable String id,
             @CookieValue(value = "loggedInEmp", defaultValue = "") String loggedInEmp, HttpServletRequest request) {
