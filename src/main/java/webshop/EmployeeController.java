@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -173,12 +174,12 @@ public class EmployeeController {
 
     @GetMapping("/send_order{id}")
     public String sendOrder(@PathVariable String id,
-            @CookieValue(value = "loggedInEmp", defaultValue = "") String loggedInEmp) {
+            @CookieValue(value = "loggedInEmp", defaultValue = "") String loggedInEmp, HttpServletRequest request) {
         if (loggedInEmp.isEmpty()) {
             return "redirect:/";
         }
         db.update("UPDATE orders SET order_status = ? WHERE id = ?", "sent", id);
-        return "redirect:/order_processing";
+        return "redirect:" + request.getHeader("Referer");
     }
 
     /**
