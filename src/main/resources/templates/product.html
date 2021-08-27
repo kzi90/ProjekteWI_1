@@ -19,7 +19,7 @@
 
     <!-- Name and description -->
     <div class="col-12 col-md-7 col-lg-8 col-xl-5">
-      <h1 class="display-2 mb-5 text-break" th:text="${product.name}" />
+      <h1 class="display-2 mb-5" th:text="${product.name}" />
       <p class="initial-letter" th:text="${product.description}" />
 
       <!-- Price -->
@@ -57,7 +57,7 @@
       </div>
     </div>
 
-    <!-- Ingriedients -->
+    <!-- further properties -->
     <div class="col-12 col-xl-3 offset-xl-1 d-flex align-items-end">
       <table class="table table-ingredients">
         <tr>
@@ -77,35 +77,14 @@
         </tr>
         <tr>
           <td>
-            <span class="text-key">Alkohol</span>
-            <span class="text-value">4,3 % vol.</span>
-          </td>
-        </tr>
-
-        <tr>
-          <td>
-            <span class="text-key">Stammwürze</span>
-            <span class="text-value">18,9 % mas.</span>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <span class="text-key">Brauart</span>
-            <span class="text-value">Untergärig</span>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <span class="text-key">Bittereinheiten</span>
-            <span class="text-value">27 EBC</span>
+            <span class="text-key">Alkoholgehalt</span>
+            <span class="text-value" th:text="${#numbers.formatDecimal(product.alcContent, 1, 1, 'COMMA') + ' %'}" />
           </td>
         </tr>
         <tr>
           <td>
             <span class="text-key">Zutaten</span>
-            <span class="text-value"
-              >Brauwasser, Gerstenmalz, Hopfenauszüge</span
-            >
+            <span class="text-value" th:text="${product.ingredients}" />
           </td>
         </tr>
         <tr>

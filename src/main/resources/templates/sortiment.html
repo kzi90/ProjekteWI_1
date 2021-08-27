@@ -23,7 +23,7 @@
       </a>
 
       <!-- Product name -->
-      <h2 class="display-5 mx-auto mb-auto text-break" th:text="${product.name}" />
+      <h2 class="display-5 mx-auto mb-auto text-break" th:text="${product.type} + ' - ' + ${product.name}" />
 
       <!-- Price -->
       <p class="mx-auto">

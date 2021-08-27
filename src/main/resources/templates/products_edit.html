@@ -9,6 +9,8 @@
       <th scope="col" th:text="'Typ'" />
       <th scope="col" th:text="'Name'" />
       <th scope="col" th:text="'Beschreibung'" />
+      <th scope="col" th:text="'% Alk.'" />
+      <th scope="col" th:text="'Zutaten'" />
       <th scope="col" th:text="'Image-URL'" />
       <th scope="col" th:text="'Menge in l'" />
       <th scope="col" th:text="'Preis in €'" />
@@ -19,8 +21,10 @@
       <td th:text="${product.type}" />
       <td th:text="${product.name}" />
       <td th:text="${product.description}" />
+      <td th:text="${product.alcContent}" />
+      <td th:text="${product.ingredients}" />
       <td th:text="${product.imgURL}" />
-      <td th:text="${product.amount / 1000.0}" />
+      <td th:text="${#numbers.formatDecimal(product.amount / 1000.0, 1, 3, 'COMMA')}" />
       <td th:text="${product.price}" />
       <td>
         <a th:href="'/product_edit' + ${product.id}">Bearbeiten</a><br>

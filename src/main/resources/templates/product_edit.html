@@ -8,6 +8,8 @@
         <th scope="col" th:text="'Typ'" />
         <th scope="col" th:text="'Name'" />
         <th scope="col" th:text="'Beschreibung'" />
+        <th scope="col" th:text="'% Alk.'" />
+        <th scope="col" th:text="'Zutaten'" />
         <th scope="col" th:text="'Image-URL'" />
         <th scope="col" th:text="'Menge in ml'" />
         <th scope="col" th:text="'Preis in €'" />
@@ -18,6 +20,8 @@
         <td><input type="text" th:field="*{type}" th:value="*{type}" /></td>
         <td><input type="text" th:field="*{name}" th:value="*{name}" /></td>
         <td><input type="text" th:field="*{description}" th:value="*{description}" /></td>
+        <td><input type="text" th:field="*{alcContent}" th:value="*{alcContent}" /></td>
+        <td><input type="text" th:field="*{ingredients}" th:value="*{ingredients}" /></td>
         <td><input type="text" th:field="*{imgURL}" th:value="*{imgURL}" /></td>
         <td><input type="text" th:field="*{amount}" th:value="*{amount}" /></td>
         <td><input type="text" th:field="*{price}" th:value="*{price}" /></td>

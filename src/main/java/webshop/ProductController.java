@@ -23,6 +23,7 @@ public class ProductController {
 
     /**
      * edit / add products when logged in as employee
+     * 
      * @param loggedInUser
      * @param sessID
      * @param response
@@ -31,7 +32,7 @@ public class ProductController {
      * @return products_edit.html template
      */
     @GetMapping("/products_edit")
-    public String products_edit(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
+    public String productsEdit(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
             @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
             @CookieValue(value = "loggedInEmp", defaultValue = "") String loggedInEmp, Model model) {
         model.addAttribute("loggedInUser", loggedInUser);
@@ -50,6 +51,7 @@ public class ProductController {
 
     /**
      * edit product when logged in as employee
+     * 
      * @param loggedInUser
      * @param sessID
      * @param response
@@ -59,7 +61,7 @@ public class ProductController {
      * @return product_edit.html template
      */
     @GetMapping("/product_edit{id}")
-    public String product_edit(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
+    public String productEdit(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
             @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
             @CookieValue(value = "loggedInEmp", defaultValue = "") String loggedInEmp, @PathVariable Integer id,
             Model model) {
@@ -79,13 +81,15 @@ public class ProductController {
 
     /**
      * save product changes made on page /product_edit
+     * 
      * @param loggedInEmp
      * @param product
      * @param id
-     * @return redirect to /products_edit or to homepage if not logged in as employee
+     * @return redirect to /products_edit or to homepage if not logged in as
+     *         employee
      */
     @PostMapping("/product_edit{id}")
-    public String product_edit(@CookieValue(value = "loggedInEmp", defaultValue = "") String loggedInEmp,
+    public String productEdit(@CookieValue(value = "loggedInEmp", defaultValue = "") String loggedInEmp,
             @ModelAttribute Product product, @PathVariable Integer id) {
         if (!loggedInEmp.isEmpty()) {
             updateProduct(product, id);
@@ -97,12 +101,14 @@ public class ProductController {
 
     /**
      * delete product when logged in as employee
+     * 
      * @param loggedInEmp
      * @param id
-     * @return redirect to /products_edit or to homepage if not logged in as employee
+     * @return redirect to /products_edit or to homepage if not logged in as
+     *         employee
      */
     @GetMapping("/product_del{id}")
-    public String product_del(@CookieValue(value = "loggedInEmp", defaultValue = "") String loggedInEmp,
+    public String productDel(@CookieValue(value = "loggedInEmp", defaultValue = "") String loggedInEmp,
             @PathVariable Integer id) {
         if (!loggedInEmp.isEmpty()) {
             deactivateProduct(id);
@@ -114,6 +120,7 @@ public class ProductController {
 
     /**
      * add product when logged in as employee
+     * 
      * @param loggedInUser
      * @param sessID
      * @param response
@@ -122,7 +129,7 @@ public class ProductController {
      * @return product_add.html template
      */
     @GetMapping("/product_add")
-    public String product_add(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
+    public String productAdd(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
             @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
             @CookieValue(value = "loggedInEmp", defaultValue = "") String loggedInEmp, Model model) {
         model.addAttribute("loggedInUser", loggedInUser);
@@ -140,12 +147,14 @@ public class ProductController {
 
     /**
      * save product which was added via /product_add
+     * 
      * @param loggedInEmp
      * @param product
-     * @return redirect to /products_edit or to homepage if not logged in as employee
+     * @return redirect to /products_edit or to homepage if not logged in as
+     *         employee
      */
     @PostMapping("/product_add")
-    public String product_add(@CookieValue(value = "loggedInEmp", defaultValue = "") String loggedInEmp,
+    public String productAdd(@CookieValue(value = "loggedInEmp", defaultValue = "") String loggedInEmp,
             @ModelAttribute Product product) {
         if (!loggedInEmp.isEmpty()) {
             saveNewProduct(product);
@@ -157,14 +166,16 @@ public class ProductController {
 
     /**
      * save new product
+     * 
      * @param product
      * @return saved product
      */
     public Product saveNewProduct(Product product) {
         String saveProductSQL = "INSERT INTO products (product_type, product_name, product_description, "
-                + "image_url, amount_ml, price_eur) VALUES (?, ?, ?, ?, ?, ?);";
-        db.update(saveProductSQL, product.getType(), product.getName(), product.getDescription(), product.getImgURL(),
-                product.getAmount(), product.getPrice());
+                + "alc_content, ingredients, image_url, amount_ml, price_eur) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+        db.update(saveProductSQL, product.getType(), product.getName(), product.getDescription(),
+                product.getAlcContent(), product.getIngredients(), product.getImgURL(), product.getAmount(),
+                product.getPrice());
         String getSQL = "SELECT * FROM products WHERE id = (SELECT MAX(id) FROM products);";
         product = db.queryForObject(getSQL, new ProductRowMapper());
         return product;
@@ -172,18 +183,21 @@ public class ProductController {
 
     /**
      * update existing product
+     * 
      * @param product
      * @param id
      */
     public void updateProduct(Product product, Integer id) {
-        String updateProductSQL = "UPDATE products SET product_type = ?, product_name = ?, "
-                + "product_description = ?, image_url = ?, amount_ml = ?, price_eur = ? WHERE id = ?;";
-        db.update(updateProductSQL, product.getType(), product.getName(), product.getDescription(), product.getImgURL(),
-                product.getAmount(), product.getPrice(), id);
+        String updateProductSQL = "UPDATE products SET product_type = ?, product_name = ?, product_description = ?,"
+                + "alc_content = ?, ingredients = ?, image_url = ?, amount_ml = ?, price_eur = ? WHERE id = ?;";
+        db.update(updateProductSQL, product.getType(), product.getName(), product.getDescription(),
+                product.getAlcContent(), product.getIngredients(), product.getImgURL(), product.getAmount(),
+                product.getPrice(), id);
     }
 
     /**
      * deactivate product so it won't be shown in the sortiment anymore
+     * 
      * @param id
      */
     public void deactivateProduct(Integer id) {
