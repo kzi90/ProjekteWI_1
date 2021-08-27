@@ -119,7 +119,7 @@ public class OrderController {
      * @return my_orders.html template
      */
     @GetMapping("my_orders")
-    public String my_orders(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
+    public String myOrders(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
             @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
             Model model) {
         if (loggedInUser.isEmpty()) {

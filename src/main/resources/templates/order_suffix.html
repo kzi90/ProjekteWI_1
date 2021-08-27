@@ -1,0 +1,80 @@
+<main th:fragment="order_suffix">
+  <div th:replace="fragments :: emp_header" />
+  <h2 th:if="${suffix == 'processing'}">Bearbeitung offene Bestellungen</h2>
+  <h2 th:if="${suffix == 'history'}">Bestellübersicht aller Bestellungen</h2>
+  <div th:each="orderHeader: ${orderHeaders}">
+    <details th:each="order: ${orders}" th:if="${orderHeader[0] == order.id.toString()}">
+      <summary>
+        <table class="table caption-top">
+          <caption>
+            <strong>
+              <span th:text="'Bestellnummer ' + ${orderHeader[0]}" />
+              <span th:text="', Kunde: ' + ${orderHeader[1]}" />
+              <span th:text="' ' + ${orderHeader[2]}" />
+              <span th:text="', ' + ${orderHeader[3]}" />
+              <span th:text="' ' + ${orderHeader[4]}" />
+              <span th:text="', ' + ${orderHeader[5]}" />
+              <span th:text="' ' + ${orderHeader[6]}" />            
+            </strong>
+          </caption>
+          <tr>
+            <th scope="col" th:text="'Datum: ' + ${order.orderDate}" />
+            <th scope="col" th:text="'Zeit: ' + ${order.orderTime}" />
+            <th
+              scope="col"
+              th:text="'Gesamtpreis: ' + ${#numbers.formatDecimal(order.totalPrice, 1, 2, 'COMMA')} + ' €'"
+            />
+            <th scope="col" th:text="'Bestellstatus: ' + ${order.status}" />
+          </tr>
+        </table>
+      </summary>
+      <table class="table">
+        <tr>
+          <th scope="col" th:text="'Bestellposition'" />
+          <th scope="col" th:text="'Artikelnummer'" />
+          <th scope="col" th:text="'Artikel'" />
+          <th scope="col" th:text="'Menge'" />
+          <th scope="col" />
+          <th scope="col" th:text="'Anzahl'" />
+        </tr>
+        <tr th:each="orderPosition: ${orderPositions}">
+          <td
+            th:if="${orderPosition.orderID == order.id}"
+            th:text="${orderPosition.posNr}"
+          />
+          <td
+            th:if="${orderPosition.orderID == order.id}"
+            th:text="${orderPosition.productID}"
+          />
+          <td
+            th:each="product: ${products}"
+            th:if="${orderPosition.orderID == order.id && orderPosition.productID == product.id}"
+            th:text="${product.type} + ' - ' + ${product.name}"
+          ></td>
+          <td
+            th:each="product: ${products}"
+            th:if="${orderPosition.orderID == order.id && orderPosition.productID == product.id}"
+            th:text="${#numbers.formatDecimal(product.amount / 1000.0, 1, 3, 'COMMA')} + ' l'"
+          />
+          <td
+            th:each="product: ${products}"
+            th:if="${orderPosition.orderID == order.id && orderPosition.productID == product.id}"
+          >
+            <img alt="Produktbild" th:src="@{${product.imgURL}}" height="120" />
+          </td>
+          <td
+            th:if="${orderPosition.orderID == order.id}"
+            th:text="${orderPosition.quantity}"
+          />
+        </tr>
+        <tr th:if="${order.status == 'ordered'}">
+          <td colspan="6">
+            <a class="btn btn-primary" th:href="'/send_order' + ${order.id}">Bestellung verschickt</a>
+          </td>
+        </tr>
+      </table>
+    </details>
+  </div>
+  <a th:if="${suffix == 'history'}" class="btn btn-primary" href="/order_processing">Offene Bestellungen anzeigen</a>
+  <a th:if="${suffix == 'processing'}" class="btn btn-primary" href="/order_history">Alle Bestellungen anzeigen</a>
+</main>

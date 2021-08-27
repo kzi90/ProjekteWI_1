@@ -2,6 +2,7 @@ package webshop;
 
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 /**
@@ -111,7 +113,7 @@ public class EmployeeController {
      * @return employee_area.html template
      */
     @GetMapping("/employee_area")
-    public String employee_area(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
+    public String employeeArea(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
             @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
             @CookieValue(value = "loggedInEmp", defaultValue = "") String loggedInEmp, Model model) {
         model.addAttribute("loggedInUser", loggedInUser);
@@ -124,6 +126,59 @@ public class EmployeeController {
         model.addAttribute("title", "Mitarbeiterbereich");
         model.addAttribute("templateName", "employee_area");
         return "layout";
+    }
+
+    @GetMapping("/order_{suffix}")
+    public String orderProcessing(@PathVariable String suffix,
+            @CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
+            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
+            @CookieValue(value = "loggedInEmp", defaultValue = "") String loggedInEmp, Model model) {
+        if (loggedInEmp.isEmpty()) {
+            return "redirect:/";
+        }
+        model.addAttribute("suffix", suffix);
+        model.addAttribute("loggedInUser", loggedInUser);
+        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
+        model.addAttribute("shoppingcart", shoppingCart);
+        List<Order> orders = new ArrayList<>();
+        if (suffix.equals("processing")) {
+            orders = db.query("SELECT * FROM orders WHERE order_status = ?", new OrderRowMapper(), "ordered");
+        } else if (suffix.equals("history")) {
+            orders = db.query("SELECT * FROM orders", new OrderRowMapper());
+        }
+        model.addAttribute("orders", orders);
+        List<String[]> orderHeaders = new ArrayList<>();
+        for (Order order : orders) {
+            Customer customer = db.queryForObject("SELECT * FROM customers WHERE id = ?", new CustomerRowMapper(),
+                    order.getId());
+            Address address = db.queryForObject("SELECT * FROM addresses WHERE id = ?", new AddressRowMapper(),
+                    customer.getAddressID());
+            orderHeaders.add(new String[] { order.getId().toString(), customer.getFirstname(), customer.getLastname(),
+                    address.getStreet(), address.getHousenr(), address.getPostcode(), address.getCity() });
+        }
+        model.addAttribute("orderHeaders", orderHeaders);
+        List<OrderPosition> orderPositions = new ArrayList<>();
+        for (Order order : orders) {
+            orderPositions.addAll(db.query("SELECT * FROM orderpositions WHERE order_id = ?",
+                    new OrderPositionRowMapper(), order.getId()));
+        }
+        model.addAttribute("orderPositions", orderPositions);
+        List<Product> products = db.query("SELECT * FROM products", new ProductRowMapper());
+        model.addAttribute("products", products);
+        model.addAttribute("loggedInEmp", loggedInEmp);
+        model.addAttribute("title", "Bestellbearbeitung");
+        model.addAttribute("templateName", "order_suffix");
+        return "layout";
+    }
+
+    @GetMapping("/send_order{id}")
+    public String sendOrder(@PathVariable String id,
+            @CookieValue(value = "loggedInEmp", defaultValue = "") String loggedInEmp) {
+        if (loggedInEmp.isEmpty()) {
+            return "redirect:/";
+        }
+        db.update("UPDATE orders SET order_status = ? WHERE id = ?", "sent", id);
+        return "redirect:/order_processing";
     }
 
     /**
