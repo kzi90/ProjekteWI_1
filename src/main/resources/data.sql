@@ -35,7 +35,10 @@ INSERT INTO products VALUES (4, 'Bananenweizen', 'Ravensberger Spinnerei', 'Die 
 
 -- Beispieldaten für Bestellungen
 INSERT INTO orders VALUES (1, '2021-07-01', '15:33:42', 9.12, 'ordered', 1);
+INSERT INTO orders VALUES (2, '2021-08-27', '20:38:03', 47.16, 'ordered', 2);
 
 -- Beispieldaten für Bestellpositionen
 INSERT INTO orderpositions VALUES (1, 5, 3, 1);
 INSERT INTO orderpositions VALUES (2, 3, 1, 1);
+INSERT INTO orderpositions VALUES (1, 24, 1, 2);
+INSERT INTO orderpositions VALUES (2, 20, 4, 2);
