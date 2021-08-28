@@ -4,7 +4,6 @@ import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.ParseException;
@@ -34,18 +33,12 @@ public class EmployeeController {
     @Autowired
     private SessionController sessionController;
 
-    @Autowired
-    private ShoppingCartController shoppingCartController;
-
     /**
      * secret login for employees
-     * 
-     * @param loggedInUser
-     * @param loggedInEmp
      * @param sessID
      * @param response
      * @param model
-     * @return s3cr3tl0g1n.html template
+     * @return s3cr3tl0g1n.html template or redirect if already logged in
      */
     @GetMapping("/s3cr3tl0g1n")
     public String s3cr3tl0g1n(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
@@ -67,11 +60,11 @@ public class EmployeeController {
 
     /**
      * trying employee login with submitted data
-     * 
+     * @param sessID
      * @param employee
      * @param response
      * @param model
-     * @return redirects to /sortiment if login successful, else to /loginfail
+     * @return redirects to /employee_area if login successful, else to /loginfail
      * @throws NoSuchAlgorithmException
      */
     @PostMapping("/s3cr3tl0g1n")
@@ -91,8 +84,7 @@ public class EmployeeController {
 
     /**
      * logout from employee account
-     * 
-     * @param loggedInUser
+     * @param sessID
      * @param response
      * @param model
      * @return logout.html template (same as for customers)
@@ -112,10 +104,8 @@ public class EmployeeController {
 
     /**
      * 
-     * @param loggedInUser
      * @param sessID
      * @param response
-     * @param loggedInEmp
      * @param model
      * @return employee_area.html template
      */
@@ -137,13 +127,10 @@ public class EmployeeController {
     }
 
     /**
-     * view and edit orders
-     * 
+     * view orders and set status to "sent"
      * @param suffix
-     * @param loggedInUser
      * @param sessID
      * @param response
-     * @param loggedInEmp
      * @param model
      * @return order_suffix.html template
      */
@@ -191,9 +178,9 @@ public class EmployeeController {
 
     /**
      * set order_status to "sent"
-     * 
      * @param id
-     * @param loggedInEmp
+     * @param sessID
+     * @param response
      * @param request
      * @return redirect to same page
      */

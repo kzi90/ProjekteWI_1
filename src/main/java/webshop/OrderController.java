@@ -27,15 +27,11 @@ public class OrderController {
     @Autowired
     private SessionController sessionController;
 
-    @Autowired
-    private ShoppingCartController shoppingCartController;
-
     /**
      * complete order from shoppingcart (if not empty). If the customer isn't logged
      * in, he/she will be redirected to /login.
-     * 
-     * @param loggedInUser
      * @param sessID
+     * @param response
      * @param model
      * @return ordercompletion.html template (if shoppingcart not empty and customer
      *         logged in)
@@ -117,8 +113,6 @@ public class OrderController {
 
     /**
      * show order history for logged in customer
-     * 
-     * @param loggedInUser
      * @param sessID
      * @param response
      * @param model
@@ -160,7 +154,6 @@ public class OrderController {
 
     /**
      * save Order
-     * 
      * @param order
      * @return order (with id)
      */

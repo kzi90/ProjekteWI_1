@@ -21,9 +21,6 @@ import org.springframework.web.bind.annotation.CookieValue;
 public class UploadController {
 
     @Autowired
-    ShoppingCartController shoppingCartController;
-
-    @Autowired
     SessionController sessionController;
 
     @GetMapping("/img_upload")

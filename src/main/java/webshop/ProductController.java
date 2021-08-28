@@ -24,16 +24,10 @@ public class ProductController {
     @Autowired
     private SessionController sessionController;
 
-    @Autowired
-    private ShoppingCartController shoppingCartController;
-
     /**
      * edit / add products when logged in as employee
-     * 
-     * @param loggedInUser
      * @param sessID
      * @param response
-     * @param loggedInEmp
      * @param model
      * @return products_edit.html template
      */
@@ -59,11 +53,8 @@ public class ProductController {
 
     /**
      * edit product when logged in as employee
-     * 
-     * @param loggedInUser
      * @param sessID
      * @param response
-     * @param loggedInEmp
      * @param id
      * @param model
      * @return product_edit.html template
@@ -90,10 +81,10 @@ public class ProductController {
 
     /**
      * save product changes made on page /product_edit
-     * 
-     * @param loggedInEmp
+     * @param sessID
      * @param product
      * @param id
+     * @param response
      * @return redirect to /products_edit or to homepage if not logged in as
      *         employee
      */
@@ -110,9 +101,9 @@ public class ProductController {
 
     /**
      * delete product when logged in as employee
-     * 
-     * @param loggedInEmp
+     * @param sessID
      * @param id
+     * @param response
      * @return redirect to /products_edit or to homepage if not logged in as
      *         employee
      */
@@ -129,11 +120,8 @@ public class ProductController {
 
     /**
      * add product when logged in as employee
-     * 
-     * @param loggedInUser
      * @param sessID
      * @param response
-     * @param loggedInEmp
      * @param model
      * @return product_add.html template
      */
@@ -158,9 +146,9 @@ public class ProductController {
 
     /**
      * save product which was added via /product_add
-     * 
-     * @param loggedInEmp
+     * @param sessID
      * @param product
+     * @param response
      * @return redirect to /products_edit or to homepage if not logged in as
      *         employee
      */

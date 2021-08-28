@@ -25,15 +25,12 @@ public class WebsiteController {
     JdbcTemplate db;
 
     @Autowired
-    ShoppingCartController shoppingCartController;
-
-    @Autowired
     SessionController sessionController;
 
     /**
      * Homepage
-     * 
-     * @param loggedInUser
+     * @param sessID
+     * @param response
      * @param model
      * @return home.html template
      */
@@ -50,9 +47,7 @@ public class WebsiteController {
     }
 
     /**
-     * Sortiment / Bestellseite
-     * 
-     * @param loggedInUser
+     * Sortiment
      * @param sessID
      * @param response
      * @param model
@@ -74,11 +69,8 @@ public class WebsiteController {
     }
 
     /**
-     * 
-     * Produktseite
-     * 
+     * product page
      * @param productID
-     * @param loggedInUser
      * @param sessID
      * @param response
      * @param model
@@ -102,8 +94,8 @@ public class WebsiteController {
 
     /**
      * Impressum
-     * 
-     * @param loggedInUser
+     * @param sessID
+     * @param response
      * @param model
      * @return impressum.html template
      */
@@ -122,8 +114,8 @@ public class WebsiteController {
 
     /**
      * AGB
-     * 
-     * @param loggedInUser
+     * @param sessID
+     * @param response
      * @param model
      * @return agb.html template
      */
@@ -141,9 +133,9 @@ public class WebsiteController {
     }
 
     /**
-     * Datenschutz
-     * 
-     * @param loggedInUser
+     * data safety
+     * @param sessID
+     * @param response
      * @param model
      * @return datenschutz.html template
      */
@@ -162,8 +154,8 @@ public class WebsiteController {
 
     /**
      * contact-webpage
-     * 
-     * @param loggedInUser
+     * @param sessID
+     * @param response
      * @param model
      * @return contact.html template
      */
@@ -180,6 +172,13 @@ public class WebsiteController {
         return "layout";
     }
 
+    /**
+     * 
+     * @param sessID
+     * @param response
+     * @param model
+     * @return history.html template
+     */
     @GetMapping("/history")
     public String history(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
             HttpServletResponse response, Model model) {
@@ -193,6 +192,13 @@ public class WebsiteController {
         return "layout";
     }
 
+    /**
+     * 
+     * @param sessID
+     * @param response
+     * @param model
+     * @return philosophy.html template
+     */
     @GetMapping("/philosophy")
     public String philosophy(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
             HttpServletResponse response, Model model) {
@@ -207,8 +213,7 @@ public class WebsiteController {
     }
 
     /**
-     * shows all database tables
-     * 
+     * shows all database tables (this is only for debugging and would be disabled in production)
      * @param model
      * @return db.html template
      */
@@ -227,25 +232,6 @@ public class WebsiteController {
         List<OrderPosition> orderPositions = db.query("SELECT * FROM orderpositions", new OrderPositionRowMapper());
         model.addAttribute("orderPositions", orderPositions);
         return "db";
-    }
-
-    @GetMapping("/cookieshow")
-    public String cookieshow(HttpServletRequest request, Model model) {
-        Cookie[] cookies = request.getCookies();
-        model.addAttribute("cookies", cookies);
-        return "cookieshow";
-    }
-
-    @GetMapping("/cookiedel")
-    @ResponseBody
-    public String cookiedel(HttpServletRequest request, HttpServletResponse response) {
-        Cookie[] cookies = request.getCookies();
-        for (Cookie cookie : cookies) {
-            cookie.setValue(null);
-            cookie.setMaxAge(0);
-            response.addCookie(cookie);
-        }
-        return "Deleted all cookies";
     }
 
 }

@@ -33,13 +33,10 @@ public class CustomerController {
     @Autowired
     private SessionController sessionController;
 
-    @Autowired
-    private ShoppingCartController shoppingCartController;
-
     /**
-     * register-page
-     * 
-     * @param loggedInUser
+     * register page
+     * @param sessID
+     * @param response
      * @param model
      * @return register.html template
      */
@@ -54,18 +51,17 @@ public class CustomerController {
         return "layout-neutral";
     }
 
-    /**
-     * Answer page after submitting registration values
-     * 
-     * @param customer     built automatically with submitted values
-     * @param address      built automatically with submitted values
-     * @param loggedInUser read from cookie
-     * @param model        saves objects as attributes
-     * @return registered.html template
-     * @throws DataAccessException
-     * @throws ParseException
-     * @throws NoSuchAlgorithmException
-     */
+     /**
+      * Answer page after submitting registration values
+      * @param customer built automatically with submitted values
+      * @param address built automatically with submitted values
+      * @param sessID read from cookie
+      * @param response
+      * @param model saves objects as attributes
+      * @return
+      * @throws DataAccessException
+      * @throws NoSuchAlgorithmException
+      */
     @PostMapping("/register")
     public String registered(@ModelAttribute Customer customer, @ModelAttribute Address address,
             @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
@@ -83,8 +79,8 @@ public class CustomerController {
 
     /**
      * login form
-     * 
-     * @param loggedInUser
+     * @param request
+     * @param response
      * @param model
      * @return login.html template
      */
@@ -99,10 +95,10 @@ public class CustomerController {
 
     /**
      * trying login with submitted data
-     * 
      * @param customer
+     * @param cameFrom
+     * @param sessID
      * @param response
-     * @param model
      * @return redirects to /sortiment if login successful, else to /loginfail
      * @throws NoSuchAlgorithmException
      */
@@ -124,8 +120,8 @@ public class CustomerController {
 
     /**
      * tell the user that his login-attempt failed
-     * 
-     * @param loggedInUser
+     * @param sessID
+     * @param response
      * @param model
      * @return loginfail.html template
      */
@@ -143,7 +139,7 @@ public class CustomerController {
 
     /**
      * logout
-     * 
+     * @param sessID
      * @param response
      * @param model
      * @return logout.html template
@@ -161,9 +157,8 @@ public class CustomerController {
     }
 
     /**
-     * reset page
-     * 
-     * @param loggedInUser
+     * reset passwort page
+     * @param response
      * @param model
      * @return password_reset.html template
      */
@@ -176,11 +171,11 @@ public class CustomerController {
     }
 
     /**
-     * reset page
-     * 
-     * @param loggedInUser
-     * @param model
-     * @return password_reset.html template
+     * reset passwort
+     * @param sessID
+     * @param response
+     * @param email
+     * @return
      * @throws NoSuchAlgorithmException
      */
     @PostMapping("/password_reset")
@@ -211,8 +206,6 @@ public class CustomerController {
 
     /**
      * change customer data by customer
-     * 
-     * @param loggedInUser
      * @param sessID
      * @param response
      * @param model
@@ -250,8 +243,7 @@ public class CustomerController {
 
     /**
      * change customer data by customer
-     * 
-     * @param loggedInUser
+     * @param sessID
      * @param response
      * @param customer
      * @param address
@@ -316,8 +308,6 @@ public class CustomerController {
 
     /**
      * deactivate user-account by customer
-     * 
-     * @param loggedInUser
      * @param sessID
      * @param response
      * @param model
@@ -374,7 +364,6 @@ public class CustomerController {
 
     /**
      * 
-     * @param loggedInUser
      * @param sessID
      * @param response
      * @param model
@@ -397,7 +386,6 @@ public class CustomerController {
 
     /**
      * 
-     * @param loggedInUser
      * @param sessID
      * @param response
      * @param request
@@ -419,7 +407,6 @@ public class CustomerController {
 
     /**
      * 
-     * @param loggedInUser
      * @param sessID
      * @param response
      * @param id
@@ -445,6 +432,17 @@ public class CustomerController {
         return "layout";
     }
 
+    /**
+     * save changes in customer data
+     * @param response
+     * @param customer
+     * @param address
+     * @param id
+     * @param newPass
+     * @return
+     * @throws DataAccessException
+     * @throws NoSuchAlgorithmException
+     */
     @PostMapping("/customer_edit{id}")
     public String customerEdited(HttpServletResponse response, @ModelAttribute Customer customer,
             @ModelAttribute Address address, @PathVariable String id, @ModelAttribute("newPass") String newPass)
