@@ -13,26 +13,14 @@ public class ShoppingCart {
     
     protected static final List<ShoppingCart> shoppingCarts = new ArrayList<>();
 
-    private Integer sessID;
+    private String sessID;
     private List<ShoppingCartPosition> cartList;
-
-    public ShoppingCart(){
-        Integer maxSessID = 1;
-        for (ShoppingCart shoppingCart : shoppingCarts) {
-            if (shoppingCart.getSessID() > maxSessID){
-                maxSessID = shoppingCart.getSessID();
-            }
-        }
-        this.sessID = shoppingCarts.isEmpty() ? maxSessID : maxSessID + 1;
-        this.cartList = new ArrayList<>();
-        shoppingCarts.add(this);
-    }
-
+    
     /**
      * If there is already a session cookie set, the id can be given as parameter.
      * @param sessID
      */
-    public ShoppingCart(Integer sessID){
+    public ShoppingCart(String sessID){
         this.sessID = sessID;
         this.cartList = new ArrayList<>();
         shoppingCarts.add(this);
@@ -72,7 +60,7 @@ public class ShoppingCart {
      * @param sessID
      * @return the shoppingcart with the given session id.
      */
-    public static ShoppingCart findBySessID(Integer sessID){
+    public static ShoppingCart findBySessID(String sessID){
         for (ShoppingCart shoppingCart : shoppingCarts) {
             if (shoppingCart.getSessID().equals(sessID)){
                 return shoppingCart;

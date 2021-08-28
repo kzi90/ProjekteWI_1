@@ -24,6 +24,12 @@ public class OrderController {
     @Autowired
     private OrderPositionController orderPositionController;
 
+    @Autowired
+    private SessionController sessionController;
+
+    @Autowired
+    private ShoppingCartController shoppingCartController;
+
     /**
      * complete order from shoppingcart (if not empty). If the customer isn't logged
      * in, he/she will be redirected to /login.
@@ -35,18 +41,17 @@ public class OrderController {
      *         logged in)
      */
     @GetMapping("/ordercompletion")
-    public String ordercompletion(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
-            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
-            Model model) {
-        model.addAttribute("loggedInUser", loggedInUser);
-
+    public String ordercompletion(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
+            HttpServletResponse response, Model model) {
+        Session session = sessionController.getOrSetSession(sessID, response);
+        String loggedInUser = session.getLoggedInUser();
         if (loggedInUser.isEmpty()) {
             return "redirect:/login";
         }
         model.addAttribute("loggedInUser", loggedInUser);
 
         // get shoppingCart by session id
-        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
+        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
         model.addAttribute("shoppingcart", shoppingCart);
 
         if (!shoppingCart.getCartList().isEmpty()) {
@@ -112,6 +117,7 @@ public class OrderController {
 
     /**
      * show order history for logged in customer
+     * 
      * @param loggedInUser
      * @param sessID
      * @param response
@@ -119,14 +125,15 @@ public class OrderController {
      * @return my_orders.html template
      */
     @GetMapping("my_orders")
-    public String myOrders(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
-            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
-            Model model) {
+    public String myOrders(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
+            HttpServletResponse response, Model model) {
+        Session session = sessionController.getOrSetSession(sessID, response);
+        String loggedInUser = session.getLoggedInUser();
         if (loggedInUser.isEmpty()) {
             return "redirect:/login";
         }
         model.addAttribute("loggedInUser", loggedInUser);
-        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
+        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
         model.addAttribute("shoppingcart", shoppingCart);
 
         Customer customer = db.queryForObject("SELECT * FROM customers WHERE email = ?", new CustomerRowMapper(),

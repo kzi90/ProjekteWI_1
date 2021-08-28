@@ -2,7 +2,6 @@ package webshop;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -21,6 +20,9 @@ public class ShoppingCartController {
     @Autowired
     JdbcTemplate db;
 
+    @Autowired
+    SessionController sessionController;
+
     /**
      * add product to shoppingcart, productnumber has to be given as parameter, e.g.
      * /addProductToCart?productID=2
@@ -33,7 +35,7 @@ public class ShoppingCartController {
     public String addProductToCart(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
             @RequestParam(value = "productID", required = true) Integer productID,
             @RequestParam(value = "quantity", required = true) Integer quantity) {
-        ShoppingCart shoppingCart = ShoppingCart.findBySessID(Integer.valueOf(sessID));
+        ShoppingCart shoppingCart = ShoppingCart.findBySessID(sessID);
         shoppingCart.addToCart(productID, quantity);
         return "redirect:/shoppingcart";
     }
@@ -48,22 +50,26 @@ public class ShoppingCartController {
      * @return shoppingcart.html template
      */
     @GetMapping("/shoppingcart")
-    public String shoppingCart(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
-            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
-            Model model) {
-
+    public String shoppingCart(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
+            HttpServletResponse response, Model model) {
+        Session session = sessionController.getOrSetSession(sessID, response);
+        String loggedInUser = session.getLoggedInUser();
         if (!loggedInUser.isEmpty()) {
             // get customer and address data from database
             Customer customer = db.queryForObject("SELECT * FROM customers WHERE email = ?", new CustomerRowMapper(),
                     loggedInUser);
-            Address address = db.queryForObject("SELECT * FROM addresses WHERE id = ?", new AddressRowMapper(),
-                    customer.getAddressID());
-            model.addAttribute(customer);
-            model.addAttribute(address);
+            if (customer != null) {
+                Address address = db.queryForObject("SELECT * FROM addresses WHERE id = ?", new AddressRowMapper(),
+                        customer.getAddressID());
+                model.addAttribute(customer);
+                if (address != null) {
+                    model.addAttribute(address);
+                }
+            }
         }
 
         model.addAttribute("loggedInUser", loggedInUser);
-        ShoppingCart shoppingCart = getShoppingCart(sessID, response);
+        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
         model.addAttribute("shoppingcart", shoppingCart);
         List<String[]> shoppingCartLines = new ArrayList<>();
         Product product;
@@ -84,26 +90,6 @@ public class ShoppingCartController {
         model.addAttribute("templateName", "shoppingcart");
         model.addAttribute("title", "Warenkorb");
         return "layout";
-    }
-
-    /**
-     * get shoppingcart and set cookie with session id if not existing
-     * 
-     * @param sessionID
-     * @param response
-     * @return shoppingcart found by session id
-     */
-    public static ShoppingCart getShoppingCart(String sessionID, HttpServletResponse response) {
-        ShoppingCart shoppingCart;
-        if (sessionID.isEmpty()) {
-            shoppingCart = new ShoppingCart();
-            Cookie cookie = new Cookie("SessionID", shoppingCart.getSessID().toString());
-            cookie.setPath("/");
-            response.addCookie(cookie);
-        } else {
-            shoppingCart = ShoppingCart.findBySessID(Integer.valueOf(sessionID));
-        }
-        return shoppingCart;
     }
 
 }

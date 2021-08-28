@@ -24,6 +24,12 @@ public class WebsiteController {
     @Autowired
     JdbcTemplate db;
 
+    @Autowired
+    ShoppingCartController shoppingCartController;
+
+    @Autowired
+    SessionController sessionController;
+
     /**
      * Homepage
      * 
@@ -32,11 +38,12 @@ public class WebsiteController {
      * @return home.html template
      */
     @GetMapping("/")
-    public String home(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
-            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
+    public String home(@CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
             Model model) {
+        Session session = sessionController.getOrSetSession(sessID, response);
+        String loggedInUser = session.getLoggedInUser();
         model.addAttribute("loggedInUser", loggedInUser);
-        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
+        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
         model.addAttribute("shoppingcart", shoppingCart);
         model.addAttribute("templateName", "home");
         return "layout";
@@ -52,13 +59,14 @@ public class WebsiteController {
      * @return sortiment.html template
      */
     @GetMapping("/sortiment")
-    public String sortiment(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
-            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
-            Model model) {
+    public String sortiment(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
+            HttpServletResponse response, Model model) {
+        Session session = sessionController.getOrSetSession(sessID, response);
+        String loggedInUser = session.getLoggedInUser();
         model.addAttribute("loggedInUser", loggedInUser);
         List<Product> products = db.query("SELECT * FROM products WHERE active = TRUE", new ProductRowMapper());
         model.addAttribute("products", products);
-        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
+        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
         model.addAttribute("shoppingcart", shoppingCart);
         model.addAttribute("templateName", "sortiment");
         model.addAttribute("title", "Sortiment");
@@ -78,13 +86,14 @@ public class WebsiteController {
      */
     @GetMapping("/product")
     public String product(@RequestParam(value = "product", required = true) Integer productID,
-            @CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
             @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
             Model model) {
+        Session session = sessionController.getOrSetSession(sessID, response);
+        String loggedInUser = session.getLoggedInUser();
         Product product = db.queryForObject("SELECT * FROM products WHERE id = ?", new ProductRowMapper(), productID);
         model.addAttribute(product);
         model.addAttribute("loggedInUser", loggedInUser);
-        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
+        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
         model.addAttribute("shoppingcart", shoppingCart);
         model.addAttribute("templateName", "product");
         model.addAttribute("title", product.getName());
@@ -99,11 +108,12 @@ public class WebsiteController {
      * @return impressum.html template
      */
     @GetMapping("/impressum")
-    public String impressum(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
-            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
-            Model model) {
+    public String impressum(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
+            HttpServletResponse response, Model model) {
+        Session session = sessionController.getOrSetSession(sessID, response);
+        String loggedInUser = session.getLoggedInUser();
         model.addAttribute("loggedInUser", loggedInUser);
-        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
+        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
         model.addAttribute("shoppingcart", shoppingCart);
         model.addAttribute("templateName", "impressum");
         model.addAttribute("title", "Impressum");
@@ -118,11 +128,12 @@ public class WebsiteController {
      * @return agb.html template
      */
     @GetMapping("/agb")
-    public String agb(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
-            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
+    public String agb(@CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
             Model model) {
+        Session session = sessionController.getOrSetSession(sessID, response);
+        String loggedInUser = session.getLoggedInUser();
         model.addAttribute("loggedInUser", loggedInUser);
-        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
+        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
         model.addAttribute("shoppingcart", shoppingCart);
         model.addAttribute("templateName", "agb");
         model.addAttribute("title", "AGB");
@@ -137,11 +148,12 @@ public class WebsiteController {
      * @return datenschutz.html template
      */
     @GetMapping("/datenschutz")
-    public String datenschutz(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
-            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
-            Model model) {
+    public String datenschutz(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
+            HttpServletResponse response, Model model) {
+        Session session = sessionController.getOrSetSession(sessID, response);
+        String loggedInUser = session.getLoggedInUser();
         model.addAttribute("loggedInUser", loggedInUser);
-        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
+        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
         model.addAttribute("shoppingcart", shoppingCart);
         model.addAttribute("templateName", "datenschutz");
         model.addAttribute("title", "Datenschutz");
@@ -156,11 +168,12 @@ public class WebsiteController {
      * @return contact.html template
      */
     @GetMapping("/contact")
-    public String contact(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
-            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
-            Model model) {
+    public String contact(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
+            HttpServletResponse response, Model model) {
+        Session session = sessionController.getOrSetSession(sessID, response);
+        String loggedInUser = session.getLoggedInUser();
         model.addAttribute("loggedInUser", loggedInUser);
-        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
+        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
         model.addAttribute("shoppingcart", shoppingCart);
         model.addAttribute("templateName", "contact");
         model.addAttribute("title", "Kontakt");
@@ -168,11 +181,12 @@ public class WebsiteController {
     }
 
     @GetMapping("/history")
-    public String history(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
-            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
-            Model model) {
+    public String history(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
+            HttpServletResponse response, Model model) {
+        Session session = sessionController.getOrSetSession(sessID, response);
+        String loggedInUser = session.getLoggedInUser();
         model.addAttribute("loggedInUser", loggedInUser);
-        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
+        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
         model.addAttribute("shoppingcart", shoppingCart);
         model.addAttribute("templateName", "history");
         model.addAttribute("title", "Geschichte");
@@ -180,11 +194,12 @@ public class WebsiteController {
     }
 
     @GetMapping("/philosophy")
-    public String philosophy(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
-            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
-            Model model) {
+    public String philosophy(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
+            HttpServletResponse response, Model model) {
+        Session session = sessionController.getOrSetSession(sessID, response);
+        String loggedInUser = session.getLoggedInUser();
         model.addAttribute("loggedInUser", loggedInUser);
-        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
+        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
         model.addAttribute("shoppingcart", shoppingCart);
         model.addAttribute("templateName", "philosophy");
         model.addAttribute("title", "Bierphilosophie");

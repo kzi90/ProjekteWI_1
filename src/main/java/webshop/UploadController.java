@@ -2,6 +2,7 @@ package webshop;
 
 import java.io.File;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -19,12 +20,20 @@ import org.springframework.web.bind.annotation.CookieValue;
 @Controller
 public class UploadController {
 
+    @Autowired
+    ShoppingCartController shoppingCartController;
+
+    @Autowired
+    SessionController sessionController;
+
     @GetMapping("/img_upload")
-    public String imgUplaod(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
-            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
-            Model model) {
+    public String imgUplaod(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
+            HttpServletResponse response, Model model) {
+        Session session = sessionController.getOrSetSession(sessID, response);
+        // TODO: check Mitarbeiter login
+        String loggedInUser = session.getLoggedInUser();
         model.addAttribute("loggedInUser", loggedInUser);
-        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
+        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
         model.addAttribute("shoppingcart", shoppingCart);
         model.addAttribute("templateName", "img_upload");
         model.addAttribute("title", "Upload");

@@ -30,6 +30,12 @@ public class CustomerController {
     @Autowired
     private AddressController addressController;
 
+    @Autowired
+    private SessionController sessionController;
+
+    @Autowired
+    private ShoppingCartController shoppingCartController;
+
     /**
      * register-page
      * 
@@ -38,12 +44,7 @@ public class CustomerController {
      * @return register.html template
      */
     @GetMapping("/register")
-    public String register(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
-            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
-            Model model) {
-        model.addAttribute("loggedInUser", loggedInUser);
-        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
-        model.addAttribute("shoppingcart", shoppingCart);
+    public String register(String sessID, HttpServletResponse response, Model model) {
         Customer customer = new Customer();
         model.addAttribute(customer);
         Address address = new Address();
@@ -67,11 +68,12 @@ public class CustomerController {
      */
     @PostMapping("/register")
     public String registered(@ModelAttribute Customer customer, @ModelAttribute Address address,
-            @CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
             @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
             Model model) throws DataAccessException, NoSuchAlgorithmException {
+        Session session = sessionController.getOrSetSession(sessID, response);
+        String loggedInUser = session.getLoggedInUser();
         model.addAttribute("loggedInUser", loggedInUser);
-        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
+        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
         model.addAttribute("shoppingcart", shoppingCart);
         boolean emailAlreadyRegistered = (!saveCustWithAddress(customer, address));
         model.addAttribute("emailAlreadyRegistered", emailAlreadyRegistered);
@@ -87,12 +89,7 @@ public class CustomerController {
      * @return login.html template
      */
     @GetMapping("/login")
-    public String login(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
-            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletRequest request,
-            HttpServletResponse response, Model model) {
-        model.addAttribute("loggedInUser", loggedInUser);
-        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
-        model.addAttribute("shoppingcart", shoppingCart);
+    public String login(HttpServletRequest request, HttpServletResponse response, Model model) {
         model.addAttribute("cameFrom", request.getHeader("Referer"));
         Customer customer = new Customer();
         model.addAttribute(customer);
@@ -111,13 +108,13 @@ public class CustomerController {
      */
     @PostMapping("/login")
     public String loggedin(@ModelAttribute Customer customer, @ModelAttribute("cameFrom") String cameFrom,
-            HttpServletRequest request, HttpServletResponse response) throws NoSuchAlgorithmException {
+            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response)
+            throws NoSuchAlgorithmException {
         List<Customer> customers = db.query("SELECT * FROM customers WHERE email = ?", new CustomerRowMapper(),
                 customer.getEmail());
         // customer.passHash contains the plain text password right now!
         if (!customers.isEmpty() && customers.get(0).login(customer.getPassHash())) {
-            Cookie cookie = new Cookie("loggedInUser", customer.getEmail());
-            response.addCookie(cookie);
+            sessionController.getOrSetSession(sessID, response).setLoggedInUser(customer.getEmail());
             return cameFrom.endsWith("/logout") || cameFrom.endsWith("/register") || cameFrom.endsWith("/loginfail")
                     || cameFrom.endsWith("/password_reset") ? "redirect:/sortiment" : "redirect:" + cameFrom;
         } else {
@@ -133,11 +130,12 @@ public class CustomerController {
      * @return loginfail.html template
      */
     @GetMapping("/loginfail")
-    public String loginfail(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
-            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
-            Model model) {
+    public String loginfail(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
+            HttpServletResponse response, Model model) {
+        Session session = sessionController.getOrSetSession(sessID, response);
+        String loggedInUser = session.getLoggedInUser();
         model.addAttribute("loggedInUser", loggedInUser);
-        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
+        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
         model.addAttribute("shoppingcart", shoppingCart);
         model.addAttribute("templateName", "loginfail");
         return "layout";
@@ -153,11 +151,10 @@ public class CustomerController {
     @GetMapping("/logout")
     public String logout(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
             HttpServletResponse response, Model model) {
-        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
+        Session session = sessionController.getOrSetSession(sessID, response);
+        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
         model.addAttribute("shoppingcart", shoppingCart);
-        Cookie cookie = new Cookie("loggedInUser", null);
-        cookie.setMaxAge(0);
-        response.addCookie(cookie);
+        session.setLoggedInUser("");
         model.addAttribute("loggedInUser", "");
         model.addAttribute("templateName", "logout");
         return "layout";
@@ -171,12 +168,7 @@ public class CustomerController {
      * @return password_reset.html template
      */
     @GetMapping("/password_reset")
-    public String passwordReset(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
-            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
-            Model model) {
-        model.addAttribute("loggedInUser", loggedInUser);
-        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
-        model.addAttribute("shoppingcart", shoppingCart);
+    public String passwordReset(HttpServletResponse response, Model model) {
         model.addAttribute("email");
         model.addAttribute("templateName", "password_reset");
         model.addAttribute("title", "Passwort zurücksetzen");
@@ -192,8 +184,9 @@ public class CustomerController {
      * @throws NoSuchAlgorithmException
      */
     @PostMapping("/password_reset")
-    public String passwordResetet(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
-            @ModelAttribute("email") String email) throws NoSuchAlgorithmException {
+    public String passwordResetet(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
+            HttpServletResponse response, @ModelAttribute("email") String email) throws NoSuchAlgorithmException {
+        String loggedInUser = sessionController.getOrSetSession(sessID, response).getLoggedInUser();
         if (!loggedInUser.isEmpty()) {
             return "redirect:/";
         }
@@ -226,14 +219,15 @@ public class CustomerController {
      * @return account.html template
      */
     @GetMapping("/account")
-    public String account(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
-            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
-            Model model) {
+    public String account(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
+            HttpServletResponse response, Model model) {
+        Session session = sessionController.getOrSetSession(sessID, response);
+        String loggedInUser = session.getLoggedInUser();
         if (loggedInUser.isEmpty()) {
             return "redirect:/login";
         }
         model.addAttribute("loggedInUser", loggedInUser);
-        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
+        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
         model.addAttribute("shoppingcart", shoppingCart);
 
         // get customer and address data from database
@@ -267,10 +261,11 @@ public class CustomerController {
      * @throws NoSuchAlgorithmException
      */
     @PostMapping("/account")
-    public String account(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
+    public String account(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
             HttpServletResponse response, @ModelAttribute Customer customer, @ModelAttribute Address address,
             @ModelAttribute("newPass") String newPass) throws DataAccessException, NoSuchAlgorithmException {
-
+        Session session = sessionController.getOrSetSession(sessID, response);
+        String loggedInUser = session.getLoggedInUser();
         Customer savedCust = db.queryForObject("SELECT * FROM customers WHERE email = ?", new CustomerRowMapper(),
                 loggedInUser);
 
@@ -293,9 +288,7 @@ public class CustomerController {
                 && db.query("SELECT * FROM customers WHERE email = ?", new CustomerRowMapper(), customer.getEmail())
                         .isEmpty()) {
             db.update("UPDATE customers SET email = ? WHERE id = ?", customer.getEmail(), savedCust.getId());
-            Cookie cookie = new Cookie("loggedInUser", customer.getEmail());
-            cookie.setPath("/");
-            response.addCookie(cookie);
+            session.setLoggedInUser(customer.getEmail());
         }
 
         // change password
@@ -331,23 +324,22 @@ public class CustomerController {
      * @return deluser.html template
      */
     @GetMapping("/deluser")
-    public String deluser(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
-            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
-            Model model) {
+    public String deluser(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
+            HttpServletResponse response, Model model) {
+        Session session = sessionController.getOrSetSession(sessID, response);
+        String loggedInUser = session.getLoggedInUser();
         if (loggedInUser.isEmpty()) {
             return "redirect:/";
         }
         model.addAttribute("loggedInUser", "");
-        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
+        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
         model.addAttribute("shoppingcart", shoppingCart);
 
         // set customer inactive
         db.update("UPDATE customers SET active = FALSE WHERE email = ?", loggedInUser);
 
-        // delete cookie
-        Cookie cookie = new Cookie("loggedInUser", null);
-        cookie.setMaxAge(0);
-        response.addCookie(cookie);
+        // logout
+        session.setLoggedInUser("");
 
         model.addAttribute("templateName", "deluser");
         return "layout";
@@ -389,12 +381,13 @@ public class CustomerController {
      * @return customer_search.html template
      */
     @GetMapping("/customer_search")
-    public String customerSearch(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
-            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
-            Model model) {
+    public String customerSearch(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
+            HttpServletResponse response, Model model) {
         // TODO check mitarbeiter login
+        Session session = sessionController.getOrSetSession(sessID, response);
+        String loggedInUser = session.getLoggedInUser();
         model.addAttribute("loggedInUser", loggedInUser);
-        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
+        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
         model.addAttribute("shoppingcart", shoppingCart);
         model.addAttribute("email");
         model.addAttribute("templateName", "customer_search");
@@ -413,18 +406,14 @@ public class CustomerController {
      * @return redirect to customer_edit.html
      */
     @PostMapping("/customer_search")
-    public String customerSearched(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
-            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
-            HttpServletRequest request, @ModelAttribute("email") String email, Model model) {
+    public String customerSearched(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
+            HttpServletResponse response, HttpServletRequest request, @ModelAttribute("email") String email,
+            Model model) {
         // TODO check mitarbeiter login
-        model.addAttribute("loggedInUser", loggedInUser);
-        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
-        model.addAttribute("shoppingcart", shoppingCart);
         List<Customer> customers = db.query("SELECT * FROM customers WHERE email = ?", new CustomerRowMapper(), email);
         if (customers.isEmpty()) {
             return "redirect:/customer_search";
         }
-
         return "redirect:/customer_edit" + customers.get(0).getId().toString();
     }
 
@@ -438,12 +427,13 @@ public class CustomerController {
      * @return customer_edit.html template
      */
     @GetMapping("/customer_edit{id}")
-    public String customerEdit(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
-            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
-            @PathVariable String id, Model model) {
+    public String customerEdit(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
+            HttpServletResponse response, @PathVariable String id, Model model) {
         // TODO check mitarbeiter login
+        Session session = sessionController.getOrSetSession(sessID, response);
+        String loggedInUser = session.getLoggedInUser();
         model.addAttribute("loggedInUser", loggedInUser);
-        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
+        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
         model.addAttribute("shoppingcart", shoppingCart);
         Customer customer = db.queryForObject("SELECT * FROM customers WHERE id = ?", new CustomerRowMapper(), id);
         Address address = db.queryForObject("SELECT * FROM addresses WHERE id = ?", new AddressRowMapper(),
@@ -456,9 +446,8 @@ public class CustomerController {
     }
 
     @PostMapping("/customer_edit{id}")
-    public String customerEdited(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
-            HttpServletResponse response, @ModelAttribute Customer customer, @ModelAttribute Address address,
-            @PathVariable String id, @ModelAttribute("newPass") String newPass)
+    public String customerEdited(HttpServletResponse response, @ModelAttribute Customer customer,
+            @ModelAttribute Address address, @PathVariable String id, @ModelAttribute("newPass") String newPass)
             throws DataAccessException, NoSuchAlgorithmException {
         // TODO check mitarbeiter login
         Customer savedCust = db.queryForObject("SELECT * FROM customers WHERE email = ?", new CustomerRowMapper(),

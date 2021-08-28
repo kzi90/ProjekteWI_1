@@ -31,6 +31,12 @@ public class EmployeeController {
     @Autowired
     private AddressController addressController;
 
+    @Autowired
+    private SessionController sessionController;
+
+    @Autowired
+    private ShoppingCartController shoppingCartController;
+
     /**
      * secret login for employees
      * 
@@ -42,15 +48,16 @@ public class EmployeeController {
      * @return s3cr3tl0g1n.html template
      */
     @GetMapping("/s3cr3tl0g1n")
-    public String s3cr3tl0g1n(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
-            @CookieValue(value = "loggedInEmp", defaultValue = "") String loggedInEmp,
-            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
-            Model model) {
+    public String s3cr3tl0g1n(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
+            HttpServletResponse response, Model model) {
+        Session session = sessionController.getOrSetSession(sessID, response);
+        String loggedInEmp = session.getLoggedInEmp();
         if (!loggedInEmp.isEmpty()) {
             return "redirect:/employee_area";
         }
+        String loggedInUser = session.getLoggedInUser();
         model.addAttribute("loggedInUser", loggedInUser);
-        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
+        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
         model.addAttribute("shoppingcart", shoppingCart);
         Employee employee = new Employee();
         model.addAttribute(employee);
@@ -68,14 +75,14 @@ public class EmployeeController {
      * @throws NoSuchAlgorithmException
      */
     @PostMapping("/s3cr3tl0g1n")
-    public String loggedin(@ModelAttribute Employee employee, HttpServletResponse response, Model model)
+    public String loggedin(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
+            @ModelAttribute Employee employee, HttpServletResponse response, Model model)
             throws NoSuchAlgorithmException {
         List<Employee> employees = db.query("SELECT * FROM employees WHERE email = ?", new EmployeeRowMapper(),
                 employee.getEmail());
         // employee.passHash contains the plain text password right now!
         if (!employees.isEmpty() && employees.get(0).login(employee.getPassHash())) {
-            Cookie cookie = new Cookie("loggedInEmp", employee.getEmail());
-            response.addCookie(cookie);
+            sessionController.getOrSetSession(sessID, response).setLoggedInEmp(employee.getEmail());
             return "redirect:/employee_area";
         } else {
             return "redirect:/loginfail";
@@ -91,15 +98,14 @@ public class EmployeeController {
      * @return logout.html template (same as for customers)
      */
     @GetMapping("/s3cr3tl0g0ut")
-    public String s3cr3tl0g0ut(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
-            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
-            Model model) {
+    public String s3cr3tl0g0ut(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
+            HttpServletResponse response, Model model) {
+        Session session = sessionController.getOrSetSession(sessID, response);
+        session.setLoggedInEmp("");
+        String loggedInUser = session.getLoggedInUser();
         model.addAttribute("loggedInUser", loggedInUser);
-        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
+        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
         model.addAttribute("shoppingcart", shoppingCart);
-        Cookie cookie = new Cookie("loggedInEmp", null);
-        cookie.setMaxAge(0);
-        response.addCookie(cookie);
         model.addAttribute("templateName", "s3cr3tl0g0ut");
         return "layout";
     }
@@ -114,11 +120,12 @@ public class EmployeeController {
      * @return employee_area.html template
      */
     @GetMapping("/employee_area")
-    public String employeeArea(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
-            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
-            @CookieValue(value = "loggedInEmp", defaultValue = "") String loggedInEmp, Model model) {
-        model.addAttribute("loggedInUser", loggedInUser);
-        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
+    public String employeeArea(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
+            HttpServletResponse response, Model model) {
+        Session session = sessionController.getOrSetSession(sessID, response);
+        String loggedInEmp = session.getLoggedInEmp();
+        model.addAttribute("loggedInUser", session.getLoggedInUser());
+        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
         model.addAttribute("shoppingcart", shoppingCart);
         if (loggedInEmp.isEmpty()) {
             return "redirect:/";
@@ -142,15 +149,16 @@ public class EmployeeController {
      */
     @GetMapping("/order_{suffix}")
     public String orderProcessing(@PathVariable String suffix,
-            @CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
             @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
-            @CookieValue(value = "loggedInEmp", defaultValue = "") String loggedInEmp, Model model) {
+            Model model) {
+        Session session = sessionController.getOrSetSession(sessID, response);
+        String loggedInEmp = session.getLoggedInEmp();
         if (loggedInEmp.isEmpty()) {
             return "redirect:/";
         }
         model.addAttribute("suffix", suffix);
-        model.addAttribute("loggedInUser", loggedInUser);
-        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
+        model.addAttribute("loggedInUser", session.getLoggedInUser());
+        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
         model.addAttribute("shoppingcart", shoppingCart);
         List<Order> orders = new ArrayList<>();
         if (suffix.equals("processing")) {
@@ -190,9 +198,9 @@ public class EmployeeController {
      * @return redirect to same page
      */
     @GetMapping("/send_order{id}")
-    public String sendOrder(@PathVariable String id,
-            @CookieValue(value = "loggedInEmp", defaultValue = "") String loggedInEmp, HttpServletRequest request) {
-        if (loggedInEmp.isEmpty()) {
+    public String sendOrder(@PathVariable String id, @CookieValue(value = "SessionID", defaultValue = "") String sessID,
+            HttpServletResponse response, HttpServletRequest request) {
+        if (sessionController.getOrSetSession(sessID, response).getLoggedInEmp().isEmpty()) {
             return "redirect:/";
         }
         db.update("UPDATE orders SET order_status = ? WHERE id = ?", "sent", id);

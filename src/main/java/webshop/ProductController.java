@@ -21,6 +21,12 @@ public class ProductController {
     @Autowired
     private JdbcTemplate db;
 
+    @Autowired
+    private SessionController sessionController;
+
+    @Autowired
+    private ShoppingCartController shoppingCartController;
+
     /**
      * edit / add products when logged in as employee
      * 
@@ -32,12 +38,14 @@ public class ProductController {
      * @return products_edit.html template
      */
     @GetMapping("/products_edit")
-    public String productsEdit(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
-            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
-            @CookieValue(value = "loggedInEmp", defaultValue = "") String loggedInEmp, Model model) {
+    public String productsEdit(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
+            HttpServletResponse response, Model model) {
+        Session session = sessionController.getOrSetSession(sessID, response);
+        String loggedInUser = session.getLoggedInUser();
         model.addAttribute("loggedInUser", loggedInUser);
-        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
+        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
         model.addAttribute("shoppingcart", shoppingCart);
+        String loggedInEmp = session.getLoggedInEmp();
         if (loggedInEmp.isEmpty()) {
             return "redirect:/";
         }
@@ -61,16 +69,17 @@ public class ProductController {
      * @return product_edit.html template
      */
     @GetMapping("/product_edit{id}")
-    public String productEdit(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
-            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
-            @CookieValue(value = "loggedInEmp", defaultValue = "") String loggedInEmp, @PathVariable Integer id,
-            Model model) {
-        model.addAttribute("loggedInUser", loggedInUser);
-        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
-        model.addAttribute("shoppingcart", shoppingCart);
+    public String productEdit(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
+            HttpServletResponse response, @PathVariable Integer id, Model model) {
+        Session session = sessionController.getOrSetSession(sessID, response);
+        String loggedInEmp = session.getLoggedInEmp();
         if (loggedInEmp.isEmpty()) {
             return "redirect:/";
         }
+        String loggedInUser = session.getLoggedInUser();
+        model.addAttribute("loggedInUser", loggedInUser);
+        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
+        model.addAttribute("shoppingcart", shoppingCart);
         Product product = db.queryForObject("SELECT * FROM products WHERE id = ?", new ProductRowMapper(), id);
         model.addAttribute(product);
         model.addAttribute("loggedInEmp", loggedInEmp);
@@ -89,9 +98,9 @@ public class ProductController {
      *         employee
      */
     @PostMapping("/product_edit{id}")
-    public String productEdit(@CookieValue(value = "loggedInEmp", defaultValue = "") String loggedInEmp,
-            @ModelAttribute Product product, @PathVariable Integer id) {
-        if (!loggedInEmp.isEmpty()) {
+    public String productEdit(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
+            @ModelAttribute Product product, @PathVariable Integer id, HttpServletResponse response) {
+        if (!sessionController.getOrSetSession(sessID, response).getLoggedInEmp().isEmpty()) {
             updateProduct(product, id);
             return "redirect:/products_edit";
         } else {
@@ -108,9 +117,9 @@ public class ProductController {
      *         employee
      */
     @GetMapping("/product_del{id}")
-    public String productDel(@CookieValue(value = "loggedInEmp", defaultValue = "") String loggedInEmp,
-            @PathVariable Integer id) {
-        if (!loggedInEmp.isEmpty()) {
+    public String productDel(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
+            @PathVariable Integer id, HttpServletResponse response) {
+        if (!sessionController.getOrSetSession(sessID, response).getLoggedInEmp().isEmpty()) {
             deactivateProduct(id);
             return "redirect:/products_edit";
         } else {
@@ -129,15 +138,17 @@ public class ProductController {
      * @return product_add.html template
      */
     @GetMapping("/product_add")
-    public String productAdd(@CookieValue(value = "loggedInUser", defaultValue = "") String loggedInUser,
-            @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
-            @CookieValue(value = "loggedInEmp", defaultValue = "") String loggedInEmp, Model model) {
-        model.addAttribute("loggedInUser", loggedInUser);
-        ShoppingCart shoppingCart = ShoppingCartController.getShoppingCart(sessID, response);
-        model.addAttribute("shoppingcart", shoppingCart);
+    public String productAdd(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
+            HttpServletResponse response, Model model) {
+        Session session = sessionController.getOrSetSession(sessID, response);
+        String loggedInEmp = session.getLoggedInEmp();
         if (loggedInEmp.isEmpty()) {
             return "redirect:/";
         }
+        String loggedInUser = session.getLoggedInUser();
+        model.addAttribute("loggedInUser", loggedInUser);
+        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
+        model.addAttribute("shoppingcart", shoppingCart);
         model.addAttribute(new Product());
         model.addAttribute("loggedInEmp", loggedInEmp);
         model.addAttribute("title", "Produktbearbeitung");
@@ -154,9 +165,9 @@ public class ProductController {
      *         employee
      */
     @PostMapping("/product_add")
-    public String productAdd(@CookieValue(value = "loggedInEmp", defaultValue = "") String loggedInEmp,
-            @ModelAttribute Product product) {
-        if (!loggedInEmp.isEmpty()) {
+    public String productAdd(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
+            @ModelAttribute Product product, HttpServletResponse response) {
+        if (!sessionController.getOrSetSession(sessID, response).getLoggedInEmp().isEmpty()) {
             saveNewProduct(product);
             return "redirect:/products_edit";
         } else {
