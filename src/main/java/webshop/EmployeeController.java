@@ -131,6 +131,7 @@ public class EmployeeController {
 
     /**
      * view and edit orders
+     * 
      * @param suffix
      * @param loggedInUser
      * @param sessID
@@ -159,6 +160,7 @@ public class EmployeeController {
         }
         model.addAttribute("orders", orders);
         List<String[]> orderHeaders = new ArrayList<>();
+        List<OrderPosition> orderPositions = new ArrayList<>();
         for (Order order : orders) {
             Customer customer = db.queryForObject("SELECT * FROM customers WHERE id = ?", new CustomerRowMapper(),
                     order.getId());
@@ -166,13 +168,10 @@ public class EmployeeController {
                     customer.getAddressID());
             orderHeaders.add(new String[] { order.getId().toString(), customer.getFirstname(), customer.getLastname(),
                     address.getStreet(), address.getHousenr(), address.getPostcode(), address.getCity() });
-        }
-        model.addAttribute("orderHeaders", orderHeaders);
-        List<OrderPosition> orderPositions = new ArrayList<>();
-        for (Order order : orders) {
             orderPositions.addAll(db.query("SELECT * FROM orderpositions WHERE order_id = ?",
                     new OrderPositionRowMapper(), order.getId()));
         }
+        model.addAttribute("orderHeaders", orderHeaders);
         model.addAttribute("orderPositions", orderPositions);
         List<Product> products = db.query("SELECT * FROM products", new ProductRowMapper());
         model.addAttribute("products", products);
@@ -184,6 +183,7 @@ public class EmployeeController {
 
     /**
      * set order_status to "sent"
+     * 
      * @param id
      * @param loggedInEmp
      * @param request
