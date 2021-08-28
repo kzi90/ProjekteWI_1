@@ -35,13 +35,12 @@ public class CustomerController {
 
     /**
      * register page
-     * @param sessID
      * @param response
      * @param model
      * @return register.html template
      */
     @GetMapping("/register")
-    public String register(String sessID, HttpServletResponse response, Model model) {
+    public String register(HttpServletResponse response, Model model) {
         Customer customer = new Customer();
         model.addAttribute(customer);
         Address address = new Address();
