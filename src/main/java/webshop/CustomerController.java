@@ -81,10 +81,11 @@ public class CustomerController {
             db.update("UPDATE customers SET validation_hash = ? WHERE email = ?;", validationHash, customer.getEmail());
 
             String fullname = customer.getFirstname() + " " + customer.getLastname();
-            String message = "Guten Tag " + fullname + ",\n\ndanke für deine Anmeldung bei Bielefelder Unikat. "
+            String message = "Guten Tag " + fullname + ",\n\ndanke für deine Registrierung bei Bielefelder Unikat. "
                     + "Um deine E-Mail-Adresse zu validieren, öffne bitte den folgenden Link:\n"
                     + request.getServerName() + "/validate" + validationHash
-                    + "\nNach der Validierung kannst du dich mit deinem Benutzerkonto anmelden.\n\n"
+                    + "\nNach der Validierung kannst du dich mit deinem Benutzerkonto anmelden.\n"
+                    + "Solltest du dich nicht bei Bielefelder Unikat registriert haben, kannst du diese E-Mail ignorieren.\n\n"
                     + "Freundliche Grüße\n\nDein Bielefelder Unikat Team";
             JavaMail.sendMessage(customer.getEmail(), fullname, "E-Mail-Validierung", message);
         }
