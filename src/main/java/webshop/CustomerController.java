@@ -276,8 +276,9 @@ public class CustomerController {
      */
     @PostMapping("/account")
     public String account(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
-            HttpServletResponse response, @ModelAttribute Customer customer, @ModelAttribute Address address,
-            @ModelAttribute("newPass") String newPass) throws DataAccessException, NoSuchAlgorithmException {
+            HttpServletRequest request, HttpServletResponse response, @ModelAttribute Customer customer,
+            @ModelAttribute Address address, @ModelAttribute("newPass") String newPass, Model model)
+            throws DataAccessException, NoSuchAlgorithmException {
         Session session = sessionController.getOrSetSession(sessID, response);
         String loggedInUser = session.getLoggedInUser();
         Customer savedCust = db.queryForObject("SELECT * FROM customers WHERE email = ?", new CustomerRowMapper(),
@@ -296,13 +297,6 @@ public class CustomerController {
         if (!customer.getPhonenumber().equals(savedCust.getPhonenumber())) {
             db.update("UPDATE customers SET phonenumber = ? WHERE id = ?", customer.getPhonenumber(),
                     savedCust.getId());
-        }
-        // email is only changed if there isn't another account with this email yet
-        if (!customer.getEmail().equals(savedCust.getEmail())
-                && db.query("SELECT * FROM customers WHERE email = ?", new CustomerRowMapper(), customer.getEmail())
-                        .isEmpty()) {
-            db.update("UPDATE customers SET email = ? WHERE id = ?", customer.getEmail(), savedCust.getId());
-            session.setLoggedInUser(customer.getEmail());
         }
 
         // change password
@@ -325,6 +319,35 @@ public class CustomerController {
                 db.update("DELETE FROM addresses WHERE id = ?", savedCust.getAddressID());
             }
         }
+
+        // email is only changed if there isn't another account with this email yet
+        if (!customer.getEmail().equals(savedCust.getEmail())
+                && db.query("SELECT * FROM customers WHERE email = ?", new CustomerRowMapper(), customer.getEmail())
+                        .isEmpty()) {
+            db.update("UPDATE customers SET email = ? WHERE id = ?", customer.getEmail(), savedCust.getId());
+            session.setLoggedInUser("");
+            int leftLimit = 48; // numeral '0'
+            int rightLimit = 122; // letter 'z'
+            String validationHash = new Random().ints(leftLimit, rightLimit + 1)
+                    .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97)).limit(10)
+                    .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append).toString();
+            db.update("UPDATE customers SET active = FALSE, validation_hash = ? WHERE email = ?;", validationHash,
+                    customer.getEmail());
+
+            String fullname = customer.getFirstname() + " " + customer.getLastname();
+            String message = "Guten Tag " + fullname + ",\n\naufgrund der Änderung deiner E-Mail-Adresse ist eine erneute "
+                    + "Validierung erforderlich, öffne dazu bitte den folgenden Link:\n"
+                    + request.getServerName() + "/validate" + validationHash
+                    + "\nNach der Validierung kannst du dich wie gewohnt mit deinem Benutzerkonto anmelden.\n"
+                    + "Solltest du kein Benutzerkonto bei Bielefelder Unikat haben, kannst du diese E-Mail ignorieren.\n\n"
+                    + "Freundliche Grüße\n\nDein Bielefelder Unikat Team";
+            JavaMail.sendMessage(customer.getEmail(), fullname, "E-Mail-Validierung", message);
+            model.addAttribute("loggedInUser", "");
+            model.addAttribute("shoppingcart", session.getShoppingCart());
+            model.addAttribute("templateName", "changed_email");
+            return "layout";
+        }
+
         return "redirect:/account";
     }
 
@@ -351,7 +374,6 @@ public class CustomerController {
 
         // logout
         session.setLoggedInUser("");
-
         model.addAttribute("loggedInUser", session.getLoggedInUser());
 
         model.addAttribute("templateName", "deluser");
