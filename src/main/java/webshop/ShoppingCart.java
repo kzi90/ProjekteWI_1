@@ -12,18 +12,15 @@ import lombok.Setter;
 public class ShoppingCart {
 
     private List<ShoppingCartPosition> cartList;
-    
-    /**
-     * If there is already a session cookie set, the id can be given as parameter.
-     * @param sessID
-     */
+
     public ShoppingCart(){
         this.cartList = new ArrayList<>();
     }
 
     /**
-     * Add product to shoppingcart
+     * add product to ShoppingCart in given quantity
      * @param productID
+     * @param quantity
      */
     public void addToCart(Integer productID, Integer quantity) {
         for (ShoppingCartPosition shoppingCartPosition : this.cartList) {
