@@ -28,10 +28,8 @@ public class UploadController {
             HttpServletResponse response, Model model) {
         Session session = sessionController.getOrSetSession(sessID, response);
         // TODO: check Mitarbeiter login
-        String loggedInUser = session.getLoggedInUser();
-        model.addAttribute("loggedInUser", loggedInUser);
-        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
-        model.addAttribute("shoppingcart", shoppingCart);
+        model.addAttribute("loggedInUser", session.getLoggedInUser());
+        model.addAttribute("shoppingcart", session.getShoppingCart());
         model.addAttribute("templateName", "img_upload");
         model.addAttribute("title", "Upload");
         return "layout";

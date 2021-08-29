@@ -10,20 +10,15 @@ import lombok.Setter;
  */
 @Getter @Setter
 public class ShoppingCart {
-    
-    protected static final List<ShoppingCart> shoppingCarts = new ArrayList<>();
 
-    private String sessID;
     private List<ShoppingCartPosition> cartList;
     
     /**
      * If there is already a session cookie set, the id can be given as parameter.
      * @param sessID
      */
-    public ShoppingCart(String sessID){
-        this.sessID = sessID;
+    public ShoppingCart(){
         this.cartList = new ArrayList<>();
-        shoppingCarts.add(this);
     }
 
     /**
@@ -53,21 +48,6 @@ public class ShoppingCart {
             amount += pos.getQuantity();
         }
         return amount;
-    }
-
-    /**
-     * Find shopping cart from static list by session id.
-     * @param sessID
-     * @return the shoppingcart with the given session id.
-     */
-    public static ShoppingCart findBySessID(String sessID){
-        for (ShoppingCart shoppingCart : shoppingCarts) {
-            if (shoppingCart.getSessID().equals(sessID)){
-                return shoppingCart;
-            }
-        }
-        shoppingCarts.add(new ShoppingCart(sessID));
-        return findBySessID(sessID);
     }
 
 }

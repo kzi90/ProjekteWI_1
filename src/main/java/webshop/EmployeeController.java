@@ -48,10 +48,8 @@ public class EmployeeController {
         if (!loggedInEmp.isEmpty()) {
             return "redirect:/employee_area";
         }
-        String loggedInUser = session.getLoggedInUser();
-        model.addAttribute("loggedInUser", loggedInUser);
-        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
-        model.addAttribute("shoppingcart", shoppingCart);
+        model.addAttribute("loggedInUser", session.getLoggedInUser());
+        model.addAttribute("shoppingcart", session.getShoppingCart());
         Employee employee = new Employee();
         model.addAttribute(employee);
         model.addAttribute("templateName", "s3cr3tl0g1n");
@@ -94,10 +92,8 @@ public class EmployeeController {
             HttpServletResponse response, Model model) {
         Session session = sessionController.getOrSetSession(sessID, response);
         session.setLoggedInEmp("");
-        String loggedInUser = session.getLoggedInUser();
-        model.addAttribute("loggedInUser", loggedInUser);
-        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
-        model.addAttribute("shoppingcart", shoppingCart);
+        model.addAttribute("loggedInUser", session.getLoggedInUser());
+        model.addAttribute("shoppingcart", session.getShoppingCart());
         model.addAttribute("templateName", "s3cr3tl0g0ut");
         return "layout";
     }
@@ -115,8 +111,7 @@ public class EmployeeController {
         Session session = sessionController.getOrSetSession(sessID, response);
         String loggedInEmp = session.getLoggedInEmp();
         model.addAttribute("loggedInUser", session.getLoggedInUser());
-        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
-        model.addAttribute("shoppingcart", shoppingCart);
+        model.addAttribute("shoppingcart", session.getShoppingCart());
         if (loggedInEmp.isEmpty()) {
             return "redirect:/";
         }
@@ -145,8 +140,7 @@ public class EmployeeController {
         }
         model.addAttribute("suffix", suffix);
         model.addAttribute("loggedInUser", session.getLoggedInUser());
-        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
-        model.addAttribute("shoppingcart", shoppingCart);
+        model.addAttribute("shoppingcart", session.getShoppingCart());
         List<Order> orders = new ArrayList<>();
         if (suffix.equals("processing")) {
             orders = db.query("SELECT * FROM orders WHERE order_status = ?", new OrderRowMapper(), "ordered");

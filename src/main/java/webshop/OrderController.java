@@ -46,8 +46,8 @@ public class OrderController {
         }
         model.addAttribute("loggedInUser", loggedInUser);
 
-        // get shoppingCart by session id
-        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
+        // get shoppingCart
+        ShoppingCart shoppingCart = session.getShoppingCart();
         model.addAttribute("shoppingcart", shoppingCart);
 
         if (!shoppingCart.getCartList().isEmpty()) {
@@ -127,8 +127,7 @@ public class OrderController {
             return "redirect:/login";
         }
         model.addAttribute("loggedInUser", loggedInUser);
-        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
-        model.addAttribute("shoppingcart", shoppingCart);
+        model.addAttribute("shoppingcart", session.getShoppingCart());
 
         Customer customer = db.queryForObject("SELECT * FROM customers WHERE email = ?", new CustomerRowMapper(),
                 loggedInUser);

@@ -35,6 +35,7 @@ public class CustomerController {
 
     /**
      * register page
+     * 
      * @param response
      * @param model
      * @return register.html template
@@ -50,26 +51,25 @@ public class CustomerController {
         return "layout-neutral";
     }
 
-     /**
-      * Answer page after submitting registration values
-      * @param customer built automatically with submitted values
-      * @param address built automatically with submitted values
-      * @param sessID read from cookie
-      * @param response
-      * @param model saves objects as attributes
-      * @return
-      * @throws DataAccessException
-      * @throws NoSuchAlgorithmException
-      */
+    /**
+     * Answer page after submitting registration values
+     * 
+     * @param customer built automatically with submitted values
+     * @param address  built automatically with submitted values
+     * @param sessID   read from cookie
+     * @param response
+     * @param model    saves objects as attributes
+     * @return
+     * @throws DataAccessException
+     * @throws NoSuchAlgorithmException
+     */
     @PostMapping("/register")
     public String registered(@ModelAttribute Customer customer, @ModelAttribute Address address,
             @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
             Model model) throws DataAccessException, NoSuchAlgorithmException {
         Session session = sessionController.getOrSetSession(sessID, response);
-        String loggedInUser = session.getLoggedInUser();
-        model.addAttribute("loggedInUser", loggedInUser);
-        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
-        model.addAttribute("shoppingcart", shoppingCart);
+        model.addAttribute("loggedInUser", session.getLoggedInUser());
+        model.addAttribute("shoppingcart", session.getShoppingCart());
         boolean emailAlreadyRegistered = (!saveCustWithAddress(customer, address));
         model.addAttribute("emailAlreadyRegistered", emailAlreadyRegistered);
         model.addAttribute("templateName", "registered");
@@ -78,6 +78,7 @@ public class CustomerController {
 
     /**
      * login form
+     * 
      * @param request
      * @param response
      * @param model
@@ -94,6 +95,7 @@ public class CustomerController {
 
     /**
      * trying login with submitted data
+     * 
      * @param customer
      * @param cameFrom
      * @param sessID
@@ -119,6 +121,7 @@ public class CustomerController {
 
     /**
      * tell the user that his login-attempt failed
+     * 
      * @param sessID
      * @param response
      * @param model
@@ -128,16 +131,15 @@ public class CustomerController {
     public String loginfail(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
             HttpServletResponse response, Model model) {
         Session session = sessionController.getOrSetSession(sessID, response);
-        String loggedInUser = session.getLoggedInUser();
-        model.addAttribute("loggedInUser", loggedInUser);
-        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
-        model.addAttribute("shoppingcart", shoppingCart);
+        model.addAttribute("loggedInUser", session.getLoggedInUser());
+        model.addAttribute("shoppingcart", session.getShoppingCart());
         model.addAttribute("templateName", "loginfail");
         return "layout";
     }
 
     /**
      * logout
+     * 
      * @param sessID
      * @param response
      * @param model
@@ -147,16 +149,16 @@ public class CustomerController {
     public String logout(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
             HttpServletResponse response, Model model) {
         Session session = sessionController.getOrSetSession(sessID, response);
-        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
-        model.addAttribute("shoppingcart", shoppingCart);
+        model.addAttribute("shoppingcart", session.getShoppingCart());
         session.setLoggedInUser("");
-        model.addAttribute("loggedInUser", "");
+        model.addAttribute("loggedInUser", session.getLoggedInUser());
         model.addAttribute("templateName", "logout");
         return "layout";
     }
 
     /**
      * reset passwort page
+     * 
      * @param response
      * @param model
      * @return password_reset.html template
@@ -171,6 +173,7 @@ public class CustomerController {
 
     /**
      * reset passwort
+     * 
      * @param sessID
      * @param response
      * @param email
@@ -205,6 +208,7 @@ public class CustomerController {
 
     /**
      * change customer data by customer
+     * 
      * @param sessID
      * @param response
      * @param model
@@ -219,8 +223,7 @@ public class CustomerController {
             return "redirect:/login";
         }
         model.addAttribute("loggedInUser", loggedInUser);
-        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
-        model.addAttribute("shoppingcart", shoppingCart);
+        model.addAttribute("shoppingcart", session.getShoppingCart());
 
         // get customer and address data from database
         Customer customer = db.queryForObject("SELECT * FROM customers WHERE email = ?", new CustomerRowMapper(),
@@ -242,6 +245,7 @@ public class CustomerController {
 
     /**
      * change customer data by customer
+     * 
      * @param sessID
      * @param response
      * @param customer
@@ -307,6 +311,7 @@ public class CustomerController {
 
     /**
      * deactivate user-account by customer
+     * 
      * @param sessID
      * @param response
      * @param model
@@ -320,15 +325,16 @@ public class CustomerController {
         if (loggedInUser.isEmpty()) {
             return "redirect:/";
         }
-        model.addAttribute("loggedInUser", "");
-        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
-        model.addAttribute("shoppingcart", shoppingCart);
+        
+        model.addAttribute("shoppingcart", session.getShoppingCart());
 
         // set customer inactive
         db.update("UPDATE customers SET active = FALSE WHERE email = ?", loggedInUser);
 
         // logout
         session.setLoggedInUser("");
+
+        model.addAttribute("loggedInUser", session.getLoggedInUser());
 
         model.addAttribute("templateName", "deluser");
         return "layout";
@@ -373,10 +379,8 @@ public class CustomerController {
             HttpServletResponse response, Model model) {
         // TODO check mitarbeiter login
         Session session = sessionController.getOrSetSession(sessID, response);
-        String loggedInUser = session.getLoggedInUser();
-        model.addAttribute("loggedInUser", loggedInUser);
-        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
-        model.addAttribute("shoppingcart", shoppingCart);
+        model.addAttribute("loggedInUser", session.getLoggedInUser());
+        model.addAttribute("shoppingcart", session.getShoppingCart());
         model.addAttribute("email");
         model.addAttribute("templateName", "customer_search");
         model.addAttribute("title", "Benutzer suchen");
@@ -417,10 +421,8 @@ public class CustomerController {
             HttpServletResponse response, @PathVariable String id, Model model) {
         // TODO check mitarbeiter login
         Session session = sessionController.getOrSetSession(sessID, response);
-        String loggedInUser = session.getLoggedInUser();
-        model.addAttribute("loggedInUser", loggedInUser);
-        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
-        model.addAttribute("shoppingcart", shoppingCart);
+        model.addAttribute("loggedInUser", session.getLoggedInUser());
+        model.addAttribute("shoppingcart", session.getShoppingCart());
         Customer customer = db.queryForObject("SELECT * FROM customers WHERE id = ?", new CustomerRowMapper(), id);
         Address address = db.queryForObject("SELECT * FROM addresses WHERE id = ?", new AddressRowMapper(),
                 customer.getAddressID());
@@ -433,6 +435,7 @@ public class CustomerController {
 
     /**
      * save changes in customer data
+     * 
      * @param response
      * @param customer
      * @param address

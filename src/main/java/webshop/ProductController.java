@@ -35,10 +35,8 @@ public class ProductController {
     public String productsEdit(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
             HttpServletResponse response, Model model) {
         Session session = sessionController.getOrSetSession(sessID, response);
-        String loggedInUser = session.getLoggedInUser();
-        model.addAttribute("loggedInUser", loggedInUser);
-        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
-        model.addAttribute("shoppingcart", shoppingCart);
+        model.addAttribute("loggedInUser", session.getLoggedInUser());
+        model.addAttribute("shoppingcart", session.getShoppingCart());
         String loggedInEmp = session.getLoggedInEmp();
         if (loggedInEmp.isEmpty()) {
             return "redirect:/";
@@ -67,10 +65,8 @@ public class ProductController {
         if (loggedInEmp.isEmpty()) {
             return "redirect:/";
         }
-        String loggedInUser = session.getLoggedInUser();
-        model.addAttribute("loggedInUser", loggedInUser);
-        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
-        model.addAttribute("shoppingcart", shoppingCart);
+        model.addAttribute("loggedInUser", session.getLoggedInUser());
+        model.addAttribute("shoppingcart", session.getShoppingCart());
         Product product = db.queryForObject("SELECT * FROM products WHERE id = ?", new ProductRowMapper(), id);
         model.addAttribute(product);
         model.addAttribute("loggedInEmp", loggedInEmp);
@@ -133,10 +129,8 @@ public class ProductController {
         if (loggedInEmp.isEmpty()) {
             return "redirect:/";
         }
-        String loggedInUser = session.getLoggedInUser();
-        model.addAttribute("loggedInUser", loggedInUser);
-        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
-        model.addAttribute("shoppingcart", shoppingCart);
+        model.addAttribute("loggedInUser", session.getLoggedInUser());
+        model.addAttribute("shoppingcart", session.getShoppingCart());
         model.addAttribute(new Product());
         model.addAttribute("loggedInEmp", loggedInEmp);
         model.addAttribute("title", "Produktbearbeitung");

@@ -34,9 +34,8 @@ public class ShoppingCartController {
     @GetMapping("/addProductToCart")
     public String addProductToCart(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
             @RequestParam(value = "productID", required = true) Integer productID,
-            @RequestParam(value = "quantity", required = true) Integer quantity) {
-        ShoppingCart shoppingCart = ShoppingCart.findBySessID(sessID);
-        shoppingCart.addToCart(productID, quantity);
+            @RequestParam(value = "quantity", required = true) Integer quantity, HttpServletResponse response) {
+        sessionController.getOrSetSession(sessID, response).getShoppingCart().addToCart(productID, quantity);
         return "redirect:/shoppingcart";
     }
 
@@ -67,9 +66,8 @@ public class ShoppingCartController {
                 }
             }
         }
-
         model.addAttribute("loggedInUser", loggedInUser);
-        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
+        ShoppingCart shoppingCart = session.getShoppingCart();
         model.addAttribute("shoppingcart", shoppingCart);
         List<String[]> shoppingCartLines = new ArrayList<>();
         Product product;

@@ -38,10 +38,8 @@ public class WebsiteController {
     public String home(@CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
             Model model) {
         Session session = sessionController.getOrSetSession(sessID, response);
-        String loggedInUser = session.getLoggedInUser();
-        model.addAttribute("loggedInUser", loggedInUser);
-        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
-        model.addAttribute("shoppingcart", shoppingCart);
+        model.addAttribute("loggedInUser", session.getLoggedInUser());
+        model.addAttribute("shoppingcart", session.getShoppingCart());
         model.addAttribute("templateName", "home");
         return "layout";
     }
@@ -57,12 +55,10 @@ public class WebsiteController {
     public String sortiment(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
             HttpServletResponse response, Model model) {
         Session session = sessionController.getOrSetSession(sessID, response);
-        String loggedInUser = session.getLoggedInUser();
-        model.addAttribute("loggedInUser", loggedInUser);
+        model.addAttribute("loggedInUser", session.getLoggedInUser());
+        model.addAttribute("shoppingcart", session.getShoppingCart());
         List<Product> products = db.query("SELECT * FROM products WHERE active = TRUE", new ProductRowMapper());
         model.addAttribute("products", products);
-        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
-        model.addAttribute("shoppingcart", shoppingCart);
         model.addAttribute("templateName", "sortiment");
         model.addAttribute("title", "Sortiment");
         return "layout";
@@ -81,12 +77,10 @@ public class WebsiteController {
             @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
             Model model) {
         Session session = sessionController.getOrSetSession(sessID, response);
-        String loggedInUser = session.getLoggedInUser();
         Product product = db.queryForObject("SELECT * FROM products WHERE id = ?", new ProductRowMapper(), productID);
         model.addAttribute(product);
-        model.addAttribute("loggedInUser", loggedInUser);
-        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
-        model.addAttribute("shoppingcart", shoppingCart);
+        model.addAttribute("loggedInUser", session.getLoggedInUser());
+        model.addAttribute("shoppingcart", session.getShoppingCart());
         model.addAttribute("templateName", "product");
         model.addAttribute("title", product.getName());
         return "layout";
@@ -103,10 +97,8 @@ public class WebsiteController {
     public String impressum(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
             HttpServletResponse response, Model model) {
         Session session = sessionController.getOrSetSession(sessID, response);
-        String loggedInUser = session.getLoggedInUser();
-        model.addAttribute("loggedInUser", loggedInUser);
-        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
-        model.addAttribute("shoppingcart", shoppingCart);
+        model.addAttribute("loggedInUser", session.getLoggedInUser());
+        model.addAttribute("shoppingcart", session.getShoppingCart());
         model.addAttribute("templateName", "impressum");
         model.addAttribute("title", "Impressum");
         return "layout";
@@ -123,10 +115,8 @@ public class WebsiteController {
     public String agb(@CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
             Model model) {
         Session session = sessionController.getOrSetSession(sessID, response);
-        String loggedInUser = session.getLoggedInUser();
-        model.addAttribute("loggedInUser", loggedInUser);
-        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
-        model.addAttribute("shoppingcart", shoppingCart);
+        model.addAttribute("loggedInUser", session.getLoggedInUser());
+        model.addAttribute("shoppingcart", session.getShoppingCart());
         model.addAttribute("templateName", "agb");
         model.addAttribute("title", "AGB");
         return "layout";
@@ -143,10 +133,8 @@ public class WebsiteController {
     public String datenschutz(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
             HttpServletResponse response, Model model) {
         Session session = sessionController.getOrSetSession(sessID, response);
-        String loggedInUser = session.getLoggedInUser();
-        model.addAttribute("loggedInUser", loggedInUser);
-        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
-        model.addAttribute("shoppingcart", shoppingCart);
+        model.addAttribute("loggedInUser", session.getLoggedInUser());
+        model.addAttribute("shoppingcart", session.getShoppingCart());
         model.addAttribute("templateName", "datenschutz");
         model.addAttribute("title", "Datenschutz");
         return "layout";
@@ -163,10 +151,8 @@ public class WebsiteController {
     public String contact(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
             HttpServletResponse response, Model model) {
         Session session = sessionController.getOrSetSession(sessID, response);
-        String loggedInUser = session.getLoggedInUser();
-        model.addAttribute("loggedInUser", loggedInUser);
-        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
-        model.addAttribute("shoppingcart", shoppingCart);
+        model.addAttribute("loggedInUser", session.getLoggedInUser());
+        model.addAttribute("shoppingcart", session.getShoppingCart());
         model.addAttribute("templateName", "contact");
         model.addAttribute("title", "Kontakt");
         return "layout";
@@ -183,10 +169,8 @@ public class WebsiteController {
     public String history(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
             HttpServletResponse response, Model model) {
         Session session = sessionController.getOrSetSession(sessID, response);
-        String loggedInUser = session.getLoggedInUser();
-        model.addAttribute("loggedInUser", loggedInUser);
-        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
-        model.addAttribute("shoppingcart", shoppingCart);
+        model.addAttribute("loggedInUser", session.getLoggedInUser());
+        model.addAttribute("shoppingcart", session.getShoppingCart());
         model.addAttribute("templateName", "history");
         model.addAttribute("title", "Geschichte");
         return "layout";
@@ -203,10 +187,8 @@ public class WebsiteController {
     public String philosophy(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
             HttpServletResponse response, Model model) {
         Session session = sessionController.getOrSetSession(sessID, response);
-        String loggedInUser = session.getLoggedInUser();
-        model.addAttribute("loggedInUser", loggedInUser);
-        ShoppingCart shoppingCart = ShoppingCart.findBySessID(session.getId());
-        model.addAttribute("shoppingcart", shoppingCart);
+        model.addAttribute("loggedInUser", session.getLoggedInUser());
+        model.addAttribute("shoppingcart", session.getShoppingCart());
         model.addAttribute("templateName", "philosophy");
         model.addAttribute("title", "Bierphilosophie");
         return "layout";
