@@ -1,0 +1,4 @@
+<main th:fragment="validate">
+    <div th:if="${validated}">Validierung der E-Mail-Adresse erfolgreich. Du kannst dich jetzt anmelden.</div>
+    <div th:if="${!validated}">Der Link ist ungültig. Womöglich wurde die E-Mail-Adresse bereits validiert.</div>
+</main>

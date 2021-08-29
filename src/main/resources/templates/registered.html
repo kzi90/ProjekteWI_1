@@ -3,7 +3,9 @@
     <span th:case="false">
       Herzlich Willkommen
       <span th:text="${customer.firstname + ' ' + customer.lastname + ','}" />
-      deine Registrierung war erfolgreich.
+      deine Registrierung war erfolgreich. Du erhältst jetzt eine E-Mail zur
+      Validierung deiner E-Mail-Adresse. Nach der Validierung kannst du dich
+      einloggen.
     </span>
     <span th:case="true">
       Es gibt bereits ein Nutzerkonto mit der E-Mail-Adresse

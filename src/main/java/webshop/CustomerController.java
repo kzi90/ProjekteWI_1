@@ -66,11 +66,28 @@ public class CustomerController {
     @PostMapping("/register")
     public String registered(@ModelAttribute Customer customer, @ModelAttribute Address address,
             @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
-            Model model) throws DataAccessException, NoSuchAlgorithmException {
+            HttpServletRequest request, Model model) throws DataAccessException, NoSuchAlgorithmException {
         Session session = sessionController.getOrSetSession(sessID, response);
         model.addAttribute("loggedInUser", session.getLoggedInUser());
         model.addAttribute("shoppingcart", session.getShoppingCart());
         boolean emailAlreadyRegistered = (!saveCustWithAddress(customer, address));
+        if (!emailAlreadyRegistered) {
+
+            int leftLimit = 48; // numeral '0'
+            int rightLimit = 122; // letter 'z'
+            String validationHash = new Random().ints(leftLimit, rightLimit + 1)
+                    .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97)).limit(10)
+                    .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append).toString();
+            db.update("UPDATE customers SET validation_hash = ? WHERE email = ?;", validationHash, customer.getEmail());
+
+            String fullname = customer.getFirstname() + " " + customer.getLastname();
+            String message = "Guten Tag " + fullname + ",\n\ndanke für deine Anmeldung bei Bielefelder Unikat. "
+                    + "Um deine E-Mail-Adresse zu validieren, öffne bitte den folgenden Link:\n"
+                    + request.getServerName() + "/validate" + validationHash
+                    + "\nNach der Validierung kannst du dich mit deinem Benutzerkonto anmelden.\n\n"
+                    + "Freundliche Grüße\n\nDein Bielefelder Unikat Team";
+            JavaMail.sendMessage(customer.getEmail(), fullname, "E-Mail-Validierung", message);
+        }
         model.addAttribute("emailAlreadyRegistered", emailAlreadyRegistered);
         model.addAttribute("templateName", "registered");
         return "layout";
@@ -113,7 +130,8 @@ public class CustomerController {
         if (!customers.isEmpty() && customers.get(0).login(customer.getPassHash())) {
             sessionController.getOrSetSession(sessID, response).setLoggedInUser(customer.getEmail());
             return cameFrom.endsWith("/logout") || cameFrom.endsWith("/register") || cameFrom.endsWith("/loginfail")
-                    || cameFrom.endsWith("/password_reset") ? "redirect:/sortiment" : "redirect:" + cameFrom;
+                    || cameFrom.endsWith("/password_reset") || cameFrom.contains("validate") ? "redirect:/sortiment"
+                            : "redirect:" + cameFrom;
         } else {
             return "redirect:/loginfail";
         }
@@ -325,7 +343,6 @@ public class CustomerController {
         if (loggedInUser.isEmpty()) {
             return "redirect:/";
         }
-        
         model.addAttribute("shoppingcart", session.getShoppingCart());
 
         // set customer inactive
@@ -365,6 +382,32 @@ public class CustomerController {
                     Convert.stringToHash(customer.getPassHash()));
         }
         return emailNotRegisteredBefore;
+    }
+
+    /**
+     * validate email after registration
+     * 
+     * @param sessID
+     * @param response
+     * @param hash
+     * @param model
+     * @return validate.html template
+     */
+    @GetMapping("/validate{hash}")
+    public String validate(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
+            HttpServletResponse response, @PathVariable String hash, Model model) {
+        if (hash.isEmpty()) {
+            return "redirect:/";
+        }
+        Session session = sessionController.getOrSetSession(sessID, response);
+        model.addAttribute("loggedInUser", session.getLoggedInUser());
+        model.addAttribute("shoppingcart", session.getShoppingCart());
+        boolean validated = db
+                .update("UPDATE customers SET active = TRUE, validation_hash = '' WHERE validation_hash = ?", hash) > 0;
+        model.addAttribute("validated", validated);
+        model.addAttribute("templateName", "validate");
+        model.addAttribute("title", "E-Mail-Validierung");
+        return "layout";
     }
 
     /**
