@@ -1,40 +1,146 @@
 <main th:fragment="home">
   <!-- Title -->
-  <h1 class="title display-1">
-    Wir&nbsp;brauen<br />Premium&nbsp;Bier<br />mit&nbsp;Geschichte.
-  </h1>
+  <h1 class="title display-1">Wir brauen Premium<br />Bier mit Geschichte.</h1>
 
   <!-- Divider -->
   <!-- <div th:replace="fragments :: divider (src='wappen-sparrenburg.svg',alt='Sparrenburg Wappen',width='60')"></div>-->
 
-  Hier fehlt noch Inhalt..
-  <a href="/s3cr3tl0g1n" class="btn btn-primary" role="button">Mitarbeiter</a>
-  <!-- Form -->
-  <form
-    action="#"
-    th:action="@{/newsletter}"
-    method="post"
-    class="needs-validation"
-    novalidate
+  <!-- <a href="/s3cr3tl0g1n" class="btn btn-primary" role="button">Mitarbeiter</a> -->
+
+  <!-- Cards -->
+  <div
+    class="
+      row row-cols-1 row-cols-sm-2 row-cols-xl-4
+      g-4
+      d-flex
+      align-items-stretch
+    "
   >
-    <!-- Email -->
-    <div class="mb-3">
-      <label for="inputEmail" class="form-label">E-Mail</label>
-      <input
-        type="email"
-        class="form-control"
-        id="inputEmail"
-        name="email"
-        autofocus
-        required
-      />
-      <div class="invalid-feedback">Bitte eine E-Mail eintragen.</div>
+    <div class="col">
+      <div class="card h-100">
+        <div
+          class="
+            card-body
+            h-100
+            text-center
+            d-flex
+            flex-column
+            justify-content-center
+          "
+        >
+          <h5 class="card-title display-6">Sortiment</h5>
+          <p class="card-text mb-auto">
+            Erleben Sie ein besonderes Geschmackerlebnis.
+          </p>
+          <a href="/sortiment" class="btn btn-outline-primary mt-4">Zum Sortiment</a>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card h-100">
+        <div
+          class="
+            card-body
+            h-100
+            text-center
+            d-flex
+            flex-column
+            justify-content-center
+          "
+        >
+          <h5 class="card-title display-6">Philosophie</h5>
+          <p class="card-text mb-auto">Woran wir festhalten.</p>
+          <a href="/philosophy" class="btn btn-outline-primary mt-4">Zur Philosophie</a>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card h-100">
+        <div
+          class="
+            card-body
+            h-100
+            text-center
+            d-flex
+            flex-column
+            justify-content-center
+          "
+        >
+          <h5 class="card-title display-6">Geschichte</h5>
+          <p class="card-text mb-auto">Wie alles anfing.</p>
+          <a href="/history" class="btn btn-outline-primary mt-4">Zur Geschichte</a>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card h-100">
+        <div
+          class="
+            card-body
+            h-100
+            text-center
+            d-flex
+            flex-column
+            justify-content-center
+          "
+        >
+          <h5 class="card-title display-6">Kontakt</h5>
+          <p class="card-text mb-auto">Wir freuen uns von ihnen zu hören.</p>
+          <a href="/contact" class="btn btn-outline-primary mt-4">Zum Kontakt</a>
+        </div>
+      </div>
     </div>
 
-    <!-- Submit -->
-    <div class="d-grid">
-      <button type="submit" class="btn btn-primary mb-5">Anmelden</button>
+    <!-- Newsletter -->
+    <div class="col-12">
+      <div class="card text-center mb-5">
+        <div class="card-body p-5 pb-2">
+          <h5 class="card-title display-5">Newsletter Anmeldung</h5>
+          <p class="card-text">
+            Verpasse keine Neuigkeiten in der Bierwelt. <br />Wir schicken einmal im
+            Monat unseren Newsletter raus mit allen Infos Rund ums Bier.<br />
+            Melde dich jetzt an und verpasse keine Neuigkeiten!
+          </p>
+
+          <!-- Form -->
+          <form
+            action="#"
+            th:action="@{/newsletter}"
+            method="post"
+            class="needs-validation"
+            novalidate
+          >
+            <div class="row justify-content-center  row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-3 row-cols-xxl-4 g-2">
+              <div class="col">
+                <!-- Email -->
+                <div class="mb-3">
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="inputEmail"
+                    name="email"
+                    autofocus
+                    required
+                    placeholder="deine@email.de"
+                  />
+                  <div class="invalid-feedback">
+                    Bitte eine E-Mail eintragen.
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <!-- Submit -->
+                <div class="d-grid">
+                  <button type="submit" class="btn btn-primary mb-5">
+                    Anmelden
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+          <div th:replace="fragments :: scriptFormValidation" />
+        </div>
+      </div>
     </div>
-  </form>
-  <div th:replace="fragments :: scriptFormValidation" />
+  </div>
 </main>

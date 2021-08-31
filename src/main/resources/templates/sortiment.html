@@ -1,8 +1,6 @@
 <main th:fragment="sortiment">
   <!-- Title -->
-  <h1 class="title display-1">
-    Wir brauen Premium<br>Bier mit Geschichte.
-  </h1>
+  <h1 class="title display-1">Wir brauen Premium<br />Bier mit Geschichte.</h1>
 
   <!-- Divider -->
   <!--<div
@@ -10,10 +8,28 @@
   ></div>
 -->
   <!-- Products -->
-  <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 g-5 d-flex align-items-stretch ">
-    <div th:each="product: ${products}" class="col product text-center d-flex flex-column align-items-start justify-content-center">
+  <div
+    class="
+      row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4
+      g-5
+      d-flex
+      align-items-stretch
+    "
+  >
+    <div
+      th:each="product: ${products}"
+      class="
+        col
+        product
+        text-center
+        d-flex
+        flex-column
+        align-items-start
+        justify-content-center
+      "
+    >
       <!-- Product link -->
-      <a href="/product" th:href="@{/product(product=${product.id})}" >
+      <a href="/product" th:href="@{/product(product=${product.id})}">
         <!-- Product image -->
         <img
           alt="Produktbild"
@@ -23,7 +39,14 @@
       </a>
 
       <!-- Product name -->
-      <h2 class="display-5 mx-auto mb-auto text-break" th:text="${product.type} + ' - ' + ${product.name}" />
+      <p
+        class="text-muted mx-auto mb-0 text-break"
+        th:text="${product.type}"
+      ></p>
+      <h2
+        class="display-5 mx-auto mb-auto text-break"
+        th:text="${product.name}"
+      />
 
       <!-- Price -->
       <p class="mx-auto">
