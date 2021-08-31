@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
@@ -26,6 +27,7 @@ public class WebsiteController {
 
     /**
      * Homepage
+     * 
      * @param sessID
      * @param response
      * @param model
@@ -37,12 +39,33 @@ public class WebsiteController {
         Session session = sessionController.getOrSetSession(sessID, response);
         model.addAttribute("loggedInUser", session.getLoggedInUser());
         model.addAttribute("shoppingcart", session.getShoppingCart());
+        model.addAttribute("email");
         model.addAttribute("templateName", "home");
+        return "layout";
+    }
+
+    @PostMapping("/newsletter")
+    public String newsletterRegistration(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
+            HttpServletResponse response, @RequestParam("email") String email, Model model) {
+        Session session = sessionController.getOrSetSession(sessID, response);
+        model.addAttribute("loggedInUser", session.getLoggedInUser());
+        model.addAttribute("shoppingcart", session.getShoppingCart());
+
+        boolean alreadyExists = db.update("UPDATE newsletter_emails SET email = ?  WHERE email = ?", email, email) > 0;
+
+        if (!alreadyExists) {
+            db.update("INSERT INTO newsletter_emails VALUES (?)", email);
+            String message = "Guten Tag lieber Bierfreund,\n\ndanke, dass du dich für unser Bier interessierst. Wir halten dich zukünftig immer auf dem Laufenden.\n\nDein Bielefelder Unikat-Team";
+            JavaMail.sendMessage(email, email, "Newsletter", message);
+        }
+        model.addAttribute("alreadyExists", alreadyExists);
+        model.addAttribute("templateName", "newsletter");
         return "layout";
     }
 
     /**
      * Sortiment
+     * 
      * @param sessID
      * @param response
      * @param model
@@ -63,6 +86,7 @@ public class WebsiteController {
 
     /**
      * product page
+     * 
      * @param productID
      * @param sessID
      * @param response
@@ -85,6 +109,7 @@ public class WebsiteController {
 
     /**
      * Impressum
+     * 
      * @param sessID
      * @param response
      * @param model
@@ -103,6 +128,7 @@ public class WebsiteController {
 
     /**
      * AGB
+     * 
      * @param sessID
      * @param response
      * @param model
@@ -121,6 +147,7 @@ public class WebsiteController {
 
     /**
      * data safety
+     * 
      * @param sessID
      * @param response
      * @param model
@@ -139,6 +166,7 @@ public class WebsiteController {
 
     /**
      * contact-webpage
+     * 
      * @param sessID
      * @param response
      * @param model
@@ -192,7 +220,9 @@ public class WebsiteController {
     }
 
     /**
-     * shows all database tables (this is only for debugging and would be disabled in production)
+     * shows all database tables (this is only for debugging and would be disabled
+     * in production)
+     * 
      * @param model
      * @return db.html template
      */

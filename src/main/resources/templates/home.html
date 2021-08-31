@@ -9,4 +9,32 @@
 
   Hier fehlt noch Inhalt..
   <a href="/s3cr3tl0g1n" class="btn btn-primary" role="button">Mitarbeiter</a>
+  <!-- Form -->
+  <form
+    action="#"
+    th:action="@{/newsletter}"
+    method="post"
+    class="needs-validation"
+    novalidate
+  >
+    <!-- Email -->
+    <div class="mb-3">
+      <label for="inputEmail" class="form-label">E-Mail</label>
+      <input
+        type="email"
+        class="form-control"
+        id="inputEmail"
+        name="email"
+        autofocus
+        required
+      />
+      <div class="invalid-feedback">Bitte eine E-Mail eintragen.</div>
+    </div>
+
+    <!-- Submit -->
+    <div class="d-grid">
+      <button type="submit" class="btn btn-primary mb-5">Anmelden</button>
+    </div>
+  </form>
+  <div th:replace="fragments :: scriptFormValidation" />
 </main>

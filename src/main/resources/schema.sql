@@ -2,7 +2,7 @@
 -- Trotzdem kann hier dokumentiert werden, welche Tabellen wie erstellt wurden.
 
 -- Löschen der Tabellen, um sie anschließend neu anzulegen:
-DROP TABLE orderpositions, orders, products, customers, employees, addresses;
+DROP TABLE orderpositions, orders, products, customers, employees, addresses, newsletter_emails;
 
 -- Tabellen:
 CREATE TABLE addresses (
@@ -80,4 +80,8 @@ CREATE TABLE orderpositions (
     FOREIGN KEY (product_id) REFERENCES products(id),
     FOREIGN KEY (order_id) REFERENCES orders(id),
     PRIMARY KEY (pos_nr, order_id)
+);
+
+CREATE TABLE newsletter_emails (
+    email VARCHAR(128) NOT NULL
 );
