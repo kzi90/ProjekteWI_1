@@ -6105,6 +6105,7 @@ fieldset:disabled .btn {
       -ms-flex-direction: column;
           flex-direction: column;
   width: 100%;
+  color: #212025;
   pointer-events: auto;
   background-color: #f8efdd;
   background-clip: padding-box;
@@ -6954,6 +6955,7 @@ fieldset:disabled .btn {
       -ms-flex-direction: column;
           flex-direction: column;
   max-width: 100%;
+  color: #212025;
   visibility: hidden;
   background-color: #f8efdd;
   background-clip: padding-box;

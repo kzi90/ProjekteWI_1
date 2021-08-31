@@ -1298,7 +1298,7 @@ $modal-dialog-margin-y-sm-up: 1.75rem;
 
 $modal-title-line-height: $line-height-base;
 
-$modal-content-color: null;
+$modal-content-color: $black; // null
 $modal-content-bg: $white;
 $modal-content-border-color: rgba($black, 0.2);
 $modal-content-border-width: $border-width;
