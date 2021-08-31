@@ -13,6 +13,10 @@ mvn spring-boot:run (für macOS)
 Kommando muss dort jetzt mit root-Rechten gestartet werden:
 sudo mvn spring-boot:run
 
+Falls beim Startversuch eine Fehlermeldung erscheint, kann es helfen, vor dem Start den target-Ordner zu löschen.
+Das geht mit folgender Befehlszeile unter Windows in der Powershell:
+rm -R .\target; .\mvnw spring-boot:run
+
 Zugriff über Webbrowser: localhost/
 Abbruch: Strg+C im Terminal
 
