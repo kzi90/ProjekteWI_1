@@ -551,8 +551,7 @@ public class CustomerController {
         if (loggedInEmp.isEmpty()) {
             return "redirect:/";
         }
-        Customer savedCust = db.queryForObject("SELECT * FROM customers WHERE email = ?", new CustomerRowMapper(),
-                customer.getEmail());
+        Customer savedCust = db.queryForObject("SELECT * FROM customers WHERE id = ?", new CustomerRowMapper(), id);
 
         // update changed data in database
         if (!customer.getFirstname().equals(savedCust.getFirstname())) {
@@ -573,9 +572,6 @@ public class CustomerController {
                 && db.query("SELECT * FROM customers WHERE email = ?", new CustomerRowMapper(), customer.getEmail())
                         .isEmpty()) {
             db.update("UPDATE customers SET email = ? WHERE id = ?", customer.getEmail(), savedCust.getId());
-            Cookie cookie = new Cookie("loggedInUser", customer.getEmail());
-            cookie.setPath("/");
-            response.addCookie(cookie);
         }
 
         // change password
@@ -597,12 +593,6 @@ public class CustomerController {
                 db.update("DELETE FROM addresses WHERE id = ?", savedCust.getAddressID());
             }
         }
-
-        // logging messages for debugging
-        System.out.println(String.format("neu: %s", customer));
-        System.out.println(String.format("alt: %s", savedCust));
-        System.out.println(String.format("neu: %s", address));
-        System.out.println(String.format("alt: %s", savedAddress));
 
         return "redirect:/customer_edit" + customer.getId().toString();
     }

@@ -1,11 +1,10 @@
 <main th:fragment="customer_edit">
   <div th:replace="fragments :: emp_header" />
   <h2>Kundendaten bearbeiten</h2>
-  <p th:text="${customer}"></p>
   <!-- Title -->
-  <h2 class="title display-1">
-    Benutzer <span th:text="${customer.email}" /> wird bearbeitet
-  </h2>
+  <p>
+    Kunde Nr. <span th:text="${customer.id}" /> (<span th:text="${customer.email}" />) wird bearbeitet
+  </p>
 
   <!-- Pills -->
   <ul
