@@ -1,8 +1,6 @@
 <main th:fragment="customer_search">
-  <p>
-    An dieser Stelle soll es möglich sein, nach einer E-Mail Adresse suchen zu
-    können.
-  </p>
+  <div th:replace="fragments :: emp_header" />
+  <h2>Kundensuche</h2>
   <form
     action="#"
     th:action="@{/customer_search}"
