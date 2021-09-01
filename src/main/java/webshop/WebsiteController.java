@@ -45,6 +45,14 @@ public class WebsiteController {
         return "layout";
     }
 
+    /**
+     * Newsletter sign on
+     * @param sessID
+     * @param response
+     * @param email
+     * @param model
+     * @return newsletter.html template
+     */
     @PostMapping("/newsletter")
     public String newsletterRegistration(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
             HttpServletResponse response, @RequestParam("email") String email, Model model) {
