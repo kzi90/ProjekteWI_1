@@ -1,5 +1,6 @@
 <main th:fragment="customer_edit">
-  <p>An dieser Stelle soll der User dann bearabeitet werden können.</p>
+  <div th:replace="fragments :: emp_header" />
+  <h2>Kundendaten bearbeiten</h2>
   <p th:text="${customer}"></p>
   <!-- Title -->
   <h2 class="title display-1">

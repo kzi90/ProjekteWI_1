@@ -27,7 +27,11 @@ public class UploadController {
     public String imgUplaod(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
             HttpServletResponse response, Model model) {
         Session session = sessionController.getOrSetSession(sessID, response);
-        // TODO: check Mitarbeiter login
+        String loggedInEmp = session.getLoggedInEmp();
+        if (loggedInEmp.isEmpty()) {
+            return "redirect:/";
+        }
+        model.addAttribute("loggedInEmp", loggedInEmp);
         model.addAttribute("loggedInUser", session.getLoggedInUser());
         model.addAttribute("shoppingcart", session.getShoppingCart());
         model.addAttribute("templateName", "img_upload");
