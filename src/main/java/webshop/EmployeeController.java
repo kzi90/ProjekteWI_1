@@ -159,7 +159,7 @@ public class EmployeeController {
         List<OrderPosition> orderPositions = new ArrayList<>();
         for (Order order : orders) {
             Customer customer = db.queryForObject("SELECT * FROM customers WHERE id = ?", new CustomerRowMapper(),
-                    order.getId());
+                    order.getCustID());
             Address address = db.queryForObject("SELECT * FROM addresses WHERE id = ?", new AddressRowMapper(),
                     customer.getAddressID());
             orderHeaders.add(new String[] { order.getId().toString(), customer.getFirstname(), customer.getLastname(),
