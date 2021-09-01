@@ -335,9 +335,10 @@ public class CustomerController {
                     customer.getEmail());
 
             String fullname = customer.getFirstname() + " " + customer.getLastname();
-            String message = "Guten Tag " + fullname + ",\n\naufgrund der Änderung deiner E-Mail-Adresse ist eine erneute "
-                    + "Validierung erforderlich, öffne dazu bitte den folgenden Link:\n"
-                    + request.getServerName() + "/validate" + validationHash
+            String message = "Guten Tag " + fullname
+                    + ",\n\naufgrund der Änderung deiner E-Mail-Adresse ist eine erneute "
+                    + "Validierung erforderlich, öffne dazu bitte den folgenden Link:\n" + request.getServerName()
+                    + "/validate" + validationHash
                     + "\nNach der Validierung kannst du dich wie gewohnt mit deinem Benutzerkonto anmelden.\n"
                     + "Solltest du kein Benutzerkonto bei Bielefelder Unikat haben, kannst du diese E-Mail ignorieren.\n\n"
                     + "Freundliche Grüße\n\nDein Bielefelder Unikat Team";
@@ -443,8 +444,12 @@ public class CustomerController {
     @GetMapping("/customer_search")
     public String customerSearch(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
             HttpServletResponse response, Model model) {
-        // TODO check mitarbeiter login
         Session session = sessionController.getOrSetSession(sessID, response);
+        String loggedInEmp = session.getLoggedInEmp();
+        if (loggedInEmp.isEmpty()) {
+            return "redirect:/";
+        }
+        model.addAttribute("loggedInEmp", loggedInEmp);
         model.addAttribute("loggedInUser", session.getLoggedInUser());
         model.addAttribute("shoppingcart", session.getShoppingCart());
         model.addAttribute("email");
@@ -466,7 +471,11 @@ public class CustomerController {
     public String customerSearched(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
             HttpServletResponse response, HttpServletRequest request, @ModelAttribute("email") String email,
             Model model) {
-        // TODO check mitarbeiter login
+        Session session = sessionController.getOrSetSession(sessID, response);
+        String loggedInEmp = session.getLoggedInEmp();
+        if (loggedInEmp.isEmpty()) {
+            return "redirect:/";
+        }
         List<Customer> customers = db.query("SELECT * FROM customers WHERE email = ?", new CustomerRowMapper(), email);
         if (customers.isEmpty()) {
             return "redirect:/customer_search";
@@ -485,8 +494,12 @@ public class CustomerController {
     @GetMapping("/customer_edit{id}")
     public String customerEdit(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
             HttpServletResponse response, @PathVariable String id, Model model) {
-        // TODO check mitarbeiter login
         Session session = sessionController.getOrSetSession(sessID, response);
+        String loggedInEmp = session.getLoggedInEmp();
+        if (loggedInEmp.isEmpty()) {
+            return "redirect:/";
+        }
+        model.addAttribute("loggedInEmp", loggedInEmp);
         model.addAttribute("loggedInUser", session.getLoggedInUser());
         model.addAttribute("shoppingcart", session.getShoppingCart());
         Customer customer = db.queryForObject("SELECT * FROM customers WHERE id = ?", new CustomerRowMapper(), id);
@@ -512,10 +525,15 @@ public class CustomerController {
      * @throws NoSuchAlgorithmException
      */
     @PostMapping("/customer_edit{id}")
-    public String customerEdited(HttpServletResponse response, @ModelAttribute Customer customer,
-            @ModelAttribute Address address, @PathVariable String id, @ModelAttribute("newPass") String newPass)
+    public String customerEdited(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
+            HttpServletResponse response, @ModelAttribute Customer customer, @ModelAttribute Address address,
+            @PathVariable String id, @ModelAttribute("newPass") String newPass)
             throws DataAccessException, NoSuchAlgorithmException {
-        // TODO check mitarbeiter login
+        Session session = sessionController.getOrSetSession(sessID, response);
+        String loggedInEmp = session.getLoggedInEmp();
+        if (loggedInEmp.isEmpty()) {
+            return "redirect:/";
+        }
         Customer savedCust = db.queryForObject("SELECT * FROM customers WHERE email = ?", new CustomerRowMapper(),
                 customer.getEmail());
 
