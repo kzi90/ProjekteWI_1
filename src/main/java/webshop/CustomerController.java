@@ -492,7 +492,8 @@ public class CustomerController {
         if (loggedInEmp.isEmpty()) {
             return "redirect:/";
         }
-        List<Customer> customers = db.query("SELECT * FROM customers WHERE email = ?", new CustomerRowMapper(), email);
+        List<Customer> customers = db.query("SELECT * FROM customers WHERE email = ? AND active = TRUE",
+                new CustomerRowMapper(), email);
         if (customers.isEmpty()) {
             return "redirect:/customer_search";
         }
@@ -519,10 +520,14 @@ public class CustomerController {
         model.addAttribute("loggedInUser", session.getLoggedInUser());
         model.addAttribute("shoppingcart", session.getShoppingCart());
         Customer customer = db.queryForObject("SELECT * FROM customers WHERE id = ?", new CustomerRowMapper(), id);
-        Address address = db.queryForObject("SELECT * FROM addresses WHERE id = ?", new AddressRowMapper(),
-                customer.getAddressID());
-        model.addAttribute(address);
-        model.addAttribute(customer);
+        if (customer != null) {
+            Address address = db.queryForObject("SELECT * FROM addresses WHERE id = ?", new AddressRowMapper(),
+                    customer.getAddressID());
+            if (address != null) {
+                model.addAttribute(address);
+                model.addAttribute(customer);
+            }
+        }
         model.addAttribute("templateName", "customer_edit");
         model.addAttribute("title", "Benutzer ändern");
         model.addAttribute("cookiesAccepted", session.getCookiesAccepted());
@@ -595,5 +600,11 @@ public class CustomerController {
         }
 
         return "redirect:/customer_edit" + customer.getId().toString();
+    }
+
+    @GetMapping("/delcustomer{id}")
+    public String delCustomer(@PathVariable String id) {
+        db.update("UPDATE customers SET active = FALSE WHERE id = ?", id);
+        return "redirect:/employee_area";
     }
 }
