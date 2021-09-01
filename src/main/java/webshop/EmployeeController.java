@@ -35,6 +35,7 @@ public class EmployeeController {
 
     /**
      * secret login for employees
+     * 
      * @param sessID
      * @param response
      * @param model
@@ -53,11 +54,13 @@ public class EmployeeController {
         Employee employee = new Employee();
         model.addAttribute(employee);
         model.addAttribute("templateName", "s3cr3tl0g1n");
+        model.addAttribute("cookiesAccepted", session.getCookiesAccepted());
         return "layout";
     }
 
     /**
      * trying employee login with submitted data
+     * 
      * @param sessID
      * @param employee
      * @param response
@@ -82,6 +85,7 @@ public class EmployeeController {
 
     /**
      * logout from employee account
+     * 
      * @param sessID
      * @param response
      * @param model
@@ -95,6 +99,7 @@ public class EmployeeController {
         model.addAttribute("loggedInUser", session.getLoggedInUser());
         model.addAttribute("shoppingcart", session.getShoppingCart());
         model.addAttribute("templateName", "s3cr3tl0g0ut");
+        model.addAttribute("cookiesAccepted", session.getCookiesAccepted());
         return "layout";
     }
 
@@ -118,11 +123,13 @@ public class EmployeeController {
         model.addAttribute("loggedInEmp", loggedInEmp);
         model.addAttribute("title", "Mitarbeiterbereich");
         model.addAttribute("templateName", "employee_area");
+        model.addAttribute("cookiesAccepted", session.getCookiesAccepted());
         return "layout";
     }
 
     /**
      * view orders and set status to "sent"
+     * 
      * @param suffix
      * @param sessID
      * @param response
@@ -167,11 +174,13 @@ public class EmployeeController {
         model.addAttribute("loggedInEmp", loggedInEmp);
         model.addAttribute("title", "Bestellbearbeitung");
         model.addAttribute("templateName", "order_suffix");
+        model.addAttribute("cookiesAccepted", session.getCookiesAccepted());
         return "layout";
     }
 
     /**
      * set order_status to "sent"
+     * 
      * @param id
      * @param sessID
      * @param response

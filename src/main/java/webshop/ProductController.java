@@ -26,6 +26,7 @@ public class ProductController {
 
     /**
      * edit / add products when logged in as employee
+     * 
      * @param sessID
      * @param response
      * @param model
@@ -46,11 +47,13 @@ public class ProductController {
         model.addAttribute("loggedInEmp", loggedInEmp);
         model.addAttribute("title", "Produktbearbeitung");
         model.addAttribute("templateName", "products_edit");
+        model.addAttribute("cookiesAccepted", session.getCookiesAccepted());
         return "layout";
     }
 
     /**
      * edit product when logged in as employee
+     * 
      * @param sessID
      * @param response
      * @param id
@@ -72,11 +75,13 @@ public class ProductController {
         model.addAttribute("loggedInEmp", loggedInEmp);
         model.addAttribute("title", "Produktbearbeitung");
         model.addAttribute("templateName", "product_edit");
+        model.addAttribute("cookiesAccepted", session.getCookiesAccepted());
         return "layout";
     }
 
     /**
      * save product changes made on page /product_edit
+     * 
      * @param sessID
      * @param product
      * @param id
@@ -97,6 +102,7 @@ public class ProductController {
 
     /**
      * delete product when logged in as employee
+     * 
      * @param sessID
      * @param id
      * @param response
@@ -116,6 +122,7 @@ public class ProductController {
 
     /**
      * add product when logged in as employee
+     * 
      * @param sessID
      * @param response
      * @param model
@@ -135,11 +142,13 @@ public class ProductController {
         model.addAttribute("loggedInEmp", loggedInEmp);
         model.addAttribute("title", "Produktbearbeitung");
         model.addAttribute("templateName", "product_add");
+        model.addAttribute("cookiesAccepted", session.getCookiesAccepted());
         return "layout";
     }
 
     /**
      * save product which was added via /product_add
+     * 
      * @param sessID
      * @param product
      * @param response

@@ -36,6 +36,7 @@ public class UploadController {
         model.addAttribute("shoppingcart", session.getShoppingCart());
         model.addAttribute("templateName", "img_upload");
         model.addAttribute("title", "Upload");
+        model.addAttribute("cookiesAccepted", session.getCookiesAccepted());
         return "layout";
     }
 

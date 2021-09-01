@@ -33,6 +33,14 @@ public class CustomerController {
     @Autowired
     private SessionController sessionController;
 
+    @GetMapping("/accept_cookies")
+    public String acceptCookies(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
+            HttpServletRequest request, HttpServletResponse response) {
+        Session session = sessionController.getOrSetSession(sessID, response);
+        session.setCookiesAccepted(true);
+        return "redirect:" + request.getHeader("Referer");
+    }
+
     /**
      * register page
      * 
@@ -91,6 +99,7 @@ public class CustomerController {
         }
         model.addAttribute("emailAlreadyRegistered", emailAlreadyRegistered);
         model.addAttribute("templateName", "registered");
+        model.addAttribute("cookiesAccepted", session.getCookiesAccepted());
         return "layout";
     }
 
@@ -153,6 +162,7 @@ public class CustomerController {
         model.addAttribute("loggedInUser", session.getLoggedInUser());
         model.addAttribute("shoppingcart", session.getShoppingCart());
         model.addAttribute("templateName", "loginfail");
+        model.addAttribute("cookiesAccepted", session.getCookiesAccepted());
         return "layout";
     }
 
@@ -172,6 +182,7 @@ public class CustomerController {
         session.setLoggedInUser("");
         model.addAttribute("loggedInUser", session.getLoggedInUser());
         model.addAttribute("templateName", "logout");
+        model.addAttribute("cookiesAccepted", session.getCookiesAccepted());
         return "layout";
     }
 
@@ -259,6 +270,7 @@ public class CustomerController {
         model.addAttribute("newPass", "");
         model.addAttribute("templateName", "account");
         model.addAttribute("title", "Kundendaten");
+        model.addAttribute("cookiesAccepted", session.getCookiesAccepted());
         return "layout";
     }
 
@@ -346,6 +358,7 @@ public class CustomerController {
             model.addAttribute("loggedInUser", "");
             model.addAttribute("shoppingcart", session.getShoppingCart());
             model.addAttribute("templateName", "changed_email");
+            model.addAttribute("cookiesAccepted", session.getCookiesAccepted());
             return "layout";
         }
 
@@ -378,6 +391,7 @@ public class CustomerController {
         model.addAttribute("loggedInUser", session.getLoggedInUser());
 
         model.addAttribute("templateName", "deluser");
+        model.addAttribute("cookiesAccepted", session.getCookiesAccepted());
         return "layout";
     }
 
@@ -431,6 +445,7 @@ public class CustomerController {
         model.addAttribute("validated", validated);
         model.addAttribute("templateName", "validate");
         model.addAttribute("title", "E-Mail-Validierung");
+        model.addAttribute("cookiesAccepted", session.getCookiesAccepted());
         return "layout";
     }
 
@@ -455,6 +470,7 @@ public class CustomerController {
         model.addAttribute("email");
         model.addAttribute("templateName", "customer_search");
         model.addAttribute("title", "Benutzer suchen");
+        model.addAttribute("cookiesAccepted", session.getCookiesAccepted());
         return "layout";
     }
 
@@ -509,6 +525,7 @@ public class CustomerController {
         model.addAttribute(customer);
         model.addAttribute("templateName", "customer_edit");
         model.addAttribute("title", "Benutzer ändern");
+        model.addAttribute("cookiesAccepted", session.getCookiesAccepted());
         return "layout";
     }
 

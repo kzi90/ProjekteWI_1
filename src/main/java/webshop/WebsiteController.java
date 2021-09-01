@@ -41,6 +41,7 @@ public class WebsiteController {
         model.addAttribute("shoppingcart", session.getShoppingCart());
         model.addAttribute("email");
         model.addAttribute("templateName", "home");
+        model.addAttribute("cookiesAccepted", session.getCookiesAccepted());
         return "layout";
     }
 
@@ -60,6 +61,7 @@ public class WebsiteController {
         }
         model.addAttribute("alreadyExists", alreadyExists);
         model.addAttribute("templateName", "newsletter");
+        model.addAttribute("cookiesAccepted", session.getCookiesAccepted());
         return "layout";
     }
 
@@ -81,6 +83,7 @@ public class WebsiteController {
         model.addAttribute("products", products);
         model.addAttribute("templateName", "sortiment");
         model.addAttribute("title", "Sortiment");
+        model.addAttribute("cookiesAccepted", session.getCookiesAccepted());
         return "layout";
     }
 
@@ -104,6 +107,7 @@ public class WebsiteController {
         model.addAttribute("shoppingcart", session.getShoppingCart());
         model.addAttribute("templateName", "product");
         model.addAttribute("title", product.getName());
+        model.addAttribute("cookiesAccepted", session.getCookiesAccepted());
         return "layout";
     }
 
@@ -123,6 +127,7 @@ public class WebsiteController {
         model.addAttribute("shoppingcart", session.getShoppingCart());
         model.addAttribute("templateName", "impressum");
         model.addAttribute("title", "Impressum");
+        model.addAttribute("cookiesAccepted", session.getCookiesAccepted());
         return "layout";
     }
 
@@ -142,6 +147,7 @@ public class WebsiteController {
         model.addAttribute("shoppingcart", session.getShoppingCart());
         model.addAttribute("templateName", "agb");
         model.addAttribute("title", "AGB");
+        model.addAttribute("cookiesAccepted", session.getCookiesAccepted());
         return "layout";
     }
 
@@ -161,6 +167,7 @@ public class WebsiteController {
         model.addAttribute("shoppingcart", session.getShoppingCart());
         model.addAttribute("templateName", "datenschutz");
         model.addAttribute("title", "Datenschutz");
+        model.addAttribute("cookiesAccepted", session.getCookiesAccepted());
         return "layout";
     }
 
@@ -180,6 +187,7 @@ public class WebsiteController {
         model.addAttribute("shoppingcart", session.getShoppingCart());
         model.addAttribute("templateName", "contact");
         model.addAttribute("title", "Kontakt");
+        model.addAttribute("cookiesAccepted", session.getCookiesAccepted());
         return "layout";
     }
 
@@ -198,6 +206,7 @@ public class WebsiteController {
         model.addAttribute("shoppingcart", session.getShoppingCart());
         model.addAttribute("templateName", "history");
         model.addAttribute("title", "Geschichte");
+        model.addAttribute("cookiesAccepted", session.getCookiesAccepted());
         return "layout";
     }
 
@@ -216,6 +225,7 @@ public class WebsiteController {
         model.addAttribute("shoppingcart", session.getShoppingCart());
         model.addAttribute("templateName", "philosophy");
         model.addAttribute("title", "Bierphilosophie");
+        model.addAttribute("cookiesAccepted", session.getCookiesAccepted());
         return "layout";
     }
 

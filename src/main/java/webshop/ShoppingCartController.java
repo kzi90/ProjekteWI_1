@@ -87,6 +87,7 @@ public class ShoppingCartController {
         model.addAttribute("total", String.format("%.2f", total));
         model.addAttribute("templateName", "shoppingcart");
         model.addAttribute("title", "Warenkorb");
+        model.addAttribute("cookiesAccepted", session.getCookiesAccepted());
         return "layout";
     }
 

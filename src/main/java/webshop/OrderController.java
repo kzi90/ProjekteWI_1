@@ -30,6 +30,7 @@ public class OrderController {
     /**
      * complete order from shoppingcart (if not empty). If the customer isn't logged
      * in, he/she will be redirected to /login.
+     * 
      * @param sessID
      * @param response
      * @param model
@@ -105,6 +106,7 @@ public class OrderController {
 
             model.addAttribute("templateName", "ordercompletion");
             model.addAttribute("title", "Bestellabschluss");
+            model.addAttribute("cookiesAccepted", session.getCookiesAccepted());
             return "layout";
         } else {
             return "redirect:/";
@@ -113,6 +115,7 @@ public class OrderController {
 
     /**
      * show order history for logged in customer
+     * 
      * @param sessID
      * @param response
      * @param model
@@ -148,11 +151,13 @@ public class OrderController {
 
         model.addAttribute("templateName", "my_orders");
         model.addAttribute("title", "Bestellungen");
+        model.addAttribute("cookiesAccepted", session.getCookiesAccepted());
         return "layout";
     }
 
     /**
      * save Order
+     * 
      * @param order
      * @return order (with id)
      */
