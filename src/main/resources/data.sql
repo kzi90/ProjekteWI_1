@@ -8,6 +8,7 @@ DELETE FROM products;
 DELETE FROM customers;
 DELETE FROM employees;
 DELETE FROM addresses;
+DELETE FROM newsletter_emails;
 
 -- Beispieldaten für Adressen
 INSERT INTO addresses VALUES (1, 'Ausgedachte Str.', '3', '12345', 'Entenhausen', 'Deutschland');
@@ -36,9 +37,12 @@ INSERT INTO products VALUES (4, 'Bananenweizen', 'Ravensberger Spinnerei', 'Die 
 -- Beispieldaten für Bestellungen
 INSERT INTO orders VALUES (1, '2021-07-01', '15:33:42', 9.12, 'ordered', 1);
 INSERT INTO orders VALUES (2, '2021-08-27', '20:38:03', 47.16, 'ordered', 2);
+INSERT INTO orders VALUES (3, '2021-09-01', '13:24:07', 48.60, 'ordered', 4);
 
 -- Beispieldaten für Bestellpositionen
 INSERT INTO orderpositions VALUES (1, 5, 3, 1);
 INSERT INTO orderpositions VALUES (2, 3, 1, 1);
 INSERT INTO orderpositions VALUES (1, 24, 1, 2);
 INSERT INTO orderpositions VALUES (2, 20, 4, 2);
+INSERT INTO orderpositions VALUES (1, 24, 2, 3);
+INSERT INTO orderpositions VALUES (2, 20, 3, 3);
