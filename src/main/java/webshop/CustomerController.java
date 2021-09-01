@@ -4,7 +4,6 @@ import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.util.List;
 import java.util.Random;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +32,13 @@ public class CustomerController {
     @Autowired
     private SessionController sessionController;
 
+    /**
+     * accept cookies
+     * @param sessID
+     * @param request
+     * @param response
+     * @return redirect to same page
+     */
     @GetMapping("/accept_cookies")
     public String acceptCookies(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
             HttpServletRequest request, HttpServletResponse response) {
