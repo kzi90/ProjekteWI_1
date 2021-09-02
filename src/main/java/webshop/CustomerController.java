@@ -147,8 +147,8 @@ public class CustomerController {
         if (!customers.isEmpty() && customers.get(0).login(customer.getPassHash())) {
             sessionController.getOrSetSession(sessID, response).setLoggedInUser(customer.getEmail());
             return cameFrom.endsWith("/logout") || cameFrom.endsWith("/register") || cameFrom.endsWith("/loginfail")
-                    || cameFrom.endsWith("/password_reset") || cameFrom.contains("validate") ? "redirect:/sortiment"
-                            : "redirect:" + cameFrom;
+                    || cameFrom.endsWith("/password_reset") || cameFrom.endsWith("/deluser")
+                    || cameFrom.contains("validate") ? "redirect:/sortiment" : "redirect:" + cameFrom;
         } else {
             return "redirect:/loginfail";
         }
@@ -612,7 +612,7 @@ public class CustomerController {
     @GetMapping("/delcustomer{id}")
     public String delCustomer(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
             HttpServletResponse response, @PathVariable String id) {
-        if (!sessionController.getOrSetSession(sessID, response).getLoggedInEmp().isEmpty()){
+        if (!sessionController.getOrSetSession(sessID, response).getLoggedInEmp().isEmpty()) {
             db.update("UPDATE customers SET active = FALSE WHERE id = ?", id);
         }
         return "redirect:/customer_search";
