@@ -590,8 +590,8 @@ $table-hover-bg-factor: 0.075;
 $table-hover-bg: rgba($black, $table-hover-bg-factor);
 
 $table-border-factor: 0.1;
-$table-border-width: $border-width;
-$table-border-color: $border-color;
+$table-border-width: 2px; //$border-width
+$table-border-color: $gray-800; //$border-color
 
 $table-striped-order: odd;
 

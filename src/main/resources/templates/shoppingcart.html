@@ -1,4 +1,7 @@
 <main th:fragment="shoppingcart">
+  <!-- Title -->
+  <h1 class="title display-1">Deine Bierkiste</h1>
+
   <div th:switch="${total != '0,00'}">
     <div class="row" th:case="${true}">
       <div class="col-12 col-md-8 col-lg-9 mb-5">
@@ -38,13 +41,13 @@
                   th:text="${cartLine[2]}"
                 />
 
-                <p class="text-muted mt-3">
+                <p class="text-muted mt-3 mb-0">
                   Artikel-Nr.: <span th:text="${cartLine[0]}" />
                 </p>
-                <p class="text-muted">
+                <p class="text-muted mb-0">
                   Einzelpreis: <span th:text="${cartLine[5]} + ' €'" />
                 </p>
-                <p class="text-muted">
+                <p class="text-muted mb-0">
                   Gesamtpreis: <span th:text="${cartLine[6]} + ' €'" />
                 </p>
 
@@ -106,8 +109,14 @@
       </div>
     </div>
     <div th:case="${false}">
-      <h2>Deine Bierkiste (Warenkorb) ist noch leer.</h2>
-      <a class="btn btn-primary" href="/sortiment">Hier kannst du sie füllen</a>
+      <h3 class="text-center text-muted">
+        Deine Bierkiste (Warenkorb) ist noch leer!
+      </h3>
+      <p class="text-center">
+        <a class="btn btn-primary mt-4" href="/sortiment"
+          >Hier kannst du sie füllen</a
+        >
+      </p>
     </div>
   </div>
 </main>

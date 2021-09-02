@@ -1,9 +1,83 @@
 <main th:fragment="s3cr3tl0g1n">
-  <h1>Geheimer Mitarbeiter-Login</h1>
-  <form action="#" th:action="@{/s3cr3tl0g1n}" method="post">
-    <p>E-Mail: <input type="text" th:field="${employee.email}" /></p>
-    <p>Passwort: <input type="password" th:field="${employee.passHash}" /></p>
-    <input type="submit" value="Submit" />
-    <input type="reset" value="Reset" />
-  </form>
+  <div class="row justify-content-center align-items-center vh-100">
+    <div class="col col-sm-10 col-md-7 col-lg-6 col-xl-5 col-xxl-4">
+      <!-- Brand -->
+      <a class="text-center my-4 d-block" href="/"
+        ><img
+          src="./images/Logo-Bielefelder-Unikat.svg"
+          alt="Bielefelder Unikat"
+          width="140"
+      /></a>
+
+      <!-- Box -->
+      <div class="border rounded-3 mt-5 mb-3 px-5 py-3">
+        <!-- Title -->
+        <h1 class="text-center mb-5 display-4">Mitarbeiter-Login</h1>
+
+        <!-- Form -->
+        <form
+          action="#"
+          th:action="@{/s3cr3tl0g1n}"
+          method="post"
+          class="needs-validation"
+          novalidate
+        >
+          <!-- Email -->
+          <div class="mb-3">
+            <label for="inputEmail" class="form-label">E-Mail</label>
+            <input
+              th:field="${employee.email}"
+              type="email"
+              class="form-control"
+              id="inputEmail"
+              autofocus
+              required
+            />
+            <div class="invalid-feedback">Bitte eine E-Mail eintragen.</div>
+          </div>
+
+          <!-- Password -->
+          <div class="mb-5">
+            <label for="inputPassword" class="form-label">Passwort</label>
+            <input
+              th:field="${employee.passHash}"
+              type="password"
+              class="form-control"
+              id="inputPassword"
+              required
+            />
+            <div class="invalid-feedback">Bitte ein Passwort eintragen.</div>
+          </div>
+
+          <!-- Came from -->
+          <input
+            type="hidden"
+            id="cameFrom"
+            name="cameFrom"
+            th:value="${cameFrom}"
+          />
+
+          <!-- Submit -->
+          <div class="d-grid">
+            <button type="submit" class="btn btn-primary mb-5">Anmelden</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Legal -->
+      <div class="text-center text-muted legal">
+        <p>
+          <a href="/impressum" class="text-decoration-none me-2 text-white-50"
+            >Impressum</a
+          >
+          <a href="/datenschutz" class="text-decoration-none me-2 text-white-50"
+            >Datenschutz</a
+          >
+          <a href="/agb" class="text-decoration-none text-white-50">AGB</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div th:replace="fragments :: scriptFormValidation" />
 </main>
