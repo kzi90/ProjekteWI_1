@@ -34,6 +34,7 @@ public class CustomerController {
 
     /**
      * accept cookies
+     * 
      * @param sessID
      * @param request
      * @param response
@@ -609,8 +610,11 @@ public class CustomerController {
     }
 
     @GetMapping("/delcustomer{id}")
-    public String delCustomer(@PathVariable String id) {
-        db.update("UPDATE customers SET active = FALSE WHERE id = ?", id);
+    public String delCustomer(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
+            HttpServletResponse response, @PathVariable String id) {
+        if (!sessionController.getOrSetSession(sessID, response).getLoggedInEmp().isEmpty()){
+            db.update("UPDATE customers SET active = FALSE WHERE id = ?", id);
+        }
         return "redirect:/employee_area";
     }
 }
