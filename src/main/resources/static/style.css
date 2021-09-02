@@ -11557,7 +11557,7 @@ header {
 .navbar .container {
   -webkit-transition: min-height 1s;
   transition: min-height 1s;
-  min-height: 100px;
+  min-height: 70px;
 }
 
 .navbar-collapse,
@@ -11717,6 +11717,10 @@ header {
   flex: 0 1 auto;
   width: 1%;
   min-width: 80px;
+}
+
+.border-secondary {
+  border-color: #464445 !important;
 }
 
 .legal a:hover {

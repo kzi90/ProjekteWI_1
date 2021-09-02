@@ -1571,7 +1571,7 @@ header {
 
   .container {
     transition: min-height 1s;
-    min-height: 100px;
+    min-height: 70px;
   }
 }
 
@@ -1733,6 +1733,10 @@ header {
   flex: 0 1 auto;
   width: 1%;
   min-width: 80px;
+}
+
+.border-secondary {
+  border-color: $gray-800 !important;
 }
 
 //-------------------------
