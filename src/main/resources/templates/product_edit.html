@@ -1,5 +1,4 @@
 <main th:fragment="product_edit">
-  <div th:replace="fragments :: emp_header" />
   <h1>Produktdatenänderung</h1>
   <form action="#" th:action="@{'/product_edit' + ${product.id}}" method="post" th:object="${product}">
     <table>

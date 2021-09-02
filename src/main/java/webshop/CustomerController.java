@@ -478,7 +478,7 @@ public class CustomerController {
         model.addAttribute("templateName", "customer_search");
         model.addAttribute("title", "Benutzer suchen");
         model.addAttribute("cookiesAccepted", session.getCookiesAccepted());
-        return "layout";
+        return "layout-backend";
     }
 
     /**
@@ -538,7 +538,7 @@ public class CustomerController {
         model.addAttribute("templateName", "customer_edit");
         model.addAttribute("title", "Benutzer ändern");
         model.addAttribute("cookiesAccepted", session.getCookiesAccepted());
-        return "layout";
+        return "layout-backend";
     }
 
     /**
@@ -615,6 +615,6 @@ public class CustomerController {
         if (!sessionController.getOrSetSession(sessID, response).getLoggedInEmp().isEmpty()){
             db.update("UPDATE customers SET active = FALSE WHERE id = ?", id);
         }
-        return "redirect:/employee_area";
+        return "redirect:/customer_search";
     }
 }

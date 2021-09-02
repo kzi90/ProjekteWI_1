@@ -11524,7 +11524,7 @@ fieldset:disabled .btn {
   }
 }
 
-body.fixed_header {
+body.fixed-header {
   padding-top: 100px;
 }
 

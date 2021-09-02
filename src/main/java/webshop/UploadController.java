@@ -37,7 +37,7 @@ public class UploadController {
         model.addAttribute("templateName", "img_upload");
         model.addAttribute("title", "Upload");
         model.addAttribute("cookiesAccepted", session.getCookiesAccepted());
-        return "layout";
+        return "layout-backend";
     }
 
     @PostMapping("/upload")

@@ -207,28 +207,71 @@ Header
   </nav>
 </header>
 
+<!--==================================================
+Header employee
+===================================================-->
 <div th:fragment="emp_header">
-  <a href="/employee_area"><h2>Mitarbeiterbereich</h2></a>
-  <span class="dropdown">
-    <!-- Employee account button -->
-    <button
-      class="btn btn-secondary dropdown-toggle"
-      type="button"
-      id="dropdownMenuButton2"
-      data-bs-toggle="dropdown"
-      aria-expanded="false"
-    >
-      <i class="fas fa-user-circle"></i>
-      <i class="d-none d-md-inline" th:text="${loggedInEmp}"></i>
-    </button>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand navbar-dark bg-dark fixed-top">
+    <!-- Container -->
+    <div class="container-fluid">
+      <!-- Navbar brand -->
+      <a class="navbar-brand" href="/"
+        ><img
+          src="./images/Logo-Bielefelder-Unikat.svg"
+          alt="Bielefelder Unikat"
+          width="100"
+      /></a>
 
-    <ul
-      class="dropdown-menu dropdown-menu-dark"
-      aria-labelledby="dropdownMenuButton2"
+      <!-- Employee account button -->
+
+      <span class="dropdown">
+        <button
+          class="btn btn-secondary dropdown-toggle"
+          type="button"
+          id="dropdownMenuButton2"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <i class="fas fa-user-circle"></i>
+          <i class="d-none d-md-inline" th:text="${loggedInEmp}"></i>
+        </button>
+
+        <ul
+          class="dropdown-menu dropdown-menu-dark"
+          aria-labelledby="dropdownMenuButton2"
+        >
+          <li><a class="dropdown-item" href="/s3cr3tl0g0ut">Abmelden</a></li>
+        </ul>
+      </span>
+    </div>
+  </nav>
+</div>
+
+<!--==================================================
+Nav backend
+===================================================-->
+<div th:fragment="navBackend">
+  <nav class="nav flex-column">
+    <a
+      class="nav-link active"
+      aria-current="page"
+      href="/products_edit"
+      >Produktbearbeitung</a
     >
-      <li><a class="dropdown-item" href="/s3cr3tl0g0ut">Abmelden</a></li>
-    </ul> </span
-  ><br /><br />
+    <a class="nav-link" href="/img_upload" >Produktbild hochladen</a
+    >
+
+    <a class="nav-link" href="/customer_search" >Benutzerdaten ändern</a
+    >
+
+    <a class="nav-link" href="/order_processing" >Offene Bestellungen bearbeiten</a
+    >
+
+    <a class="nav-link" href="/order_history" >Alle Bestellungen anzeigen</a
+    >
+
+  </nav>
 </div>
 
 <!--==================================================
@@ -368,7 +411,10 @@ Login/Register/User Buttons
 <!--==================================================
 Scripts
 ===================================================-->
-<div th:fragment="scripts" th:with="cookiesAccepted=${cookiesAccepted} ?: false">
+<div
+  th:fragment="scripts"
+  th:with="cookiesAccepted=${cookiesAccepted} ?: false"
+>
   <!-- Bootstrap JavaScript -->
   <script
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"

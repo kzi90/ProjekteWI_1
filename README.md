@@ -21,4 +21,4 @@ Zugriff über Webbrowser: localhost/
 Abbruch: Strg+C im Terminal
 
 Login zum Mitarbeiterbereich: localhost/s3cr3tl0g1n
-Mitarbeiterbereich: localhost/employee_area
+Mitarbeiterbereich: localhost/products_edit

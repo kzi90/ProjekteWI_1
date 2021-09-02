@@ -47,7 +47,7 @@ public class EmployeeController {
         Session session = sessionController.getOrSetSession(sessID, response);
         String loggedInEmp = session.getLoggedInEmp();
         if (!loggedInEmp.isEmpty()) {
-            return "redirect:/employee_area";
+            return "redirect:/products_edit";
         }
         model.addAttribute("loggedInUser", session.getLoggedInUser());
         model.addAttribute("shoppingcart", session.getShoppingCart());
@@ -55,7 +55,7 @@ public class EmployeeController {
         model.addAttribute(employee);
         model.addAttribute("templateName", "s3cr3tl0g1n");
         model.addAttribute("cookiesAccepted", session.getCookiesAccepted());
-        return "layout";
+        return "layout-neutral";
     }
 
     /**
@@ -65,7 +65,7 @@ public class EmployeeController {
      * @param employee
      * @param response
      * @param model
-     * @return redirects to /employee_area if login successful, else to /loginfail
+     * @return redirects to /products_edit if login successful, else to /loginfail
      * @throws NoSuchAlgorithmException
      */
     @PostMapping("/s3cr3tl0g1n")
@@ -77,7 +77,7 @@ public class EmployeeController {
         // employee.passHash contains the plain text password right now!
         if (!employees.isEmpty() && employees.get(0).login(employee.getPassHash())) {
             sessionController.getOrSetSession(sessID, response).setLoggedInEmp(employee.getEmail());
-            return "redirect:/employee_area";
+            return "redirect:/products_edit";
         } else {
             return "redirect:/loginfail";
         }
@@ -99,30 +99,6 @@ public class EmployeeController {
         model.addAttribute("loggedInUser", session.getLoggedInUser());
         model.addAttribute("shoppingcart", session.getShoppingCart());
         model.addAttribute("templateName", "s3cr3tl0g0ut");
-        model.addAttribute("cookiesAccepted", session.getCookiesAccepted());
-        return "layout";
-    }
-
-    /**
-     * 
-     * @param sessID
-     * @param response
-     * @param model
-     * @return employee_area.html template
-     */
-    @GetMapping("/employee_area")
-    public String employeeArea(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
-            HttpServletResponse response, Model model) {
-        Session session = sessionController.getOrSetSession(sessID, response);
-        String loggedInEmp = session.getLoggedInEmp();
-        model.addAttribute("loggedInUser", session.getLoggedInUser());
-        model.addAttribute("shoppingcart", session.getShoppingCart());
-        if (loggedInEmp.isEmpty()) {
-            return "redirect:/";
-        }
-        model.addAttribute("loggedInEmp", loggedInEmp);
-        model.addAttribute("title", "Mitarbeiterbereich");
-        model.addAttribute("templateName", "employee_area");
         model.addAttribute("cookiesAccepted", session.getCookiesAccepted());
         return "layout";
     }
@@ -175,7 +151,7 @@ public class EmployeeController {
         model.addAttribute("title", "Bestellbearbeitung");
         model.addAttribute("templateName", "order_suffix");
         model.addAttribute("cookiesAccepted", session.getCookiesAccepted());
-        return "layout";
+        return "layout-backend";
     }
 
     /**

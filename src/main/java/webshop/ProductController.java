@@ -48,7 +48,7 @@ public class ProductController {
         model.addAttribute("title", "Produktbearbeitung");
         model.addAttribute("templateName", "products_edit");
         model.addAttribute("cookiesAccepted", session.getCookiesAccepted());
-        return "layout";
+        return "layout-backend";
     }
 
     /**
@@ -76,7 +76,7 @@ public class ProductController {
         model.addAttribute("title", "Produktbearbeitung");
         model.addAttribute("templateName", "product_edit");
         model.addAttribute("cookiesAccepted", session.getCookiesAccepted());
-        return "layout";
+        return "layout-backend";
     }
 
     /**

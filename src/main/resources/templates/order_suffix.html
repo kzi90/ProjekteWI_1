@@ -1,5 +1,4 @@
 <main th:fragment="order_suffix">
-  <div th:replace="fragments :: emp_header" />
   <h2 th:if="${suffix == 'processing' && !orders.isEmpty()}">Bearbeitung offene Bestellungen</h2>
   <h2 th:if="${suffix == 'processing' && orders.isEmpty()}">Es gibt keine offenen Bestellungen!</h2>
   <h2 th:if="${suffix == 'history'}">Bestellübersicht aller Bestellungen</h2>

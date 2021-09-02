@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+  <div th:replace="fragments :: head(title=${title})" />
+  <body class="fixed-header">
+    <div class="container-fluid">
+      <!-- Header -->
+      <div th:replace="fragments :: emp_header" />
+
+      <div class="row">
+        <div class="col-12 col-md-3">
+          <!-- Navigation -->
+          <div th:replace="fragments :: navBackend" />
+        </div>
+        <div class="col-12 col-md-9">
+          <!-- Content -->
+          <main th:include="${templateName} :: ${templateName}" id="content" />
+        </div>
+      </div>
+    </div>
+    <div th:replace="fragments :: scripts" />
+  </body>
+</html>

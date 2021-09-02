@@ -1,5 +1,4 @@
 <main th:fragment="customer_edit">
-  <div th:replace="fragments :: emp_header" />
   <h2>Kundendaten bearbeiten</h2>
   <!-- Title -->
   <p>
@@ -141,13 +140,6 @@
                   Bitte Geburtsdatum eintragen.
                 </div>
               </div>
-
-              <!-- Submit -->
-              <div class="d-grid">
-                <button type="submit" class="btn btn-primary">
-                  Änderungen speichern
-                </button>
-              </div>
             </div>
           </div>
 
@@ -190,13 +182,6 @@
                 />
                 <div class="valid-feedback">Sieht gut aus!</div>
                 <div class="invalid-feedback">Bitte eine E-Mail eintragen.</div>
-              </div>
-
-              <!-- Submit -->
-              <div class="d-grid">
-                <button type="submit" class="btn btn-primary mb-4">
-                  Änderungen speichern
-                </button>
               </div>
             </div>
           </div>
@@ -277,13 +262,6 @@
                 <div class="valid-feedback">Sieht gut aus!</div>
                 <div class="invalid-feedback">Bitte eine Stadt eintragen.</div>
               </div>
-
-              <!-- Submit -->
-              <div class="d-grid">
-                <button type="submit" class="btn btn-primary">
-                  Änderungen speichern
-                </button>
-              </div>
             </div>
           </div>
 
@@ -343,21 +321,23 @@
                 <div class="valid-feedback">Sieht gut aus!</div>
                 <div class="invalid-feedback">Das Passwort ist anders!</div>
               </div>
-
-              <!-- Submit -->
-              <div class="d-grid">
-                <button type="submit" class="btn btn-primary">
-                  Änderungen speichern
-                </button>
-              </div>
             </div>
           </div>
+        </div>
+
+        <!-- Submit -->
+        <div class="d-grid">
+          <button type="submit" class="btn btn-primary">
+            Änderungen speichern
+          </button>
+          <hr />
+          <a class="btn btn-danger" th:href="'/delcustomer' + ${customer.id}"
+            >Benutzerkonto entfernen</a
+          >
         </div>
       </div>
     </div>
   </form>
-  <a class="btn btn-primary" th:href="'/delcustomer' + ${customer.id}"
-    >Benutzerkonto entfernen</a
-  >
+
   <div th:replace="fragments :: scriptFormValidation" />
 </main>
