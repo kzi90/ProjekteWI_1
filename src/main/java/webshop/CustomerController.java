@@ -148,7 +148,8 @@ public class CustomerController {
             sessionController.getOrSetSession(sessID, response).setLoggedInUser(customer.getEmail());
             return cameFrom.endsWith("/logout") || cameFrom.endsWith("/register") || cameFrom.endsWith("/loginfail")
                     || cameFrom.endsWith("/password_reset") || cameFrom.endsWith("/deluser")
-                    || cameFrom.contains("validate") ? "redirect:/sortiment" : "redirect:" + cameFrom;
+                    || cameFrom.contains("validate") || cameFrom.endsWith("/s3cr3tl0g0ut") ? "redirect:/sortiment"
+                            : "redirect:" + cameFrom;
         } else {
             return "redirect:/loginfail";
         }
@@ -344,7 +345,11 @@ public class CustomerController {
                 && db.query("SELECT * FROM customers WHERE email = ?", new CustomerRowMapper(), customer.getEmail())
                         .isEmpty()) {
             db.update("UPDATE customers SET email = ? WHERE id = ?", customer.getEmail(), savedCust.getId());
-            session.setLoggedInUser("");
+            for (Session s : SessionController.activeSessions) {
+                if (s.getLoggedInUser().equals(savedCust.getEmail())) {
+                    s.setLoggedInUser("");
+                }
+            }
             int leftLimit = 48; // numeral '0'
             int rightLimit = 122; // letter 'z'
             String validationHash = new Random().ints(leftLimit, rightLimit + 1)
@@ -394,7 +399,11 @@ public class CustomerController {
         db.update("UPDATE customers SET active = FALSE WHERE email = ?", loggedInUser);
 
         // logout
-        session.setLoggedInUser("");
+        for (Session s : SessionController.activeSessions) {
+            if (s.getLoggedInUser().equals(loggedInUser)) {
+                s.setLoggedInUser("");
+            }
+        }
         model.addAttribute("loggedInUser", session.getLoggedInUser());
 
         model.addAttribute("templateName", "deluser");
@@ -452,7 +461,8 @@ public class CustomerController {
         model.addAttribute("validated", validated);
         model.addAttribute("templateName", "validate");
         model.addAttribute("title", "E-Mail-Validierung");
-        model.addAttribute("cookiesAccepted", session.getCookiesAccepted());
+        // set cookies accepted to avoid the cookie-popup here
+        model.addAttribute("cookiesAccepted", true);
         return "layout";
     }
 
@@ -584,6 +594,11 @@ public class CustomerController {
                 && db.query("SELECT * FROM customers WHERE email = ?", new CustomerRowMapper(), customer.getEmail())
                         .isEmpty()) {
             db.update("UPDATE customers SET email = ? WHERE id = ?", customer.getEmail(), savedCust.getId());
+            for (Session s : SessionController.activeSessions) {
+                if (s.getLoggedInUser().equals(savedCust.getEmail())) {
+                    s.setLoggedInUser("");
+                }
+            }
         }
 
         // change password
@@ -614,6 +629,12 @@ public class CustomerController {
             HttpServletResponse response, @PathVariable String id) {
         if (!sessionController.getOrSetSession(sessID, response).getLoggedInEmp().isEmpty()) {
             db.update("UPDATE customers SET active = FALSE WHERE id = ?", id);
+            Customer cust = db.queryForObject("SELECT * FROM customers WHERE id = ?", new CustomerRowMapper(), id);
+            for (Session s : SessionController.activeSessions) {
+                if (s.getLoggedInUser().equals(cust.getEmail())) {
+                    s.setLoggedInUser("");
+                }
+            }
         }
         return "redirect:/customer_search";
     }
