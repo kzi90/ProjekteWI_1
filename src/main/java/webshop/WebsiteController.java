@@ -238,8 +238,8 @@ public class WebsiteController {
     }
 
     /**
-     * shows all database tables (this is only for debugging and would be disabled
-     * in production)
+     * shows all database tables and active sessions (this method is only for
+     * debugging and should be disabled in production)
      * 
      * @param model
      * @return db.html template
@@ -258,6 +258,7 @@ public class WebsiteController {
         model.addAttribute("orders", orders);
         List<OrderPosition> orderPositions = db.query("SELECT * FROM orderpositions", new OrderPositionRowMapper());
         model.addAttribute("orderPositions", orderPositions);
+        model.addAttribute("sessions", SessionController.activeSessions);
         return "db";
     }
 

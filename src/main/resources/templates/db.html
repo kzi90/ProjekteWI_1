@@ -100,6 +100,24 @@
 
     <table class="table caption-top">
       <caption>
+        <strong>ACTIVE SESSIONS</strong>
+      </caption>
+      <tr>
+        <th scope="col" th:text="'Session ID'" />
+        <th scope="col" th:text="'logged in user'" />
+        <th scope="col" th:text="'logged in emp'" />
+        <th scope="col" th:text="'cookies accepted'" />
+      </tr>
+      <tr th:each="sess: ${sessions}">
+        <td th:text="${sess.id}" />
+        <td th:text="${sess.loggedInUser}" />
+        <td th:text="${sess.loggedInEmp}" />
+        <td th:text="${sess.cookiesAccepted}" />
+      </tr>
+    </table>
+
+    <table class="table caption-top">
+      <caption>
         <strong>PRODUCTS</strong>
       </caption>
       <tr>
