@@ -624,6 +624,13 @@ public class CustomerController {
         return "redirect:/customer_edit" + customer.getId().toString();
     }
 
+    /**
+     * delete (deactivate) customer by employee
+     * @param sessID
+     * @param response
+     * @param id
+     * @return redirect to /customer_search
+     */
     @GetMapping("/delcustomer{id}")
     public String delCustomer(@CookieValue(value = "SessionID", defaultValue = "") String sessID,
             HttpServletResponse response, @PathVariable String id) {

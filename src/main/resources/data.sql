@@ -39,6 +39,8 @@ INSERT INTO orders VALUES (1, '2021-07-01', '15:33:42', 9.12, 'ordered', 1);
 INSERT INTO orders VALUES (2, '2021-08-27', '20:38:03', 47.16, 'ordered', 2);
 INSERT INTO orders VALUES (3, '2021-09-01', '13:24:07', 48.60, 'ordered', 3);
 INSERT INTO orders VALUES (4, '2021-09-01', '13:53:23', 4.42, 'ordered', 4);
+INSERT INTO orders VALUES (5, '2021-09-05',	'13:54:25', 61.68, 'ordered', 4);
+INSERT INTO orders VALUES (6, '2021-09-05', '14:11:57', 8.35, 'ordered', 4);
 
 -- Beispieldaten für Bestellpositionen
 INSERT INTO orderpositions VALUES (1, 5, 3, 1);
@@ -51,3 +53,9 @@ INSERT INTO orderpositions VALUES (1, 1, 4, 4);
 INSERT INTO orderpositions VALUES (2, 1, 3, 4);
 INSERT INTO orderpositions VALUES (3, 1, 2, 4);
 INSERT INTO orderpositions VALUES (4, 1, 1, 4);
+INSERT INTO orderpositions VALUES (1, 5, 1, 5);
+INSERT INTO orderpositions VALUES (2, 10, 2, 5);
+INSERT INTO orderpositions VALUES (3, 15, 3, 5);
+INSERT INTO orderpositions VALUES (4, 22, 4, 5);
+INSERT INTO orderpositions VALUES (1, 5, 3, 6);
+INSERT INTO orderpositions VALUES (2, 2, 2, 6);
