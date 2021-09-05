@@ -143,7 +143,7 @@ public class ProductController {
         model.addAttribute("title", "Produktbearbeitung");
         model.addAttribute("templateName", "product_add");
         model.addAttribute("cookiesAccepted", session.getCookiesAccepted());
-        return "layout";
+        return "layout-backend";
     }
 
     /**
