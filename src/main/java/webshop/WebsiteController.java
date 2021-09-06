@@ -47,6 +47,7 @@ public class WebsiteController {
 
     /**
      * Newsletter sign on
+     * 
      * @param sessID
      * @param response
      * @param email
@@ -109,12 +110,16 @@ public class WebsiteController {
             @CookieValue(value = "SessionID", defaultValue = "") String sessID, HttpServletResponse response,
             Model model) {
         Session session = sessionController.getOrSetSession(sessID, response);
-        Product product = db.queryForObject("SELECT * FROM products WHERE id = ?", new ProductRowMapper(), productID);
-        model.addAttribute(product);
+        List<Product> product = db.query("SELECT * FROM products WHERE id = ? AND active = TRUE",
+                new ProductRowMapper(), productID);
+        if (product.isEmpty()){
+            return "redirect:/";
+        }
+        model.addAttribute(product.get(0));
         model.addAttribute("loggedInUser", session.getLoggedInUser());
         model.addAttribute("shoppingcart", session.getShoppingCart());
         model.addAttribute("templateName", "product");
-        model.addAttribute("title", product.getName());
+        model.addAttribute("title", product.get(0).getName());
         model.addAttribute("cookiesAccepted", session.getCookiesAccepted());
         return "layout";
     }
