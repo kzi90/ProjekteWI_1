@@ -8,3 +8,5 @@ target/
 .sts4-cache/
 .project
 .classpath
+
+pom.xml
