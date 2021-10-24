@@ -1,9 +1,10 @@
 Das hier funktioniert bei mir mit jdk 16 (Windows 10) und OpenJDK 11 (Linux)
 Java Version muss ggf. in pom.xml angepasst werden
 
-pom.xml in .gitignore aufgenommen, damit die Java-Version nicht ständig
-angepasst werden muss. Es werden vermutlich keine neuen dependencies
-mehr hinzugefügt werden müssen.
+Falls eine andere Java-Version als 16 verwendet wird, im Terminal zuerst den
+Befehl "git update-index --skip-worktree pom.xml" ausführen.
+Danach kann die Version z.B. auf 11 geändert werden, ohne dass die Änderung
+beim nächsten Commit im Repository übernommen wird.
 
 Zugang H2-Datenbank:
 URL: localhost/h2-console
