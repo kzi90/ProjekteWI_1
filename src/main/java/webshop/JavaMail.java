@@ -22,6 +22,7 @@ public class JavaMail {
 
     /**
      * prepare message to send via email
+     * 
      * @param email
      * @param name
      * @param topic
@@ -39,10 +40,11 @@ public class JavaMail {
         properties.put("mail.smtp.host", "smtp.gmail.com");
         properties.put("mail.smtp.port", "587");
 
+        // TODO: add your own mail here;
         Session session = Session.getInstance(properties, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("bierbestellen@gmail.com", "2M6FJ0i3a4Am");
+                return new PasswordAuthentication("bierbestellen@gmail.com", "password");
             }
         });
 
@@ -60,6 +62,7 @@ public class JavaMail {
 
     /**
      * send email to any recipient
+     * 
      * @param email
      * @param name
      * @param topic
